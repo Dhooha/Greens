@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2018.06.20
+Copyright © 2018 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- 
+            =================================================================================
+            This Image Slider is adapted from http://www.menucool.com/javascript-image-slider 
+            It uses the following files:
+                - js-image-slider.css
+                - js-image-slider.js
+                - bullet.png
+
+            The following references are included in the siteTemplate.xhtml file:
+                <h:outputStylesheet library="css" name="js-image-slider.css" />
+                <h:outputScript name="js/js-image-slider.js" />
+            =================================================================================
+            -->
+
+            <div id="sliderFrame">
+                <div id="slider">
+                    <!--
+                    Image captions are provided by the "alt" values and are displayed on gray background.
+                    However, we provide no captions here.
+                    -->
+                    <img src="#{resource['images:imageSliderPhotos/photo1.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo2.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo3.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo4.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo5.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo6.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo7.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo8.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo9.png']}"  alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo10.png']}" alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo11.png']}" alt=""  />
+                    <img src="#{resource['images:imageSliderPhotos/photo12.png']}" alt=""  />
+                </div>
+            </div>
+            <br /><br /><br />
+            <div align="center">
+
+                <!-- 
+                ==============================================
+                Show "Questionnaire" page if user is signed in 
+                ==============================================
+                -->
+                <c:if test="#{userController.isLoggedIn() == true}">
+                    <p:button outcome="/userQuestionnaire/TakeQuestionnaire" 
+                              value="Take Questionnaire" icon="fas fa-pencil-alt"  />
+                </c:if>
+
+                <!-- 
+                ===========================================
+                Show "Sign In" page if no user is signed in 
+                ===========================================
+                -->
+                <c:if test="#{userController.isLoggedIn() == false}">
+                    <p:button outcome="/SignIn" value="Take Questionnaire" icon="fas fa-pencil-alt"  />
+                </c:if>
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
