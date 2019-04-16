@@ -54,7 +54,7 @@ public class CartController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CartCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -74,6 +74,7 @@ public class CartController implements Serializable {
         }
     }
 
+    //There should only be one Cart per User
     public List<Cart> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -113,10 +114,12 @@ public class CartController implements Serializable {
         return getFacade().find(id);
     }
 
+    //There should only be one Cart per User
     public List<Cart> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    //There should only be one Cart per User
     public List<Cart> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
@@ -161,5 +164,46 @@ public class CartController implements Serializable {
         }
 
     }
-
+    
+    //Above this is automatically generated Code **********************************************************************************
+    
+    //Checks if the user is logged in or not to see if we need to update the database
+    //calls the cart facade to create a cart in the DB table for this user id 
+    public void createCart(int user_id){
+        //possibly use create()
+    }
+    
+    //it would check if the user is logged in or not through injecting the userController 
+    //and calling the ‘isLoggedIn’ method, if it is logged, you get the user cart, update 
+    //it and push it to the database. If the user is not Logged in, we just update 
+    //the cart object- not update the table
+    /*
+    public void addItemToCart(MenuItem item, int quantity){
+        //possibly use update()
+    }*/
+    
+    //Checks if the user is logged in or not to see if we need to update the database
+    //also can’t set it to zero, it is about editing the quantity
+    /*
+    public void editItemInCart(MenuItem item, int newQuantity){
+        //possibly use update()
+    }*/
+    
+    //Checks if the user is logged in or not to see if we need to update the database
+    /*
+    public void removeItemFromCart(MenuItem item){
+        //possibly use update()
+    }*/
+    
+    //Removes the Json string items from the cart object as well as the cart table  
+    //(no need to check because the user will be logged in)
+    public void removeAllItemsFromCart(){
+        //possibly use update()
+    }
+    
+    //checks if the user is logged in, if yes, it redirect to the order page, 
+    //otherwise, it will ask the user to login, and redirect the user to the 
+    //login/create user page.
+    public void checkOutCart(){
+    }
 }

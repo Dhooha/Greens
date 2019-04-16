@@ -39,12 +39,16 @@ public class Cart implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    //A string that has Json data
+    //Example is: 
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 16777215)
     @Column(name = "cart_items")
     private String cartItems;
+   
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;

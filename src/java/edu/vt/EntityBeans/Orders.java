@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findByOrderType", query = "SELECT o FROM Orders o WHERE o.orderType = :orderType")
     , @NamedQuery(name = "Orders.findByOrderTimestamp", query = "SELECT o FROM Orders o WHERE o.orderTimestamp = :orderTimestamp")
     , @NamedQuery(name = "Orders.findByOrderStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus")
-    , @NamedQuery(name = "Orders.findByOrderTotal", query = "SELECT o FROM Orders o WHERE o.orderTotal = :orderTotal")})
+    , @NamedQuery(name = "Orders.findByOrderTotal", query = "SELECT o FROM Orders o WHERE o.orderTotal = :orderTotal")
+    ,@NamedQuery(name = "Orders.findOrdersByUserPrimaryKey", query = "SELECT o FROM Orders o WHERE o.user_id = :primaryKey")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,31 +47,39 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
+    //A string that has Json data
+    //Example is:
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 16777215)
     @Column(name = "order_items")
     private String orderItems;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)
     @Column(name = "order_type")
     private String orderType;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "order_timestamp")
     @Temporal(TemporalType.DATE)
     private Date orderTimestamp;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
     @Column(name = "order_status")
     private String orderStatus;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "order_total")
     private float orderTotal;
+    
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;

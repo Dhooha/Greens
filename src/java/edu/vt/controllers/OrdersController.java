@@ -25,7 +25,10 @@ public class OrdersController implements Serializable {
 
     @EJB
     private edu.vt.FacadeBeans.OrdersFacade ejbFacade;
-    private List<Orders> items = null;
+    
+    //I changed the name from items to orderItems to be consistent with our
+    //documentation
+    private List<Orders> orderItems = null;
     private Orders selected;
 
     public OrdersController() {
@@ -58,7 +61,7 @@ public class OrdersController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("OrdersCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            orderItems = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
@@ -70,15 +73,15 @@ public class OrdersController implements Serializable {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("OrdersDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            orderItems = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Orders> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
+        if (orderItems == null) {
+            orderItems = getFacade().findAll();
         }
-        return items;
+        return orderItems;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -112,7 +115,8 @@ public class OrdersController implements Serializable {
     public Orders getOrders(java.lang.Integer id) {
         return getFacade().find(id);
     }
-
+    
+    //TODO: Can I just Rename one of these? 
     public List<Orders> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
@@ -160,6 +164,19 @@ public class OrdersController implements Serializable {
             }
         }
 
+    }
+    
+    //Above this is automatically generated Code **********************************************************************************
+    
+    
+    //call the OrderFacade ___ method to get a list of all the orders for this user
+    public List<Orders> getOrderList() {
+        int userPrimaryKey  = 1;
+        
+        //get loggedin user primary key
+        //int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+       
+        return getFacade().findOrdersbyUserId(userPrimaryKey );
     }
 
 }
