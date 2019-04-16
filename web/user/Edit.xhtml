@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserEditDlg" widgetVar="UserEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUserTitle}">
+            <h:form id="UserEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUserLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{userController.selected.id}" title="#{bundle.EditUserTitle_id}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{userController.selected.username}" title="#{bundle.EditUserTitle_username}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_username}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{userController.selected.password}" title="#{bundle.EditUserTitle_password}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_password}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{userController.selected.firstName}" title="#{bundle.EditUserTitle_firstName}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_firstName}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_middleName}" for="middleName" />
+                        <p:inputText id="middleName" value="#{userController.selected.middleName}" title="#{bundle.EditUserTitle_middleName}" />
+                        <p:outputLabel value="#{bundle.EditUserLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{userController.selected.lastName}" title="#{bundle.EditUserTitle_lastName}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_lastName}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_deliveryAddress1}" for="deliveryAddress1" />
+                        <p:inputText id="deliveryAddress1" value="#{userController.selected.deliveryAddress1}" title="#{bundle.EditUserTitle_deliveryAddress1}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_deliveryAddress1}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_deliveryAddress2}" for="deliveryAddress2" />
+                        <p:inputText id="deliveryAddress2" value="#{userController.selected.deliveryAddress2}" title="#{bundle.EditUserTitle_deliveryAddress2}" />
+                        <p:outputLabel value="#{bundle.EditUserLabel_deliveryCity}" for="deliveryCity" />
+                        <p:inputText id="deliveryCity" value="#{userController.selected.deliveryCity}" title="#{bundle.EditUserTitle_deliveryCity}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_deliveryCity}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_deliveryState}" for="deliveryState" />
+                        <p:inputText id="deliveryState" value="#{userController.selected.deliveryState}" title="#{bundle.EditUserTitle_deliveryState}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_deliveryState}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_deliveryZipcode}" for="deliveryZipcode" />
+                        <p:inputText id="deliveryZipcode" value="#{userController.selected.deliveryZipcode}" title="#{bundle.EditUserTitle_deliveryZipcode}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_deliveryZipcode}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_securityQuestionNumber}" for="securityQuestionNumber" />
+                        <p:inputText id="securityQuestionNumber" value="#{userController.selected.securityQuestionNumber}" title="#{bundle.EditUserTitle_securityQuestionNumber}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_securityQuestionNumber}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_securityAnswer}" for="securityAnswer" />
+                        <p:inputText id="securityAnswer" value="#{userController.selected.securityAnswer}" title="#{bundle.EditUserTitle_securityAnswer}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_securityAnswer}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{userController.selected.email}" title="#{bundle.EditUserTitle_email}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_email}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userController.update}" value="#{bundle.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UserEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UserEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OrdersCreateDlg" widgetVar="OrdersCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateOrdersTitle}">
+            <h:form id="OrdersCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ordersController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{ordersController.selected.id}" title="#{bundle.CreateOrdersTitle_id}" required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_orderItems}" for="orderItems" />
+                        <p:inputTextarea rows="4" cols="30" id="orderItems" value="#{ordersController.selected.orderItems}" title="#{bundle.CreateOrdersTitle_orderItems}" required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_orderItems}"/>
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_orderType}" for="orderType" />
+                        <p:inputText id="orderType" value="#{ordersController.selected.orderType}" title="#{bundle.CreateOrdersTitle_orderType}" required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_orderType}"/>
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_orderTimestamp}" for="orderTimestamp" />
+                        <p:calendar id="orderTimestamp" pattern="MM/dd/yyyy" value="#{ordersController.selected.orderTimestamp}" title="#{bundle.EditOrdersTitle_orderTimestamp}" required="true" requiredMessage="#{bundle.EditOrdersRequiredMessage_orderTimestamp}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_orderStatus}" for="orderStatus" />
+                        <p:inputText id="orderStatus" value="#{ordersController.selected.orderStatus}" title="#{bundle.CreateOrdersTitle_orderStatus}" required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_orderStatus}"/>
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_orderTotal}" for="orderTotal" />
+                        <p:inputText id="orderTotal" value="#{ordersController.selected.orderTotal}" title="#{bundle.CreateOrdersTitle_orderTotal}" required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_orderTotal}"/>
+                        <p:outputLabel value="#{bundle.CreateOrdersLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{ordersController.selected.userId}" required="true" requiredMessage="#{bundle.EditOrdersRequiredMessage_userId}">
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ordersController.create}" value="#{bundle.Save}" update="display,:OrdersListForm:datalist,:growl" oncomplete="handleSubmit(args,'OrdersCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="OrdersCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaymentMethodEditDlg" widgetVar="PaymentMethodEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPaymentMethodTitle}">
+            <h:form id="PaymentMethodEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paymentMethodController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{paymentMethodController.selected.id}" title="#{bundle.EditPaymentMethodTitle_id}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_nameOnCreditCard}" for="nameOnCreditCard" />
+                        <p:inputText id="nameOnCreditCard" value="#{paymentMethodController.selected.nameOnCreditCard}" title="#{bundle.EditPaymentMethodTitle_nameOnCreditCard}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_nameOnCreditCard}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_creditCardNumber}" for="creditCardNumber" />
+                        <p:inputText id="creditCardNumber" value="#{paymentMethodController.selected.creditCardNumber}" title="#{bundle.EditPaymentMethodTitle_creditCardNumber}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_creditCardNumber}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_creditCardType}" for="creditCardType" />
+                        <p:inputText id="creditCardType" value="#{paymentMethodController.selected.creditCardType}" title="#{bundle.EditPaymentMethodTitle_creditCardType}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_creditCardType}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_creditCardExpiration}" for="creditCardExpiration" />
+                        <p:inputText id="creditCardExpiration" value="#{paymentMethodController.selected.creditCardExpiration}" title="#{bundle.EditPaymentMethodTitle_creditCardExpiration}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_creditCardExpiration}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_billingAddress1}" for="billingAddress1" />
+                        <p:inputText id="billingAddress1" value="#{paymentMethodController.selected.billingAddress1}" title="#{bundle.EditPaymentMethodTitle_billingAddress1}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_billingAddress1}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_billingAddress2}" for="billingAddress2" />
+                        <p:inputText id="billingAddress2" value="#{paymentMethodController.selected.billingAddress2}" title="#{bundle.EditPaymentMethodTitle_billingAddress2}" />
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_billingCity}" for="billingCity" />
+                        <p:inputText id="billingCity" value="#{paymentMethodController.selected.billingCity}" title="#{bundle.EditPaymentMethodTitle_billingCity}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_billingCity}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_billingState}" for="billingState" />
+                        <p:inputText id="billingState" value="#{paymentMethodController.selected.billingState}" title="#{bundle.EditPaymentMethodTitle_billingState}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_billingState}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_billingZipcode}" for="billingZipcode" />
+                        <p:inputText id="billingZipcode" value="#{paymentMethodController.selected.billingZipcode}" title="#{bundle.EditPaymentMethodTitle_billingZipcode}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_billingZipcode}"/>
+                        <p:outputLabel value="#{bundle.EditPaymentMethodLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{paymentMethodController.selected.userId}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_userId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paymentMethodController.update}" value="#{bundle.Save}" update="display,:PaymentMethodListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PaymentMethodEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PaymentMethodEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
