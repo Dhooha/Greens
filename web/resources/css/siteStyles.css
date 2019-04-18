@@ -1,6 +1,6 @@
 /*****************************************************
 *   Cascading Style Sheets (CSS) Style Definitions   *
-*   Composed by Melanie Trammell for the Recipes app.     *
+*   Composed by Osman Balci for the BevQ app.        *
 *****************************************************/
 
 /*
@@ -21,8 +21,8 @@ html, body {
     /* background-color: beige;         */
     /* background-color: gainsboro;     */
     /* background-color: ivory;         */
-    /* background-color: linen;         */
-    background-color: oldlace;
+    background-color: linen;
+    /* background-color: oldlace;       */
     /* background-color: papayawhip;    */
     /* background-color: wheat;         */
     /* background-color: powderblue;    */
@@ -82,7 +82,7 @@ Style the div component whose unique id is "header" per reference
 <div id="header"> in siteTemplate
 */
 #header {
-    background-color: azure;
+    background-color: powderblue;
     width: 100%;
     height: 84px;
     position: absolute;
@@ -99,8 +99,8 @@ Style the div component whose unique id is "editableContent" per reference
     /* height = 100% window height - (header height 84px + footer height 100px) */
     height: calc(100% - 184px); 
     width: 100%;
-    left: 0px;
-    right: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 100px;
     margin-bottom: 16px;
 }
@@ -130,12 +130,7 @@ Hyperlinks (or links) are styled differently depending on what state they are in
 
 /* Set the font family for the standard HTML tag "a" for hyperlinks */
 a {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-}
-
-.blueLink{
-    color: blue;
+    font-family: Arial, Helvetica, sans-serif
 }
 
 a:link {
@@ -215,19 +210,19 @@ Used in headerTemplate
     font-size: 12pt;
     color:white;                /* Text color */
     padding: 5px 10px;          /* Top Right Bottom Left */
-    border: 1px solid teal;
+    border: 1px solid dodgerblue;
     border-radius:6px;
-    background: teal;
+    background: dodgerblue;
 }
 .menu:focus { pointer-events:none; }
 .menu:focus .menu-dropdown { opacity:1; visibility:visible; }
 
 .menu-dropdown {
-    background: teal;
+    background: dodgerblue;
     width: auto;
     margin:6px 20px 0 0;        /* Top Right Bottom Left = 20px on right same as in headerTemplate */
     padding: 10px;              /* Top Right Bottom Left */
-    border:1px teal solid;
+    border:1px dodgerblue solid;
     border-radius:6px;
     pointer-events: auto;
     position: absolute;
@@ -249,8 +244,57 @@ Used in headerTemplate
 }
 
 .menu-dropdown a:hover {
-    background-color: lightgreen;
+    background-color: lightskyblue;
     color:black;
+}
+
+/*
+================================
+|   Vertical Navigation Menu   |
+================================
+Used in Profile
+*/
+/* Style class for <ul> */
+.verticalMenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 180px;
+    background-color: azure;
+    border: 1px solid darkgray;
+
+}
+
+/* Style class for <li> */
+.verticalMenuItem {
+    text-align: left;
+    border-bottom: 1px solid darkgray;
+}
+
+/* Style class for <li> and the <a> tag that defines a hyperlink */
+.verticalMenuItem a {
+    display: block;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;  /* Do not underline the hyperlink */
+}
+
+/* Style class for <ul>, <li> and <a> hyperlink tag */
+.verticalMenu, .verticalMenuItem a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* Style class for <li> last-child */
+.verticalMenuItem:last-child {
+    border-bottom: none;
+}
+
+/* Style class for <li> for mouse over state */
+.verticalMenuItem a:hover {
+    background-color: lightskyblue;
 }
 
 /*
@@ -258,16 +302,6 @@ Used in headerTemplate
 |   Other Style Definitions   |
 ===============================
 */
-
-.panelGridGreyCol{
-    text-align: center;
-    background-color: lightgrey !important; 
-    white-space: nowrap;
-}
-
-.centeredColumn{
-    text-align:center;
-}
 
 /* Style p:panelGrid Column 1 */
 .panelGridColumn1 {
@@ -283,8 +317,26 @@ Used in headerTemplate
     white-space: nowrap;        /* Disallow line break */
 }
 
+/* Style heading text used in About and UserGuide */
+.heading {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt;
+    font-style: normal;
+    font-weight: normal;
+    color: darkgreen;
+}
+
+/* Style the hello text used in headerTemplate */
+.helloText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    color: darkmagenta;
+}
+
 /* Style standard text and input text field text */
-.standardText, .inputTextField, .recipeDataFields {
+.standardText, .inputTextField {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
     font-style: normal;
@@ -293,116 +345,49 @@ Used in headerTemplate
 
 /* Used in CreateAccount, EditAccount, SignIn, EnterUsername, and SecurityQuestion */
 .inputTextField {
-    width: 600px;
+    width: 275px;
 }
 
-.searchInputTextField{
-    width: 200px;
+/* Style the beverage images used in TakeQuestionnaire */
+.beverageImage {
+    max-height: 100%;
+    width: auto;
+    vertical-align: middle;
+    padding-bottom: 5px;
 }
 
-.inputTextField{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-    width: 600px;
-    color:blue;
+/* Used in Profile and About pages to style person's photo in a circle */
+.profilePhoto {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
-.recipeDataFields {
-    width: 600px;
-}
-
-.recipeImageCenter {
-    display: block;  /* Displays an element as a block element (like <p>) */
-    /*
-    top and bottom margins = 0
-    right and left margins = auto (The browser calculates a margin)
-    Since the default alignment is "center", the image is centered.
-    */
-    margin: 0 auto;
-}
-
-/* 
-Proportionately scale image to show on mobile devices and smaller browser windows.
-Scale the image downward, but do not enlarge it beyond its actual width size.
-*/
-.scalableImage {
-    max-width: 100%;
-    height: auto;
-    border: none;
-}
-
-/* Styles for h:panelGrid */
-.columnRecipeImage {
-    width: 100px;
-}
-.columnMiddlePart {
-    width: 75%;
-}
-.columnInfoButton {
-    width: 10%;
-}
-
-.leftColumn{
-    float: left;
-  /*text-align: left;*/
-}
-
-.rightColumn{
-    float: right;
-}
-
-/* Style the country flag image in List.xhtml (from country) */
-.recipeImageCenter {
-    display: block;  /* Displays an element as a block element (like <p>) */
-    /*
-    top and bottom margins = 0
-    right and left margins = auto (The browser calculates a margin)
-    Since the default alignment is "center", the image is centered.
-    */
-    margin: 0 auto;
-}
-
-
-/* 
-Styles for the dialogs CurrentRecipeDetails.xhtml 
-and SearchedRecipeDetails.xhtml 
-*/
-.dialogPoster {
-    width: 50%;
-}
-.dialogText {
-    width: 50%;
-}
-.ratingColumn1 {
-    width: 45%;
-    height: 100%;
+/* Used in headerTemplate and QuestionnairesTaken to style user's small photo in a circle */
+.smallProfilePhoto {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
     vertical-align: middle;
 }
-.ratingColumn2 {
-    width: 45%;
+.mediumProfilePhoto {
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: middle;
 }
-.ratingColumn3 {
-    width: 10%;
-}
-.selectedRecipeTitle {
-    font-size: 20px;
-}
-
-/*
------------------------------------------
-Skinning PrimeFaces Galleria Image Slider
------------------------------------------
-*/
-
-.ui-galleria-caption {
-    position: absolute;
-    left: 0px !important;
-    background-color: rgba(240, 255, 255, 0.8) !important;
-    padding: 0px !important;
-}
-
 /*
 =========================================
 |   Skinning PrimeFaces UI Components   |
@@ -579,6 +564,26 @@ Position the confirmation dialog box on the center of the screen per
     background-color: oldlace;
 }
 
+/* Override PrimeFaces style definition for the fileUpload component */
+.ui-fileupload {
+    width: 80%;
+}
+
+.ui-fileupload-buttonbar {
+    /* padding values are specified in clockwise: Top, Right, Bottom, and Left */
+    padding: 0px 0px 8px 0px !important;
+}
+
+.ui-fileupload-content {
+    /* The drag-and-drop area height will increase as more files are dropped */
+    min-height: 200px;
+}
+
+/* Style p:selectOneRadio circle icons to be left justified */
+.ui-radiobutton {
+    float: left;
+}
+
 /*
 ========================================================
 |   Delete auto generated jsfcrud.css file since its   |
@@ -619,3 +624,5 @@ if content overflows an element's box.
 .ui-button {
     margin-top: 10px !important;
 }
+
+
