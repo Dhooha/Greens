@@ -8,12 +8,12 @@ This CSS file was created by http://www.menucool.com
 
 #sliderFrame 
 {
-    width:600px;   /* Change this value with the image width you are using */
+    width:640px;   /* Change this value with the image width you are using */
     margin:0 auto; /*center-aligned*/
 }
 
 #slider, #slider .sliderInner {
-    width:600px;height:333px;  /* Change to image width and height you are using */
+    width:640px;height:427px;  /* Change to image width and height you are using */
     border-radius:3px;
 }
 
@@ -61,7 +61,7 @@ This CSS file was created by http://www.menucool.com
 
 /* ------ built-in navigation bullets wrapper ------*/
 #slider .navBulletsWrapper  {
-    top:340px;   /* Change this value to image height you are using + 7px */
+    top:437px;   /* Change this value to image height you are using + 7px */
     text-align:center;
     background:none;
     position:relative;
