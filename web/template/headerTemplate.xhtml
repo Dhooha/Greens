@@ -111,15 +111,28 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     
                                 </h:link>
                                 
-                                <!--
-                                ================
-                                  ** Sign In **
-                                ================
-                                -->
-                                <h:link outcome="/index" class="standardText">
-                                    <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
-                                    
-                                </h:link>
+                                <c:choose>
+                                    <c:when test="#{userController.isLoggedIn() == true}">
+                                        <!--
+                                        ===================
+                                           ** Sign Out **
+                                        ===================
+                                        -->
+                                        <i class="fas fa-sign-out-alt"></i>&nbsp; Sign Out
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!--
+                                        ================
+                                          ** Sign In **
+                                        ================
+                                        -->
+                                        <h:link outcome="/index" class="standardText">
+                                            <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
+
+                                        </h:link>
+                                    </c:otherwise>
+                                </c:choose>
+                                
                             </div>
                         </div>
                     </td>
