@@ -4,6 +4,7 @@ import edu.vt.EntityBeans.User;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.UserFacade;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.util.List;
@@ -161,5 +162,25 @@ public class UserController implements Serializable {
         }
 
     }
+    
+    /*
+    ================
+    Instance Methods
+    ================
+
+    **********************************
+    Return True if a User is Signed In
+    **********************************
+     */
+    public boolean isLoggedIn() {
+        /*
+        The username of a signed-in user is put into the SessionMap in the
+        initializeSessionMap() method in LoginManager upon user's sign in.
+        If there is a username, that means, there is a signed-in user.
+         */
+        return Methods.sessionMap().get("username") != null;
+    }
+
+    
 
 }
