@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Osman Balci on 2018.06.20
-Copyright © 2018 Osman Balci. All rights reserved.
+Created by Dhoha Abid on 2019.04.18
+Copyright © 2019 Dhoha Abid. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
+            xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
@@ -38,7 +38,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     Image captions are provided by the "alt" values and are displayed on gray background.
                     However, we provide no captions here.
                     -->
-                    <img src="#{resource['images:imageSliderPhotos/photo1.png']}"  alt=""  />
+                     <img src="#{resource['images:imageSliderPhotos/photo1.png']}"  alt=""  />
                     <img src="#{resource['images:imageSliderPhotos/photo2.png']}"  alt=""  />
                     <img src="#{resource['images:imageSliderPhotos/photo3.png']}"  alt=""  />
                     <img src="#{resource['images:imageSliderPhotos/photo4.png']}"  alt=""  />
@@ -57,12 +57,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
 
                 <!-- 
                 ==============================================
-                Show "Questionnaire" page if user is signed in 
+                Show "Survey" page if user is signed in 
                 ==============================================
                 -->
                 <c:if test="#{userController.isLoggedIn() == true}">
-                    <p:button outcome="/userQuestionnaire/TakeQuestionnaire" 
-                              value="Take Questionnaire" icon="fas fa-pencil-alt"  />
+                    <p:button outcome="/userSurvey/TakeSurvey" 
+                              value="Take Survey" icon="fas fa-pencil-alt"  />
                 </c:if>
 
                 <!-- 
@@ -71,10 +71,9 @@ Copyright © 2018 Osman Balci. All rights reserved.
                 ===========================================
                 -->
                 <c:if test="#{userController.isLoggedIn() == false}">
-                    <p:button outcome="/SignIn" value="Take Questionnaire" icon="fas fa-pencil-alt"  />
+                    <p:button outcome="/SignIn" value="Take Survey" icon="fas fa-pencil-alt"  />
                 </c:if>
             </div>
-
         </ui:define>
 
     </ui:composition>
