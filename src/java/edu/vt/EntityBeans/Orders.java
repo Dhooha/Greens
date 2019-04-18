@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findByOrderTimestamp", query = "SELECT o FROM Orders o WHERE o.orderTimestamp = :orderTimestamp")
     , @NamedQuery(name = "Orders.findByOrderStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus")
     , @NamedQuery(name = "Orders.findByOrderTotal", query = "SELECT o FROM Orders o WHERE o.orderTotal = :orderTotal")
+    , @NamedQuery(name = "Orders.findBySpecialInstructions", query = "SELECT o FROM Orders o WHERE o.specialInstructions = :specialInstructions")
     ,@NamedQuery(name = "Orders.findOrdersByUserPrimaryKey", query = "SELECT o FROM Orders o WHERE o.user_id = :primaryKey")})
 public class Orders implements Serializable {
 
@@ -79,6 +80,11 @@ public class Orders implements Serializable {
     @NotNull
     @Column(name = "order_total")
     private float orderTotal;
+    
+   //new column in table
+    @Size(min = 1, max = 500)
+    @Column(name = "special_instructions")
+    private String specialInstructions;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

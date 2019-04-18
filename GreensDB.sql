@@ -20,11 +20,11 @@ CREATE TABLE User
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
     last_name VARCHAR(50) NOT NULL,
-    delivery_address1 VARCHAR(128) NOT NULL,
+    delivery_address1 VARCHAR(128),
     delivery_address2 VARCHAR(128),
-    delivery_city VARCHAR(64) NOT NULL,
-    delivery_state VARCHAR(2) NOT NULL,
-    delivery_zipcode VARCHAR(10) NOT NULL,    /* e.g., 24060-1804 */
+    delivery_city VARCHAR(64),
+    delivery_state VARCHAR(2),
+    delivery_zipcode VARCHAR(10),    /* e.g., 24060-1804 */
     security_question_number INT NOT NULL,  /* Refers to the number of the selected security question */
     security_answer VARCHAR(128) NOT NULL,
     email VARCHAR(128) NOT NULL,
@@ -49,6 +49,7 @@ CREATE TABLE Orders /* ORDER is a SQL reserved word */
     order_timestamp DATE NOT NULL,
     order_status ENUM('PLACED', 'READY', 'CLAIMED') NOT NULL,
     order_total FLOAT NOT NULL,
+    special_instructions VARCHAR(500),
     user_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );

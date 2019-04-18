@@ -71,34 +71,33 @@ public class User implements Serializable {
     @Size(max = 50)
     @Column(name = "middle_name")
     private String middleName;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "last_name")
     private String lastName;
-    @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 128)
     @Column(name = "delivery_address1")
     private String deliveryAddress1;
+    
     @Size(max = 128)
     @Column(name = "delivery_address2")
     private String deliveryAddress2;
-    @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 64)
     @Column(name = "delivery_city")
     private String deliveryCity;
-    @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 2)
     @Column(name = "delivery_state")
     private String deliveryState;
-    @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 10)
     @Column(name = "delivery_zipcode")
     private String deliveryZipcode;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "security_question_number")
