@@ -1,6 +1,3 @@
-/*Automatically generated
- */
-
 function handleSubmit(args, dialog) {
     var jqDialog = jQuery('#' + dialog);
     if (args.validationFailed) {
