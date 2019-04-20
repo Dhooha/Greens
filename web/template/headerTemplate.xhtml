@@ -112,9 +112,13 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     
                                 </h:link>
                                 
-                                <c:choose>
+                                <!--
+                                ===========================================
+                                |   Menu Options IF a User is Signed In   |
+                                ===========================================
+                                -->
                                     
-                                    <c:when test="#{userController.isLoggedIn() == true}">
+                                    <c:if  test="#{userController.isLoggedIn() == true}">
                                         <!--
                                         ===================
                                            ** Profile **
@@ -129,11 +133,17 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                            ** Sign Out **
                                         ===================
                                         -->
-                                        <h:link>
-                                            <i class="fas fa-sign-out-alt"></i>&nbsp; Sign Out
-                                        </h:link>
-                                    </c:when>
-                                    <c:otherwise>
+                                         <h:commandLink action="#{userController.logout()}" class="standardText">
+                                        <i class="fas fa-sign-out-alt"/> &nbsp; Sign Out
+                                        </h:commandLink>
+                                    </c:if>
+                                
+                                     <!-- 
+                                    ============================================
+                                    |   Menu Options IF No User is Signed In   |
+                                    ============================================
+                                    -->
+                                     <c:if test="#{userController.isLoggedIn() == false}">
                                         <!--
                                         ================
                                           ** Sign In **
@@ -143,8 +153,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                             <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
 
                                         </h:link>
-                                    </c:otherwise>
-                                </c:choose>
+                                    </c:if>
+                            
                                 
                             </div>
                         </div>
