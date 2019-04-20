@@ -68,77 +68,6 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
                         <!--
                         ********************************
-                        *        ADDRESS LINE 1        *
-                        ********************************
-                        -->
-                        <p:outputLabel value="#{bundle.CreateUserLabel_address1}" for="address1" />
-                        <p:inputText id="address1" value="#{userController.address1}" required="true" class="inputTextField"
-                                     requiredMessage="#{bundle.CreateUserRequiredMessage_address1}">
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
-
-                        <!--
-                        ********************************
-                        *        ADDRESS LINE 2        *
-                        ********************************
-                        -->
-                        <p:outputLabel value="#{bundle.CreateUserLabel_address2}" for="address2" />
-                        <p:inputText id="address2" value="#{userController.address2}" class="inputTextField">
-                        </p:inputText>
-
-                        <!--
-                        ********************************
-                        *             CITY             *
-                        ********************************
-                        -->
-                        <p:outputLabel value="#{bundle.CreateUserLabel_city}" for="city" />
-                        <p:inputText id="city" value="#{userController.city}" required="true" class="inputTextField"
-                                     requiredMessage="#{bundle.CreateUserRequiredMessage_city}">
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
-
-                        <!--
-                        ********************************
-                        *      STATE ABBREVIATION      *
-                        ********************************
-                        -->
-                        <p:outputLabel value="#{bundle.CreateUserLabel_state}" for="state" />
-                        <h:selectOneMenu id="state" value="#{userController.state}" required="true">
-                            <!--
-                            List of U.S. state postal codes is iterated over 
-                            to display the list for the user to select one.
-                            -->
-                            <f:selectItems value="#{userController.listOfStates()}" var="state"
-                                           itemLabel="#{state}" itemValue="#{state}" />
-                        </h:selectOneMenu>
-
-                        <!--
-                        ********************************
-                        *           ZIP CODE           *
-                        ********************************
-                        -->
-                        <p:outputLabel id="zipcodeEntry" value="#{bundle.CreateUserLabel_zipcode}" for="zipcode" >
-                            &nbsp;<i class="fas fa-question-circle" />
-                            <!--
-                            When the user mouses over the icon, a tooltip is displayed
-                            to provide context-sensitive help information to the user.
-                            -->
-                            <p:tooltip for="zipcodeEntry" value="Enter 5 digits or 9 digits with hyphen, e.g., 24060-1804" 
-                                       showEffect="clip" hideEffect="explode" position="top" />
-                        </p:outputLabel> 
-
-                        <p:inputText id="zipcode" value="#{userController.zipcode}" required="true" class="inputTextField"
-                                     requiredMessage="#{bundle.CreateUserRequiredMessage_zipcode}">
-                            <f:validateLength minimum="5" />
-                            <!-- 
-                            Execute the "validate" method in the "ZipCodeValidator.java" 
-                            class file to validate the ZIP code entered. 
-                            -->
-                            <f:validator validatorId="zipCodeValidator"/> 
-                        </p:inputText>
-
-                        <!--
-                        ********************************
                         *       SECURITY QUESTION      *
                         ********************************
                         -->
@@ -241,7 +170,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     required="true" class="inputTextField"/>
 
                     </p:panelGrid>
-                    <br />
+                    <br /> 
 
                     <!--
                     ================================
@@ -257,7 +186,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     ================================
                     -->
                     <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
-
+                    <br/><br/>
                 </h:form>
             </div>
         </ui:define>
