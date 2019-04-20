@@ -8,6 +8,7 @@
 Tables to be dropped must be listed in a logical order based on dependency.
 UserSurvey and UserPhoto depend on User. Therefore, they must be dropped before User.
 */
+USE GreensDB;
 SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS Cart , Orders , UserPhoto, PaymentMethod, User;
 SET FOREIGN_KEY_CHECKS=1;
