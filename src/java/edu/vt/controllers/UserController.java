@@ -4,12 +4,14 @@ import edu.vt.EntityBeans.User;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.UserFacade;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -22,11 +24,39 @@ import javax.faces.convert.FacesConverter;
 @Named("userController")
 @SessionScoped
 public class UserController implements Serializable {
-
+    
+    /*
+    ================================
+    Instancee Variables (Properties)
+    ================================
+    */
+    private String username;
+    private String password;
+    private String confirmPassword;
+    
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    
+    private String deliveryAddress1;
+    private String deliveryAddress2;
+    private String city;
+    private String state;
+    private String zipCode;
+    
+    private int securityQuestionNumber;
+    private String answerToSecurityQuestion;
+    
+    private String email;
+    
+    private Map<String, Object> security_questions;
+    
+    private User selected;
+    
     @EJB
     private edu.vt.FacadeBeans.UserFacade ejbFacade;
     private List<User> items = null;
-    private User selected;
+    
 
     public UserController() {
     }
@@ -161,5 +191,25 @@ public class UserController implements Serializable {
         }
 
     }
+    
+    /*
+    ================
+    Instance Methods
+    ================
+
+    **********************************
+    Return True if a User is Signed In
+    **********************************
+     */
+    public boolean isLoggedIn() {
+        /*
+        The username of a signed-in user is put into the SessionMap in the
+        initializeSessionMap() method in LoginManager upon user's sign in.
+        If there is a username, that means, there is a signed-in user.
+         */
+        return Methods.sessionMap().get("username") != null;
+    }
+
+    
 
 }

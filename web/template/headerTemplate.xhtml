@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Melanie Trammell on 2019.02.26
-Copyright © 2019 Melanie Trammell. All rights reserved.
+Created by Dhoha Abid on 2019.04.18
+Copyright © 2019 Dhoha Abid. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!--
     *********************************************
@@ -34,18 +35,25 @@ Copyright © 2019 Melanie Trammell. All rights reserved.
                         Column width = Logo Image Width
                         -->
                         <h:link outcome="/index">
-                            <img src="#{resource['images:recipesLogo.png']}"
+                            <img src="#{resource['images:greensLogo.jpg']}"
                                  style="max-width:100%; height:auto; float:left; padding-left:10px; border:none;"
-                                 alt="Recipes Logo" />
+                                 alt="Grees Logo" />
                         </h:link>
                     </td>
                     <!--
                     *************************
-                    Column 2 (Center): Unused
+                    Column 2 (Center): Welcome User
                     *************************
                     -->
                     <td align="center" valign="middle">
-
+                        <c:choose>
+                            <c:when test="#{userController.isLoggedIn() == true}">
+                                <div class="helloText">Hello, #{userController.selected.firstName}</div>
+                            </c:when>
+                            <c:otherwise>
+                                <h1>Hello, Guest</h1>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                     <!--
                     ***************************************
@@ -67,14 +75,64 @@ Copyright © 2019 Melanie Trammell. All rights reserved.
                             <div class="menu-dropdown" style="right:0;">
 
                                 <!-- 
-                                =====================================
-                                Selecting "Home" displays index.xhtml
-                                =====================================
+                                =============
+                                  ** Home **
+                                =============
                                 -->
                                 <h:link outcome="/index" class="standardText">
                                     <i class="fas fa-home"></i>&nbsp;Home
                                 </h:link>
+                                
+                                <!--
+                                =============
+                                  ** Menu **
+                                =============
+                                -->
+                                <h:link outcome="/index" class="standardText">
+                                    <i class="fas fa-utensils"></i>&nbsp; Menu
+                                </h:link>
+                                
+                                <!--
+                                =============
+                                  ** Cart ** 
+                                =============
+                                -->
+                                <h:link outcome="/index" class="standardText">
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; Cart
+                                </h:link> 
+                                
+                                <!--
+                                =============
+                                  ** About **
+                                =============
+                                -->
+                                <h:link outcome="/index" class="standardText">
+                                    <i class="fas fa-info-circle"></i>&nbsp; About
+                                    
+                                </h:link>
+                                
+                                <c:choose>
+                                    <c:when test="#{userController.isLoggedIn() == true}">
+                                        <!--
+                                        ===================
+                                           ** Sign Out **
+                                        ===================
+                                        -->
+                                        <i class="fas fa-sign-out-alt"></i>&nbsp; Sign Out
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!--
+                                        ================
+                                          ** Sign In **
+                                        ================
+                                        -->
+                                        <h:link outcome="/SignIn" class="standardText">
+                                            <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
 
+                                        </h:link>
+                                    </c:otherwise>
+                                </c:choose>
+                                
                             </div>
                         </div>
                     </td>
@@ -82,13 +140,6 @@ Copyright © 2019 Melanie Trammell. All rights reserved.
             </table>
 
         </h:form>
-
-        <!-- 
-        Selecting the 'Country Search' menu option displays the included 
-        Dialog.xhtml file in a dialog box on top of the currently displayed page. -->
-        
-        <ui:include src="/search/Dialog.xhtml"/>
-        
         
 
     </ui:composition>
