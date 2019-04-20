@@ -49,13 +49,25 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 <li class="verticalMenuItem">
                                     <!--
                                     ================================
-                                    |         MY FILES Link        |
+                                    |          My Orders           |
                                     ================================
                                     -->
-                                    <h:link outcome="/userVideo/List">
-                                        <i class="fas fa-file-alt"></i>&nbsp;My Videos
+                                    <h:link outcome="/index">
+                                        <i class="fab fa-first-order"></i>&nbsp; My Orders
                                     </h:link>
                                 </li>
+                                
+                                <li class="verticalMenuItem">
+                                    <!--
+                                    ================================
+                                    |          My Orders           |
+                                    ================================
+                                    -->
+                                    <h:link outcome="/index">
+                                        <i class="far fa-credit-card"></i>&nbsp; My Payment Methods
+                                    </h:link>
+                                </li>
+
 
                                 <li class="verticalMenuItem">
                                     <!--
@@ -167,20 +179,20 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 <h:outputText value="#{bundle.ViewUserLabel_lastName}"/>
                                 <h:outputText value="#{userController.selected.lastName}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_address1}"/>
-                                <h:outputText value="#{userController.selected.address1}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_deliveryAddress1}"/>
+                                <h:outputText value="#{userController.selected.deliveryAddress1}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_address2}"/>
-                                <h:outputText value="#{userController.selected.address2}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_deliveryAddress2}"/>
+                                <h:outputText value="#{userController.selected.deliveryAddress2}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_city}"/>
-                                <h:outputText value="#{userController.selected.city}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_deliveryCity}"/>
+                                <h:outputText value="#{userController.selected.deliveryCity}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_state}"/>
-                                <h:outputText value="#{userController.selected.state}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_deliveryState}"/>
+                                <h:outputText value="#{userController.selected.deliveryState}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_zipcode}"/>
-                                <h:outputText value="#{userController.selected.zipcode}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_deliveryZipcode}"/>
+                                <h:outputText value="#{userController.selected.deliveryZipcode}" />
 
                                 <h:outputText value="#{bundle.ViewUserLabel_email}"/>
                                 <h:outputText value="#{userController.selected.email}" />
