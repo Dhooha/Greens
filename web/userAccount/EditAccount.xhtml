@@ -67,8 +67,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         ********************************
                         -->
                         <p:outputLabel value="#{bundle.EditUserLabel_deliveryAddress1}" for="address1" />
-                        <p:inputText id="address1" value="#{userController.selected.deliveryAddress1}" required="true" class="inputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_deliveryAddress1}" label="Address Line 1">
+                        <p:inputText id="address1" value="#{userController.selected.deliveryAddress1}" class="inputTextField"
+                                     label="Address Line 1">
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
@@ -87,8 +87,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         ********************************
                         -->
                         <p:outputLabel value="#{bundle.EditUserLabel_deliveryCity}" for="city" />
-                        <p:inputText id="city" value="#{userController.selected.deliveryCity}" required="true" class="inputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_deliveryCity}" label="City">
+                        <p:inputText id="city" value="#{userController.selected.deliveryCity}" class="inputTextField"
+                                     label="City">
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
@@ -98,7 +98,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         ********************************
                         -->
                         <p:outputLabel value="#{bundle.EditUserLabel_deliveryState}" for="state" />
-                        <h:selectOneMenu id="state" value="#{userController.selected.deliveryState}" required="true" >
+                        <h:selectOneMenu id="state" value="#{userController.selected.deliveryState}" >
                             <f:selectItems value="#{userController.listOfStates()}" var="state"
                                            itemLabel="#{state}" itemValue="#{state}" />
                         </h:selectOneMenu>
@@ -109,8 +109,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         ********************************
                         -->
                         <p:outputLabel value="#{bundle.EditUserLabel_deliveryZipcode}" for="zipcode" />
-                        <p:inputText id="zipcode" value="#{userController.selected.deliveryZipcode}" required="true" class="inputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_deliveryZipcode}" label="Zip Code" >
+                        <p:inputText id="zipcode" value="#{userController.selected.deliveryZipcode}" class="inputTextField"
+                                     label="Zip Code" >
                             <f:validateLength minimum="5" />
                             <f:validator validatorId="zipCodeValidator"/> 
                         </p:inputText>
