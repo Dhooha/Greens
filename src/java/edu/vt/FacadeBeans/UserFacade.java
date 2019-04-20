@@ -51,4 +51,17 @@ public class UserFacade extends AbstractFacade<User> {
         }
     }
     
+    /**
+     * Deletes the User entity whose primary key is id
+     * @param id is the Primary Key of the User entity in a table row in the database.
+     */
+    public void deleteUser(int id) {
+        
+        // The find method is inherited from the parent AbstractFacade class
+        User user = em.find(User.class, id);
+        
+        // The remove method is inherited from the parent AbstractFacade class
+        em.remove(user); 
+    }
+    
 }
