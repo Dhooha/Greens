@@ -88,8 +88,8 @@ public final class Constants {
         <> the app name starting with slash, e.g., /BevQ, if an external file is referenced or
         <> the URI of the Web Pages folder of the application if an internal file is referenced.
      */
-    public static final String PHOTOS_RELATIVE_PATH = "/SurveyUserPhotoStorage/";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "/SurveyUserPhotoStorage/defaultUserPhoto.png";
+    public static final String PHOTOS_RELATIVE_PATH = "/Greens/";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "/Greens/defaultUserPhoto.png";
 
     /* 
     ==================================================
