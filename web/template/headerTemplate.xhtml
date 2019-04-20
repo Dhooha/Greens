@@ -8,7 +8,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <!--
     *********************************************
@@ -112,13 +113,25 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 </h:link>
                                 
                                 <c:choose>
+                                    
                                     <c:when test="#{userController.isLoggedIn() == true}">
+                                        <!--
+                                        ===================
+                                           ** Profile **
+                                        ===================
+                                        -->
+                                        <h:link outcome="/userAccount/Profile" class="standardText">
+                                            <p:graphicImage cache="false" class="smallProfilePhoto"
+                                                            value="#{userController.userPhoto()}"/> &nbsp;&nbsp;My Account
+                                        </h:link>
                                         <!--
                                         ===================
                                            ** Sign Out **
                                         ===================
                                         -->
-                                        <i class="fas fa-sign-out-alt"></i>&nbsp; Sign Out
+                                        <h:link>
+                                            <i class="fas fa-sign-out-alt"></i>&nbsp; Sign Out
+                                        </h:link>
                                     </c:when>
                                     <c:otherwise>
                                         <!--
