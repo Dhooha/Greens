@@ -368,8 +368,8 @@ background-color: whitesmoke;
 
 .custromDataGridHeaderRight{
     width: 40%;
-    text-align: right;
-    white-space:normal;
+    white-space: normal;
+    display: block;
 }
 
 .custromDataGridHeader img{
