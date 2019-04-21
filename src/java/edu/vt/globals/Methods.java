@@ -96,11 +96,11 @@ public final class Methods {
         //String command = "curl -X GET -H X-Access-Token:__API_EXPLORER_AUTH_KEY__ https://eatstreet.com/publicapi/v1/restaurant/90fd4587554469b1884225aec137a02a83c1200448b8c26e/menu";
         // retrive the data from the API
         Process process = Runtime.getRuntime().exec(webServiceCurl);
-        int exitCode = process.exitValue();
-        if (exitCode != 0){
-            Methods.showMessage("Error", "Something went wrong, the system couldn't get the menu data from eatStreet API", "");
-            return null;
-        }
+//        int exitCode = process.exitValue();
+//        if (exitCode != 0){
+//            Methods.showMessage("Error", "Something went wrong, the system couldn't get the menu data from eatStreet API", "");
+//            return null;
+//        }
         
         // read the data into inputStream, then BufferedReader
         InputStream inputStream = process.getInputStream(); 
