@@ -17,8 +17,13 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
         <ui:define name="editableContent">
             <br/><br/>
-            <div style="width:90%">
+            <div style="width:90%; text-align: center;margin: 0 auto">
                 <h:form id="menuForm" >
+                    <!--
+                    ======================
+                    Sushi Classic Uramaki 
+                    ======================
+                    -->
                     <p:dataGrid value="#{menuController.sushiClassicUramakiItems}"
                                 var="menuItem"
                                 columns="3"
@@ -28,35 +33,35 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 styleClass="custromDataGridHeader"
                                 >
                         <f:facet name="header">
-                            <table>
+                            <table width="100%">
                                 <tr>
-                                    <td style="text-align:left;white-space: normal; width:60%">
-                                        <h2 style="color:#b30000">#{menuController.sushiClassicUramakiName}</h2>
-                            <h3 style="color:#330000">#{menuController.sushiClassicUramakiDescription}</h3>
+                                    <td class="custromDataGridHeaderLeft" >
+                                        <h2>#{menuController.sushiClassicUramakiName}</h2>
+                                        <h3>#{menuController.sushiClassicUramakiDescription}</h3>
                                     </td>
-                                    <td style="width: 40%;text-align: right">
-                                        <img src="#{resource['images:imageSliderPhotos/photo1.jpg']}" style="width:100px"> </img>
-                                         <img src="#{resource['images:imageSliderPhotos/photo2.jpg']}" style="width:100px"> </img>
-                                          <img src="#{resource['images:imageSliderPhotos/photo3.jpg']}" style="width:100px"> </img>
-                                           <img src="#{resource['images:imageSliderPhotos/photo4.jpg']}" style="width:100px"> </img>
+                                    <td class="customDataGridHeaderRight" align="right">
+                                        <img src="#{resource['images:menu/classicUramaki/photo1.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/classicUramaki/photo2.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/classicUramaki/photo3.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/classicUramaki/photo4.jpg']}" > </img>
                                     </td>
                                 </tr>
                             </table>
-                            
+
                         </f:facet>
                         <p:panel style="height: 120px">
                             <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
-                                <h3 style="color:#990000">#{menuItem.name}</h3>
+                                <h3>#{menuItem.name}</h3>
 
-                                <h:outputText style="color:#4d0000" value="#{menuItem.price}"></h:outputText> 
-                               
-                                <h:outputText style="color:#4d0000" value="#{menuItem.description}"></h:outputText>
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
 
-                                 
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+
 
 
                                 <p:commandLink>
-                                    <i class="fas fa-shopping-cart fa-2x" style="color:#4d0000" />
+                                    <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
                             </p:panelGrid>
@@ -64,6 +69,277 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         </p:panel>
 
                     </p:dataGrid>
+                    
+                    <br/><br/>
+                    <!--
+                    ========================
+                    Greens Speciality Rolls 
+                    ========================
+                    -->
+                    <p:dataGrid value="#{menuController.greensSpecialittyRollsItems}"
+                                var="menuItem"
+                                columns="3"
+                                rows="6"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridHeader"
+                                >
+                        <f:facet name="header">
+                            <table  width="100%">
+                                <tr>
+                                    <td class="custromDataGridHeaderLeft" >
+                                        <h2>#{menuController.greensSpecialityRollsName}</h2>
+                                        <h3>#{menuController.greensSpecialityRollsDescription}</h3>
+                                    </td>
+                                     <td class="customDataGridHeaderRight" align="right">
+                                        <img src="#{resource['images:menu/greensSpeciality/photo1.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/greensSpeciality/photo2.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/greensSpeciality/photo3.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/greensSpeciality/photo4.jpg']}" > </img>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </f:facet>
+                        <p:panel style="height: 120px">
+                            <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
+                                <h3>#{menuItem.name}</h3>
+
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+
+
+
+                                <p:commandLink>
+                                    <i class="fas fa-shopping-cart fa-2x"/>
+                                    <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                                </p:commandLink>
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+                    
+                    <br/><br/>
+                    <!--
+                    ================
+                    Grill Appetizer 
+                    ================
+                    -->
+                    <p:dataGrid value="#{menuController.grillAppetizerItems}"
+                                var="menuItem"
+                                columns="3"
+                                rows="6"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridHeader"
+                                >
+                        <f:facet name="header">
+                            <table width="100%">
+                                <tr>
+                                    <td class="custromDataGridHeaderLeft" >
+                                        <h2>#{menuController.grillAppetizerName}</h2>
+                                        <h3>#{menuController.grillAppetizerDescription}</h3>
+                                    </td>
+                                    <td></td>
+                                    <td class="customDataGridHeaderRight" align="right">
+                                        <img src="#{resource['images:menu/grillAppetizers/photo1.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/grillAppetizers/photo2.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/grillAppetizers/photo3.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/grillAppetizers/photo4.jpg']}" > </img>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </f:facet>
+                        <p:panel style="height: 120px">
+                            <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
+                                <h3>#{menuItem.name}</h3>
+
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+
+
+
+                                <p:commandLink>
+                                    <i class="fas fa-shopping-cart fa-2x"/>
+                                    <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                                </p:commandLink>
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+                    
+                    <br/><br/>
+                    
+                    
+                    <!--
+                    ================================
+                    Grill Gourmet Burger Sandwiches 
+                    ================================
+                    -->
+                    <p:dataGrid value="#{menuController.grillGourmetBurgersSandwichesItems}"
+                                var="menuItem"
+                                columns="3"
+                                rows="6"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridHeader"
+                                >
+                        <f:facet name="header">
+                            <table width="100%">
+                                <tr>
+                                    <td class="custromDataGridHeaderLeft" >
+                                        <h2>#{menuController.grillGourmetBurgersSandwichesName}</h2>
+                                        <h3>#{menuController.grillGourmetBurgersSandwichesDescription}</h3>
+                                    </td>
+                                    <td></td>
+                                    <td class="customDataGridHeaderRight" align="right">
+                                        <img src="#{resource['images:menu/gourmetBurgerSandwiches/photo1.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/gourmetBurgerSandwiches/photo2.png']}" > </img>
+                                        <img src="#{resource['images:menu/gourmetBurgerSandwiches/photo3.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/gourmetBurgerSandwiches/photo4.jpg']}" > </img>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </f:facet>
+                        <p:panel style="height: 120px">
+                            <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
+                                <h3>#{menuItem.name}</h3>
+
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+
+
+
+                                <p:commandLink>
+                                    <i class="fas fa-shopping-cart fa-2x"/>
+                                    <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                                </p:commandLink>
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+                    
+                    <br/><br/>
+                    
+                    
+                     <!--
+                    ==============
+                    Gourmet Tacos
+                    ==============
+                    -->
+                    <p:dataGrid value="#{menuController.grillGourmetTacosItems}"
+                                var="menuItem"
+                                columns="3"
+                                rows="6"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridHeader"
+                                >
+                        <f:facet name="header">
+                            <table width="100%">
+                                <tr>
+                                    <td class="custromDataGridHeaderLeft" >
+                                        <h2>#{menuController.grillGourmetTacosName}</h2>
+                                        <h3>#{menuController.grillGourmetTacosDescription}</h3>
+                                    </td>
+                                    <td></td>
+                                    <td class="customDataGridHeaderRight" align="right">
+                                        <img src="#{resource['images:menu/gourmetTacos/photo1.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/gourmetTacos/photo2.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/gourmetTacos/photo3.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/gourmetTacos/photo4.gif']}" > </img>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </f:facet>
+                        <p:panel style="height: 120px">
+                            <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
+                                <h3>#{menuItem.name}</h3>
+
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+
+
+
+                                <p:commandLink>
+                                    <i class="fas fa-shopping-cart fa-2x"/>
+                                    <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                                </p:commandLink>
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+                    
+                    <br/><br/>
+                    
+                     <!--
+                    =============================
+                    Grill Middle Eastern Cuisine 
+                    =============================
+                    -->
+                    <p:dataGrid value="#{menuController.grillMiddleEasternCuisineItems}"
+                                var="menuItem"
+                                columns="3"
+                                rows="6"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridHeader"
+                                >
+                        <f:facet name="header">
+                            <table width="100%">
+                                <tr>
+                                    <td class="custromDataGridHeaderLeft" >
+                                        <h2>#{menuController.grillMiddleEasternCuisineName}</h2>
+                                        <h3>#{menuController.grillMiddleEasternCuisineDescription}</h3>
+                                    </td>
+                                    <td></td>
+                                    <td class="customDataGridHeaderRight" align="right">
+                                        <img src="#{resource['images:menu/grillMidlleEastern/photo1.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/grillMidlleEastern/photo2.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/grillMidlleEastern/photo3.jpg']}" > </img>
+                                        <img src="#{resource['images:menu/grillMidlleEastern/photo4.jpg']}" > </img>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </f:facet>
+                        <p:panel style="height: 120px">
+                            <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
+                                <h3>#{menuItem.name}</h3>
+
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+
+
+
+                                <p:commandLink>
+                                    <i class="fas fa-shopping-cart fa-2x"/>
+                                    <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                                </p:commandLink>
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+                    
+                    <br/><br/>
                 </h:form>
             </div>
         </ui:define>
