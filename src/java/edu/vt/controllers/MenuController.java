@@ -272,7 +272,7 @@ public class MenuController implements Serializable  {
                     JSONObject menuItemObject = menuCategoryItems.getJSONObject(j);
                     String name = menuItemObject.optString("name", "");
                     String description = menuItemObject.optString("description", "");
-                    Double price = menuItemObject.optDouble("price", 7.99);
+                    Double price = menuItemObject.optDouble("basePrice", 7.99);
                     MenuItem menuItem = new MenuItem(name, description, price);
                     menuItems.add(menuItem);
                 }
@@ -293,7 +293,7 @@ public class MenuController implements Serializable  {
                         greensSpecialityRollsDescription = descriptionCategory;
                         greensSpecialittyRollsItems = menuItems;
                         break;
-                    case " Grill - Appetizers":
+                    case "Grill - Appetizers":
                         grillAppetizerName = nameCategory;
                         grillAppetizerDescription = descriptionCategory;
                         grillAppetizerItems = menuItems;
