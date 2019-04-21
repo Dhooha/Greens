@@ -31,13 +31,14 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                             <table>
                                 <tr>
                                     <td style="text-align:left;white-space: normal; width:60%">
-                                        <h:outputText value="#{menuController.sushiClassicUramakiName}" style="text-align:left"></h:outputText>
-                            <h3>#{menuController.sushiClassicUramakiDescription}</h3>
+                                        <h2 style="color:#b30000">#{menuController.sushiClassicUramakiName}</h2>
+                            <h3 style="color:#330000">#{menuController.sushiClassicUramakiDescription}</h3>
                                     </td>
                                     <td style="width: 40%;text-align: right">
                                         <img src="#{resource['images:imageSliderPhotos/photo1.jpg']}" style="width:100px"> </img>
                                          <img src="#{resource['images:imageSliderPhotos/photo2.jpg']}" style="width:100px"> </img>
                                           <img src="#{resource['images:imageSliderPhotos/photo3.jpg']}" style="width:100px"> </img>
+                                           <img src="#{resource['images:imageSliderPhotos/photo4.jpg']}" style="width:100px"> </img>
                                     </td>
                                 </tr>
                             </table>
@@ -45,17 +46,17 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         </f:facet>
                         <p:panel style="height: 120px">
                             <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
-                                <h:outputText  value="#{menuItem.name}"></h:outputText>
+                                <h3 style="color:#990000">#{menuItem.name}</h3>
 
-                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+                                <h:outputText style="color:#4d0000" value="#{menuItem.price}"></h:outputText> 
                                
-                                <h:outputText value="#{menuItem.description}"></h:outputText>
+                                <h:outputText style="color:#4d0000" value="#{menuItem.description}"></h:outputText>
 
                                  
 
 
                                 <p:commandLink>
-                                    <i class="fas fa-shopping-cart fa-2x"  />
+                                    <i class="fas fa-shopping-cart fa-2x" style="color:#4d0000" />
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
                             </p:panelGrid>
