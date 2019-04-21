@@ -17,20 +17,33 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
         <ui:define name="editableContent">
             <br/><br/>
-            <div style="width:90%;margin: 0 auto; text-align: center">
-                <h:form id="menuForm" style="align-items: center">
+            <div style="width:90%">
+                <h:form id="menuForm" >
                     <p:dataGrid value="#{menuController.sushiClassicUramakiItems}"
                                 var="menuItem"
                                 columns="3"
                                 rows="6"
                                 layout="grid"
                                 paginator="true"
-                                style="table-layout: fixed; word-wrap: break-word;">
+                                styleClass="custromDataGridHeader"
+                                >
                         <f:facet name="header">
-                            <h1>#{menuController.sushiClassicUramakiName}</h1>
+                            <table>
+                                <tr>
+                                    <td style="text-align:left;white-space: normal; width:60%">
+                                        <h:outputText value="#{menuController.sushiClassicUramakiName}" style="text-align:left"></h:outputText>
                             <h3>#{menuController.sushiClassicUramakiDescription}</h3>
+                                    </td>
+                                    <td style="width: 40%;text-align: right">
+                                        <img src="#{resource['images:imageSliderPhotos/photo1.jpg']}" style="width:100px"> </img>
+                                         <img src="#{resource['images:imageSliderPhotos/photo2.jpg']}" style="width:100px"> </img>
+                                          <img src="#{resource['images:imageSliderPhotos/photo3.jpg']}" style="width:100px"> </img>
+                                    </td>
+                                </tr>
+                            </table>
+                            
                         </f:facet>
-                        <p:panel style="height: 100px;position:relative;">
+                        <p:panel style="height: 120px">
                             <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
                                 <h:outputText  value="#{menuItem.name}"></h:outputText>
 
