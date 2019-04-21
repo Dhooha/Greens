@@ -9,43 +9,49 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    
+
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <h:outputText value="Menu"></h:outputText>
         </ui:define>
-        
+
         <ui:define name="editableContent">
-            <h:form id="menuForm">
-                <p:dataGrid value="#{menuController.sushiClassicUramakiItems}"
-                            var="menuItem"
-                            columns="3"
-                            rows="9"
-                            layout="grid"
-                            paginator="true"
-                            style="table-layout: fixed; word-wrap: break-word;">
-                    <f:facet name="header">
-                        <h1>"#{menuController.sushiClassicUramakiName}"</h1>
-                        <h3>"#{menuController.sushiClassicUramakiDescription}</h3>
-                    </f:facet>
-                    <p:panel style="height: 170px">
-                        <p:panelGrid >
-                            <h3 style="align-content: center">#{menuItem.name}</h3>
-                            <h3 style="font-style: normal"> #{menuItem.description} </h3>
-                        
-                            <h3>#{menuItem.price}</h3>
-                        
-                         
-                          <p:commandLink>
-                               <i class="fas fa-shopping-cart fa-2x"  />
-                              <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
-                          </p:commandLink>
-                        </p:panelGrid>
-                        
-                    </p:panel>
-                  
-                </p:dataGrid>
-            </h:form>
+            <br/><br/>
+            <div style="width:90%;margin: 0 auto; text-align: center">
+                <h:form id="menuForm" style="align-items: center">
+                    <p:dataGrid value="#{menuController.sushiClassicUramakiItems}"
+                                var="menuItem"
+                                columns="3"
+                                rows="6"
+                                layout="grid"
+                                paginator="true"
+                                style="table-layout: fixed; word-wrap: break-word;">
+                        <f:facet name="header">
+                            <h1>#{menuController.sushiClassicUramakiName}</h1>
+                            <h3>#{menuController.sushiClassicUramakiDescription}</h3>
+                        </f:facet>
+                        <p:panel style="height: 100px;position:relative;">
+                            <p:panelGrid columns="2" class="panelGridNoBorder" columnClasses="panelGridColumn1, panelGridColumn2" >
+                                <h:outputText  value="#{menuItem.name}"></h:outputText>
+
+                                <h:outputText value="#{menuItem.price}"></h:outputText> 
+                               
+                                <h:outputText value="#{menuItem.description}"></h:outputText>
+
+                                 
+
+
+                                <p:commandLink>
+                                    <i class="fas fa-shopping-cart fa-2x"  />
+                                    <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                                </p:commandLink>
+                            </p:panelGrid>
+
+                        </p:panel>
+
+                    </p:dataGrid>
+                </h:form>
+            </div>
         </ui:define>
     </ui:composition>
 </html>
