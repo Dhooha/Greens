@@ -358,6 +358,43 @@ background-color: whitesmoke;
     text-align: left;
     border: none;
 }
+
+.custromDataGridHeaderLeft{
+    text-align: left;
+    white-space: normal;
+    width: 60%;
+    
+} 
+
+.custromDataGridHeaderRight{
+    width: 40%;
+    text-align: right;
+    white-space:normal;
+}
+
+.custromDataGridHeader img{
+    width: 100px;
+}
+.custromDataGridHeaderLeft h2{
+    color: #b30000;
+}
+
+.custromDataGridHeaderLeft  h3{
+    color: #330000;
+}
+
+.custromDataGridHeader .panelGridColumn1 h3 {
+    color: #990000;
+}
+
+.custromDataGridHeader .ui-panelgrid-cell {
+    color: #4d0000;
+    
+}
+
+.custromDataGridHeader .ui-commandlink {
+    color: #4d0000;
+}
 /* Style heading text used in About and UserGuide */
 .heading {
     font-family: Arial, Helvetica, sans-serif;
