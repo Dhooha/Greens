@@ -305,16 +305,29 @@ Used in Profile
 
 /* Style p:panelGrid Column 1 */
 .panelGridColumn1 {
-    text-align: right;
+    text-align: center;
     background-color: bisque; 
-    white-space: nowrap;        /* Disallow line break */
+    width:80%;
+    white-space: normal;
+    /*white-space: nowrap;     */   /* Disallow line break */
 }
 
 /* Style p:panelGrid Column 2 */
 .panelGridColumn2 {
-    text-align: left;
+    text-align: center;
     background-color: blanchedalmond; 
-    white-space: nowrap;        /* Disallow line break */
+    width:20%;
+    white-space: normal;      /* Disallow line break */
+}
+
+.panelGridNoBorder.ui-panelgrid>*>tr,
+.panelGridNoBorder.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+    position: relative;
+    height: 35px;
+    width:100%;
+    vertical-align: middle;
+    align-content: center;
 }
 
 /* Style heading text used in About and UserGuide */
