@@ -305,6 +305,21 @@ Used in Profile
 
 /* Style p:panelGrid Column 1 */
 .panelGridColumn1 {
+    text-align: right;
+    background-color: bisque; 
+    white-space: nowrap;        /* Disallow line break */
+}
+
+/* Style p:panelGrid Column 2 */
+.panelGridColumn2 {
+    text-align: left;
+    background-color: blanchedalmond; 
+    white-space: nowrap;        /* Disallow line break */
+}
+
+
+/* Style p:panelGrid Column 1 */
+.panelGridColumnMenu1 {
     text-align: center;
     background-color: bisque; 
     width:80%;
@@ -313,7 +328,7 @@ Used in Profile
 }
 
 /* Style p:panelGrid Column 2 */
-.panelGridColumn2 {
+.panelGridColumnMenu2 {
     text-align: center;
     background-color: blanchedalmond; 
     width:20%;
