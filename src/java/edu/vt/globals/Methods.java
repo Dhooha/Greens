@@ -4,6 +4,11 @@
  */
 package edu.vt.globals;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -80,4 +85,36 @@ public final class Methods {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
     }
 
+    /**
+     * Return the content of a given Curl as String
+     * 
+     * @param webServiceCurL to retrieve the JSON data from
+     * @return JSON data from the given URL as String
+     * @ throw Exception
+     */
+    public static String readCurlContent(String webServiceCurl) throws Exception {
+        //String command = "curl -X GET -H X-Access-Token:__API_EXPLORER_AUTH_KEY__ https://eatstreet.com/publicapi/v1/restaurant/90fd4587554469b1884225aec137a02a83c1200448b8c26e/menu";
+        // retrive the data from the API
+        Process process = Runtime.getRuntime().exec(webServiceCurl);
+        int exitCode = process.exitValue();
+        if (exitCode != 0){
+            Methods.showMessage("Error", "Something went wrong, the system couldn't get the menu data from eatStreet API", "");
+            return null;
+        }
+        
+        // read the data into inputStream, then BufferedReader
+        InputStream inputStream = process.getInputStream(); 
+        BufferedReader  reader = null;
+        reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder buffer = new StringBuilder();
+        char[] chars = new char[10240];
+        int numberOfCharactersRead;
+        while((numberOfCharactersRead = reader.read(chars)) != -1){
+            buffer.append(chars, 0, numberOfCharactersRead);
+        }
+        process.destroy();
+        return buffer.toString();
+        
+       
+    }
 }
