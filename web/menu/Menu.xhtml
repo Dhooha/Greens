@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Dhoha Abid on 2019.04.20 
+Copyright © 2019 Dhoha Abid. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Menu"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="editableContent">
+            <h:form id="menuForm">
+                <p:dataGrid value="#{menuController.sushiClassicUramakiItems}"
+                            var="menuItem"
+                            columns="3"
+                            rows="9"
+                            layout="grid"
+                            paginator="true"
+                            style="table-layout: fixed; word-wrap: break-word;">
+                    <f:facet name="header">
+                        <h1>"#{menuController.sushiClassicUramakiName}"</h1>
+                        <h3>"#{menuController.sushiClassicUramakiDescription}</h3>
+                    </f:facet>
+                    <p:panel style="height: 170px">
+                        <p:panelGrid >
+                            <h3 style="align-content: center">#{menuItem.name}</h3>
+                            <h3 style="font-style: normal"> #{menuItem.description} </h3>
+                        
+                            <h3>#{menuItem.price}</h3>
+                        
+                         
+                          <p:commandLink>
+                               <i class="fas fa-shopping-cart fa-2x"  />
+                              <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
+                          </p:commandLink>
+                        </p:panelGrid>
+                        
+                    </p:panel>
+                  
+                </p:dataGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
