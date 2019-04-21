@@ -324,12 +324,40 @@ Used in Profile
 .panelGridNoBorder.ui-panelgrid .ui-panelgrid-cell {
     border: none;
     position: relative;
-    height: 35px;
+    height: 45px;
     width:100%;
     vertical-align: middle;
     align-content: center;
 }
 
+.ui-paginator {
+font-family: verdana;
+font-weight: bold;
+text-align: right !important;
+background-color: whitesmoke;
+}
+
+.ui-paginator span {
+text-align: left !important;
+}
+
+.ui-paginator-pages .ui-paginator-page{
+background: none;
+background-color:whitesmoke;
+}
+.ui-paginator-pages .ui-state-active{
+background-color: oldlace;
+}
+.ui-paginator-pages .ui-state-hover{
+background-color: whitesmoke;
+}
+
+.custromDataGridHeader .ui-datagrid-header {
+    background-color:whitesmoke;
+    background-image: none;
+    text-align: left;
+    border: none;
+}
 /* Style heading text used in About and UserGuide */
 .heading {
     font-family: Arial, Helvetica, sans-serif;
@@ -518,6 +546,7 @@ Therefore, remove the default ui-icon showing in the ui-confirm-dialog backgroun
 .ui-fileupload-cancel .ui-button-text {
     margin-left: -12px !important;
 }
+
 
 /*
 ---------------------------------------
