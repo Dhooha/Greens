@@ -339,7 +339,7 @@ Used in Profile
 .panelGridNoBorder.ui-panelgrid .ui-panelgrid-cell {
     border: none;
     position: relative;
-    height: 45px;
+    height: 55px;
     width:100%;
     vertical-align: middle;
     align-content: center;
