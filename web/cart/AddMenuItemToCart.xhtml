@@ -32,14 +32,25 @@
                                 </p:selectOneMenu>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                 <p:commandButton value="#{bundle.Add}"
+                                         icon="fas fa-plus"/> &nbsp;
+                        <p:commandButton value="#{bundle.Cancel}"
+                                         icon="fas fa-ban"
+                                         onclick="AddMenuItemToCartDialog.hide()"/>
+                            </td>
+                           
+                        </tr>
                     </table>
+
+                 
+                 
+                        
+
+                   
                 </p:panelGrid>
-                <br/><br/>
-                    <p:commandButton value="#{bundle.Add}"
-                                     icon="fas fa-plus"/> &nbsp;
-                    <p:commandButton value="#{bundle.Cancel}"
-                                     icon="fas fa-ban"
-                                     onclick="AddMenuItemToCartDialog.hide()"/>
+
 
 
             </h:form>
