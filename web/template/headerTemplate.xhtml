@@ -9,6 +9,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <!--
@@ -40,6 +41,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                  style="max-width:100%; height:auto; float:left; padding-left:10px; border:none;"
                                  alt="Grees Logo" />
                         </h:link>
+                        
+                        
                     </td>
                     <!--
                     *************************
@@ -61,8 +64,13 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     Column 3 (Right): Hamburger Menu Button
                     ***************************************
                     -->
-                    <td align="right" valign="middle" style="width:100px;">
-
+                    <td align="right" style="padding-right: 30px; width:100px" valign="top">
+                        <i for="language" class="fas fa-globe fa-2x" style="vertical-align: middle;color:green"></i> &nbsp;
+                        <p:selectOneMenu id="language" value="" style="width: 25px; vertical-align: middle" >
+                            <f:selectItem itemLabel="EN" itemValue="ENGLISH"/>
+                            <f:selectItem itemLabel="FR" itemValue="FRENCH"/>
+                        </p:selectOneMenu>
+                        <br/> <br/><br/>
                         <!--
                         tabindex="0" enables the menu element to be focusable and to trigger interaction. 
                         This HTML5 attribute makes the menu element act like a button.
@@ -72,7 +80,10 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         <h:link> renders into <a href> for which drop-down menu CSS style is defined.
                         Therefore, the drop-down menu works either with <a href> or <h:link>.
                         -->
-                        <div tabindex="0" class="menu" style="float:right;padding-right:20px;">
+                        <!--p:outputLabel value="Language"></p:outputLabel-->
+
+
+                        <div tabindex="0" class="menu" style="float:right;">
                             <div class="menu-dropdown" style="right:0;">
 
                                 <!-- 
@@ -83,7 +94,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 <h:link outcome="/index" class="standardText">
                                     <i class="fas fa-home"></i>&nbsp;Home
                                 </h:link>
-                                
+
                                 <!--
                                 =============
                                   ** Menu **
@@ -92,7 +103,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 <h:link outcome="/menu/Menu" class="standardText">
                                     <i class="fas fa-utensils"></i>&nbsp; Menu
                                 </h:link>
-                                
+
                                 <!--
                                 =============
                                   ** Cart ** 
@@ -101,7 +112,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 <h:link outcome="/index" class="standardText">
                                     <i class="fas fa-shopping-cart"></i>&nbsp; Cart
                                 </h:link> 
-                                
+
                                 <!--
                                 =============
                                   ** About **
@@ -109,61 +120,63 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 -->
                                 <h:link outcome="/index" class="standardText">
                                     <i class="fas fa-info-circle"></i>&nbsp; About
-                                    
+
                                 </h:link>
-                                
+
                                 <!--
                                 ===========================================
                                 |   Menu Options IF a User is Signed In   |
                                 ===========================================
                                 -->
-                                    
-                                    <c:if  test="#{userController.isLoggedIn() == true}">
-                                        <!--
-                                        ===================
-                                           ** Profile **
-                                        ===================
-                                        -->
-                                        <h:link outcome="/userAccount/Profile" class="standardText">
-                                            <p:graphicImage cache="false" class="smallProfilePhoto"
-                                                            value="#{userController.userPhoto()}"/> &nbsp;&nbsp;My Account
-                                        </h:link>
-                                        <!--
-                                        ===================
-                                           ** Sign Out **
-                                        ===================
-                                        -->
-                                         <h:commandLink action="#{userController.logout()}" class="standardText">
-                                        <i class="fas fa-sign-out-alt"/> &nbsp; Sign Out
-                                        </h:commandLink>
-                                    </c:if>
-                                
-                                     <!-- 
-                                    ============================================
-                                    |   Menu Options IF No User is Signed In   |
-                                    ============================================
-                                    -->
-                                     <c:if test="#{userController.isLoggedIn() == false}">
-                                        <!--
-                                        ================
-                                          ** Sign In **
-                                        ================
-                                        -->
-                                        <h:link outcome="/SignIn" class="standardText">
-                                            <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
 
-                                        </h:link>
-                                    </c:if>
-                            
-                                
+                                <c:if  test="#{userController.isLoggedIn() == true}">
+                                    <!--
+                                    ===================
+                                       ** Profile **
+                                    ===================
+                                    -->
+                                    <h:link outcome="/userAccount/Profile" class="standardText">
+                                        <p:graphicImage cache="false" class="smallProfilePhoto"
+                                                        value="#{userController.userPhoto()}"/> &nbsp;&nbsp;My Account
+                                    </h:link>
+                                    <!--
+                                    ===================
+                                       ** Sign Out **
+                                    ===================
+                                    -->
+                                    <h:commandLink action="#{userController.logout()}" class="standardText">
+                                        <i class="fas fa-sign-out-alt"/> &nbsp; Sign Out
+                                    </h:commandLink>
+                                </c:if>
+
+                                <!-- 
+                               ============================================
+                               |   Menu Options IF No User is Signed In   |
+                               ============================================
+                                -->
+                                <c:if test="#{userController.isLoggedIn() == false}">
+                                    <!--
+                                    ================
+                                      ** Sign In **
+                                    ================
+                                    -->
+                                    <h:link outcome="/SignIn" class="standardText">
+                                        <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
+
+                                    </h:link>
+                                </c:if>
+
+
                             </div>
                         </div>
+                        
                     </td>
                 </tr>
+                
             </table>
 
         </h:form>
-        
+
 
     </ui:composition>
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
