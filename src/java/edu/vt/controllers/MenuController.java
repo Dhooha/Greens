@@ -246,7 +246,11 @@ public class MenuController implements Serializable  {
         this.selectedMenuItem = selectedMenuItem;
     }
 
-    
+    /*
+    ================
+     ** Methods ** 
+    ================
+    */
     private void obtainMenuDataFromAPI(){
         Methods.preserveMessages();
 
