@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog position="center center" 
+                  id="AddMenuItemToCartDlg" 
+                  widgetVar="AddMenuItemToCartDialog" 
+                  modal="true" resizable="false" 
+                  appendTo="@(body)" 
+                  header="#{bundle.AddMenuItemToCart}">
+            <h:form id="AddMenuItemToCartForm">
+                <p:panelGrid rendered="#{not empty menuController.selectedMenuItem}">
+                    <table width="430px" cellpadding="10" cellspacing="0">
+                        <tr>
+                            <td width="80%" valign="top" align="left">
+                                <h3>#{menuController.selectedMenuItem.name}</h3>
+
+                                <h4>#{menuController.selectedMenuItem.description}</h4>
+                            </td>
+
+                            <td width="20%" valign="top" align="right">
+                                <h4>#{menuController.selectedMenuItem.price}</h4>
+                                <p:selectOneMenu style="width: 30px">
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </p:panelGrid>
+                <br/><br/>
+                    <!--p:commandButton actionListener="#{cartController.create}" value="#{bundle.Save}" update="display,:CartListForm:datalist,:growl" oncomplete="handleSubmit(args,'CartCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CartCreateDialog.hide()"/-->
+
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
