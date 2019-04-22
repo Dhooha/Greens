@@ -60,7 +60,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
 
 
-                                <p:commandLink>
+                                <p:commandLink update=":AddMenuItemToCartForm" oncomplete="PF('AddMenuItemToCartDialog').show()">
                                     <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
@@ -112,7 +112,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
 
 
-                                <p:commandLink>
+                                <p:commandLink update=":AddMenuItemToCartForm" oncomplete="PF('AddMenuItemToCartDialog').show()">
                                     <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
@@ -165,7 +165,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
 
 
-                                <p:commandLink>
+                                <p:commandLink  update=":AddMenuItemToCartForm" oncomplete="PF('AddMenuItemToCartDialog').show()">
                                     <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
@@ -220,7 +220,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
 
 
-                                <p:commandLink>
+                                <p:commandLink  update=":AddMenuItemToCartForm" oncomplete="PF('AddMenuItemToCartDialog').show()">
                                     <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
@@ -275,7 +275,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
 
 
-                                <p:commandLink>
+                                <p:commandLink  update=":AddMenuItemToCartForm" oncomplete="PF('AddMenuItemToCartDialog').show()">
                                     <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
@@ -329,7 +329,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
 
 
-                                <p:commandLink>
+                                <p:commandLink  update=":AddMenuItemToCartForm" oncomplete="PF('AddMenuItemToCartDialog').show()">
                                     <i class="fas fa-shopping-cart fa-2x"/>
                                     <f:setPropertyActionListener value="#{menuItem}" target="#{menuController.selectedMenuItem}"/>
                                 </p:commandLink>
@@ -342,6 +342,9 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     <br/><br/>
                 </h:form>
             </div>
+            
+            <ui:include src="/cart/AddMenuItemToCart.xhtml"/>
+            
         </ui:define>
     </ui:composition>
 </html>
