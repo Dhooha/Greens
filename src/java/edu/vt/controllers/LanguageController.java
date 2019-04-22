@@ -4,15 +4,14 @@
  */
 package edu.vt.controllers;
 
+import edu.vt.globals.Methods;
 import java.io.Serializable;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-/**
- *
- * @author se
- */
 
 @Named("languageController")
 @SessionScoped
@@ -37,7 +36,24 @@ public class LanguageController implements Serializable{
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+        this.language = language; 
+        if (language.equals("FRENCH")){
+            Locale frenchLocal = new Locale("fr", "FR");
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(frenchLocal);
+        }
+        else{
+            Locale englishLocal = new Locale("en", "US");;
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocal);
+        }
+    }
+    
+    /*
+    ====================
+      ** Constructor **
+    ====================
+    */
+    public LanguageController(){
+        
     }
     
     /*
@@ -46,6 +62,11 @@ public class LanguageController implements Serializable{
     ===================
     */
     public void changeLanguage(){
+        if (language.equals("FRENCH")){
+            Locale frenchLocal = new Locale("fr", "FR");
+            ResourceBundle bundle = ResourceBundle.getBundle("Bundle", frenchLocal);
+            System.out.print(bundle.getString("ViewUserLabel_firstName"));
+        }
         
     }
     
