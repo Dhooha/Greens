@@ -41,8 +41,8 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                  style="max-width:100%; height:auto; float:left; padding-left:10px; border:none;"
                                  alt="Grees Logo" />
                         </h:link>
-                        
-                        
+
+
                     </td>
                     <!--
                     *************************
@@ -68,7 +68,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         <i for="language" class="fas fa-globe fa-2x"
                            style="vertical-align: middle;color:green"></i> &nbsp;
                         <p:selectOneMenu id="language" value="#{languageController.language}"
-                                         valueChangeListener="#{languageController.changeLanguage()}"
+                                         valueChangeListener="#{languageController.changeLanguage}" 
                                          onchange="submit()"
                                          style="width: 25px; vertical-align: middle" >
                             <f:selectItem itemLabel="EN" itemValue="ENGLISH"/>
@@ -128,6 +128,15 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 </h:link>
 
                                 <!--
+                                
+                                -->
+                                <h:link outcome="/index" class="standardText">
+                                    <i class="far fa-newspaper"></i>&nbsp; Reviews
+
+                                </h:link>
+
+                                <!--
+                                
                                 ===========================================
                                 |   Menu Options IF a User is Signed In   |
                                 ===========================================
@@ -173,10 +182,10 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
                             </div>
                         </div>
-                        
+
                     </td>
                 </tr>
-                
+
             </table>
 
         </h:form>
