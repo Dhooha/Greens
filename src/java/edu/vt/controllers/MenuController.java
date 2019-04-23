@@ -8,6 +8,7 @@ import edu.vt.globals.Methods;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import edu.vt.pojo.MenuItem;
+import edu.vt.pojo.SpecialInstruction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,37 +28,37 @@ public class MenuController implements Serializable  {
     Instance Variables (Properties)
     ===============================
     */
-    String sushiClassicUramakiName;
-    String sushiClassicUramakiDescription;
-    List<MenuItem> sushiClassicUramakiItems = null;
+    private String sushiClassicUramakiName;
+    private String sushiClassicUramakiDescription;
+    private List<MenuItem> sushiClassicUramakiItems = null;
 
-    String sushiNigiriName;
-    String sushiNigiriDescription;
-    List<MenuItem> sushiNigiriItems = null;
+    private String sushiNigiriName;
+    private String sushiNigiriDescription;
+    private List<MenuItem> sushiNigiriItems = null;
     
-    String greensSpecialityRollsName ;
-    String greensSpecialityRollsDescription;
-    List <MenuItem> greensSpecialittyRollsItems = null;
+    private String greensSpecialityRollsName ;
+    private String greensSpecialityRollsDescription;
+    private List <MenuItem> greensSpecialittyRollsItems = null;
 
-    String grillAppetizerName;
-    String grillAppetizerDescription;
-    List<MenuItem> grillAppetizerItems = null;
+    private String grillAppetizerName;
+    private String grillAppetizerDescription;
+    private List<MenuItem> grillAppetizerItems = null;
 
-    String grillGourmetBurgersSandwichesName;
-    String grillGourmetBurgersSandwichesDescription;
-    List<MenuItem> grillGourmetBurgersSandwichesItems = null;
+    private String grillGourmetBurgersSandwichesName;
+    private String grillGourmetBurgersSandwichesDescription;
+    private List<MenuItem> grillGourmetBurgersSandwichesItems = null;
 
-    String grillGourmetTacosName;
-    String grillGourmetTacosDescription;
-    List<MenuItem> grillGourmetTacosItems = null;
+    private String grillGourmetTacosName;
+    private String grillGourmetTacosDescription;
+    private List<MenuItem> grillGourmetTacosItems = null;
                       
-    String grillMiddleEasternCuisineName;
-    String grillMiddleEasternCuisineDescription;
-    List<MenuItem> grillMiddleEasternCuisineItems = null;
+    private String grillMiddleEasternCuisineName;
+    private String grillMiddleEasternCuisineDescription;
+    private List<MenuItem> grillMiddleEasternCuisineItems = null;
 
    
     
-    MenuItem selectedMenuItem;
+    private MenuItem selectedMenuItem;
     
     @PostConstruct
     public void init() {
@@ -255,7 +256,7 @@ public class MenuController implements Serializable  {
         Methods.preserveMessages();
 
         try {
-            String menuJsonData = Methods.readCurlContent("curl -X GET -H X-Access-Token:__API_EXPLORER_AUTH_KEY__ https://eatstreet.com/publicapi/v1/restaurant/90fd4587554469b1884225aec137a02a83c1200448b8c26e/menu");
+            String menuJsonData = Methods.readCurlContent("curl -X GET -H X-Access-Token:__API_EXPLORER_AUTH_KEY__ https://eatstreet.com/publicapi/v1/restaurant/90fd4587554469b1884225aec137a02a83c1200448b8c26e/menu?includeCustomizations=true");
             
             // if the retrieved data is null, throw an exception.
             if (menuJsonData == null){
@@ -265,19 +266,52 @@ public class MenuController implements Serializable  {
             
             // else gets the hits from the json data 
             JSONArray menuJsonArray = new JSONArray(menuJsonData);
+            // loop over the different menu categories
             for (int i=0; i<menuJsonArray.length(); i++){
                 JSONObject MenuCategoryObject = menuJsonArray.getJSONObject(i);
                 String nameCategory = MenuCategoryObject.optString("name", "");
                 String descriptionCategory = MenuCategoryObject.optString("description", "");
                 JSONArray menuCategoryItems = MenuCategoryObject.optJSONArray("items");
                 
+                // loop over the menu items in that category
                 List<MenuItem> menuItems = new ArrayList<>();
                 for (int j=0; j<menuCategoryItems.length(); j++){
                     JSONObject menuItemObject = menuCategoryItems.getJSONObject(j);
                     String name = menuItemObject.optString("name", "");
                     String description = menuItemObject.optString("description", "");
                     Double price = menuItemObject.optDouble("basePrice", 7.99);
-                    MenuItem menuItem = new MenuItem(name, description, price);
+                    
+                    // loop over the special instruction
+                    // loop over customizationGroups
+                    List<SpecialInstruction> specialInstructionItems = new ArrayList<>();
+                    
+                    JSONArray customizationGroupsItems = menuItemObject.optJSONArray("customizationGroups");
+                    for (int k=0; k<customizationGroupsItems.length(); k++){
+                        JSONObject customizationGroup = customizationGroupsItems.getJSONObject(k);
+                        
+                        // consider only first item of customization
+                        JSONArray customizationsItems = customizationGroup.optJSONArray("customizations");
+                        JSONObject firstCustomization =  customizationsItems.getJSONObject(0);
+                        String type = firstCustomization.optString("type", "");
+                            if (type.equals("DROPDOWN")){
+                                String instruction = firstCustomization.optString("name", "");
+                                if (!instruction.equals("")){
+                                    JSONArray customizationChoicesItems = firstCustomization.optJSONArray("customizationChoices");
+                                    for (int v=0; v<customizationChoicesItems.length(); v++){
+                                        JSONObject customizationChoicesObject = customizationChoicesItems.getJSONObject(v);
+                                        double instruction_price = customizationChoicesObject.optDouble("price", 0.0);
+                                        if (instruction_price > 0){
+                                            specialInstructionItems.add(new SpecialInstruction(instruction, instruction_price));
+                                        }
+                                    }
+                                }
+                                
+                            }
+                    }
+                    
+                    
+                    
+                    MenuItem menuItem = new MenuItem(name, description, price, specialInstructionItems);
                     menuItems.add(menuItem);
                 }
                 
@@ -317,7 +351,7 @@ public class MenuController implements Serializable  {
                         grillMiddleEasternCuisineDescription = descriptionCategory;
                         grillMiddleEasternCuisineItems = menuItems;
                         break;
-                }
+                }   
                         
             }
         } catch (Exception ex) {
