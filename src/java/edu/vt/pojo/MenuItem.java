@@ -4,10 +4,8 @@
  */
 package edu.vt.pojo;
 
-/**
- *
- * @author se
- */
+import java.util.List;
+
 
 public class MenuItem {
     /*
@@ -18,16 +16,18 @@ public class MenuItem {
     String name;
     String description;
     Double price;
+    List<SpecialInstruction> specialInstructionItems;
 
     /*
     ===================
     Constructor Method
     ===================
     */
-    public MenuItem(String name, String description, Double price){
+    public MenuItem(String name, String description, Double price, List<SpecialInstruction> specialInstructionItems){
         this.name = name;
         this.description = description;
         this.price = price;
+        this.specialInstructionItems = specialInstructionItems;
     }
     
     /*
@@ -59,4 +59,14 @@ public class MenuItem {
     public void setPrice(Double price) {
         this.price = price;
     }
+    
+    public List<SpecialInstruction> getSpecialInstructionItems() {
+        return specialInstructionItems;
+    }
+
+    public void setSpecialInstructionItems(List<SpecialInstruction> specialInstructionItems) {
+        this.specialInstructionItems = specialInstructionItems;
+    }
+
+    
 }
