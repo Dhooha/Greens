@@ -16,15 +16,15 @@
                   header="#{bundle.AddMenuItemToCart}">
             <h:form id="AddMenuItemToCartForm">
                 <p:panelGrid rendered="#{not empty menuController.selectedMenuItem}">
-                    <table width="430px" cellpadding="10" cellspacing="0">
+                    <table width="450px" cellpadding="10" cellspacing="0">
                         <tr>
-                            <td width="80%" valign="top" align="left">
+                            <td width="90%" valign="top" align="left">
                                 <h3>#{menuController.selectedMenuItem.name}</h3>
 
                                 <h4>#{menuController.selectedMenuItem.description}</h4>
                             </td>
 
-                            <td width="20%" valign="top" align="right">
+                            <td width="10%" valign="top" align="right">
                                 <h4>#{menuController.selectedMenuItem.price}</h4>
                                 <p:selectOneMenu style="width: 30px">
                                     <f:selectItem itemLabel="1" itemValue="1"/>
@@ -32,23 +32,32 @@
                                 </p:selectOneMenu>
                             </td>
                         </tr>
+                        <td>
+                            <p:selectManyCheckbox id="grid" value="#{cartController.selectedSpcialInstruction}" layout="grid" columns="1">
+                                <f:selectItems value="#{menuController.selectedMenuItem.specialInstructionItems}" 
+                                               var="specialInstruction" 
+                                               itemLabel="#{specialInstruction.instruction} for #{specialInstruction.price}" 
+                                               itemValue="#{specialInstruction.price}" />
+                            </p:selectManyCheckbox>
+                        </td>
                         <tr>
                             <td colspan="2" align="center">
-                                 <p:commandButton value="#{bundle.Add}"
-                                         icon="fas fa-plus"/> &nbsp;
-                        <p:commandButton value="#{bundle.Cancel}"
-                                         icon="fas fa-ban"
-                                         onclick="AddMenuItemToCartDialog.hide()"/>
+                                <p:commandButton value="#{bundle.Add}"
+                                                 icon="fas fa-plus"
+                                                 actionListener="#{cartController.addMenuItemToCart()}"/> &nbsp;
+                                <p:commandButton value="#{bundle.Cancel}"
+                                                 icon="fas fa-ban"
+                                                 onclick="AddMenuItemToCartDialog.hide()"/>
                             </td>
-                           
+
                         </tr>
                     </table>
 
-                 
-                 
-                        
 
-                   
+
+
+
+
                 </p:panelGrid>
 
 
