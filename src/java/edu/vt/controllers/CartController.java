@@ -5,9 +5,10 @@ import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.CartFacade;
 import edu.vt.pojo.MenuItem;
-import edu.vt.pojo.SpecialInstruction;
+import edu.vt.pojo.CartItem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,9 +38,10 @@ public class CartController implements Serializable {
     Attribute Variables (Properties)
     ================================
     */
-    private List<MenuItem> cartItems = null;
-    private List<SpecialInstruction> selectedSpcialInstruction;
-    private MenuItem selectedMenuItem;
+    private List<CartItem> cartItems = null;
+    private List<String> cartSelectedSpecialInstructionItems;
+    private MenuItem cartSelectedMenuItem;
+    private int cartSelectedMenuItemQty;
     
     // to delete
     private List<Cart> items = null;
@@ -51,20 +53,20 @@ public class CartController implements Serializable {
     Getter and Settter Methods
     ===============================
     */
-     public List<MenuItem> getCartItems() {
+     public List<CartItem> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(List<MenuItem> cartItems) {
+    public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
 
-    public List<SpecialInstruction> getSelectedSpcialInstruction() {
-        return selectedSpcialInstruction;
+    public List<String> getCartSelectedSpecialInstructionItems() {
+        return cartSelectedSpecialInstructionItems;
     }
 
-    public void setSelectedSpcialInstruction(List<SpecialInstruction> selectedSpcialInstruction) {
-        this.selectedSpcialInstruction = selectedSpcialInstruction;
+    public void setCartSelectedSpecialInstructionItems(List<String> cartSelectedSpecialInstructionItems) {
+        this.cartSelectedSpecialInstructionItems = cartSelectedSpecialInstructionItems;
     }
 
     public CartFacade getEjbFacade() {
@@ -75,13 +77,23 @@ public class CartController implements Serializable {
         this.ejbFacade = ejbFacade;
     }
 
-    public MenuItem getSelectedMenuItem() {
-        return selectedMenuItem;
+    public MenuItem getCartSelectedMenuItem() {
+        return cartSelectedMenuItem;
     }
 
-    public void setSelectedMenuItem(MenuItem selectedMenuItem) {
-        this.selectedMenuItem = selectedMenuItem;
+    public void setCartSelectedMenuItem(MenuItem cartSelectedMenuItem) {
+        this.cartSelectedMenuItem = cartSelectedMenuItem;
     }
+    
+    public int getCartSelectedMenuItemQty() {
+        return cartSelectedMenuItemQty;
+    }
+
+    public void setCartSelectedMenuItemQty(int cartSelectedMenuItemQty) {
+        this.cartSelectedMenuItemQty = cartSelectedMenuItemQty;
+    }
+    
+    
 
     public CartController() {
     }
@@ -231,13 +243,29 @@ public class CartController implements Serializable {
     Methods Added by the team members
     ==================================
     */
-    public void addMenuItemToCart(){
-        selectedMenuItem = menuController.selectedMenuItem;
-//        if (selectedSpcialInstruction !=null && selectedMenuItem !=null){
-        selectedMenuItem.setSpecialInstructionItems(selectedSpcialInstruction);
-        cartItems.add(selectedMenuItem);
-//        }
+    
+    public void addMenuItemToCart(){ // By Dhoha
+
+        MenuItem menuSelectedMenuItem = menuController.getSelectedMenuItem();
+        if (menuSelectedMenuItem != null){
+            cartSelectedMenuItem = new MenuItem(
+                menuSelectedMenuItem.getName()
+                , menuSelectedMenuItem.getDescription()
+                , menuSelectedMenuItem.getPrice()
+                , cartSelectedSpecialInstructionItems);
+        }
+            if (cartItems == null){
+                cartItems = new ArrayList<>(); // maybe we need to change it to be retrive from database
+            }
+            cartItems.add(new CartItem(cartSelectedMenuItem, cartSelectedMenuItemQty));
+            clear();
+        }  
+    
+    public void clear(){ // By Dhoha
+        cartSelectedSpecialInstructionItems = null;
+        cartSelectedMenuItemQty = 1;
     }
+    
     //Above this is automatically generated Code **********************************************************************************
     
     //NOTE: only call if creating a user!
