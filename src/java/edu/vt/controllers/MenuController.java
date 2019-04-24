@@ -300,7 +300,7 @@ public class MenuController implements Serializable  {
                                         JSONObject customizationChoicesObject = customizationChoicesItems.getJSONObject(v);
                                         double instructionPrice = customizationChoicesObject.optDouble("price", 0.0);
                                         if (instructionPrice > 0){
-                                            specialInstructionItems.add(instruction + ", for " + String.valueOf(instructionPrice));
+                                            specialInstructionItems.add(instruction + ", for $" + String.valueOf(instructionPrice));
                                         }
                                     }
                                 }
