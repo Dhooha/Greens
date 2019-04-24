@@ -245,7 +245,7 @@ public class CartController implements Serializable {
     */
     
     public void addMenuItemToCart(){ // By Dhoha
-
+        // Do Anyway either the user is logged in or not
         MenuItem menuSelectedMenuItem = menuController.getSelectedMenuItem();
         if (menuSelectedMenuItem != null){
             cartSelectedMenuItem = new MenuItem(
@@ -259,13 +259,56 @@ public class CartController implements Serializable {
             }
             cartItems.add(new CartItem(cartSelectedMenuItem, cartSelectedMenuItemQty));
             clear();
-        }  
+            
+        // If the user is loggedIn save the added items to the database
+        
+    }  
     
     public void clear(){ // By Dhoha
         cartSelectedSpecialInstructionItems = null;
         cartSelectedMenuItemQty = 1;
     }
     
+    public double calculateTotalBeforeTax(){
+        if ((cartItems == null) || (cartItems.isEmpty())){
+            return 0.0;
+        }else{
+            try{
+                double total = 0.0;
+                for (CartItem cartItem: cartItems){
+                    int qty = cartItem.getQty();
+                    double price = cartItem.getMenuItem().getPrice();
+                    // get the special instruction if any
+                    List<String> specialInstructionItems = cartItem.getMenuItem().getSpecialInstructionItems();
+                    double totalSpecialInsructionItems = 0.0;
+                    if ((specialInstructionItems != null) && (specialInstructionItems.isEmpty() == false)){                    
+                        for (String specialInstructionItem: specialInstructionItems){
+//                            String[] arr = specialInstructionItem.split("\\$");
+//                            String p = arr[1];
+//                            double specialInstructionItemPrice = Double.valueOf(p);
+                            double specialInstructionItemPrice = Double.valueOf(specialInstructionItem.split("\\$")[1]);
+                            totalSpecialInsructionItems += specialInstructionItemPrice;
+                        }
+                    }
+                total += (qty * price) + totalSpecialInsructionItems;
+                }
+                return total;
+            }
+            catch(Exception ex){
+                System.out.println(ex.toString());
+                return 0.0;
+            }
+           
+        }
+    }
+    
+    public boolean isCartEmpty(){
+        if ((cartItems == null) || (cartItems.isEmpty() == true)){
+            return true;
+        } 
+        return false;
+    }
+
     //Above this is automatically generated Code **********************************************************************************
     
     //NOTE: only call if creating a user!
