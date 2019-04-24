@@ -22,29 +22,33 @@ public class LanguageController implements Serializable{
     Instance Variables (Properties)
     ===============================
     */
-    String language = "EN";
-    
+    private String language;
+    private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
     
     /*
     ==========================
     Getter and Setters Methods
     ==========================
     */
-
+    public Locale getLocale() {
+        return locale;
+    }
+    
     public String getLanguage() {
-        return language;
+        return locale.getLanguage();
     }
 
     public void setLanguage(String language) {
-        this.language = language; 
-        if (language.equals("FRENCH")){
-            Locale frenchLocal = new Locale("fr", "FR");
-            FacesContext.getCurrentInstance().getViewRoot().setLocale(frenchLocal);
+        if (language.equals("FR")){
+            locale = new Locale("fr", "FR");
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
         }
-        else{
-            Locale englishLocal = new Locale("en", "US");;
-            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocal);
+        else if (language.equals("EN")){
+            locale = new Locale("en", "US");;
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
         }
+        
+        
     }
     
     /*
@@ -53,7 +57,6 @@ public class LanguageController implements Serializable{
     ====================
     */
     public LanguageController(){
-        
     }
     
     /*
@@ -61,13 +64,21 @@ public class LanguageController implements Serializable{
        ** Methods **
     ===================
     */
-    public void changeLanguage(){
-        if (language.equals("FRENCH")){
-            Locale frenchLocal = new Locale("fr", "FR");
-            ResourceBundle bundle = ResourceBundle.getBundle("Bundle", frenchLocal);
-            System.out.print(bundle.getString("ViewUserLabel_firstName"));
-        }
-        
-    }
+//    public void changeLanguage(){
+//         if (language.equals("FR")){
+//            Locale frenchLocal = new Locale("fr", "FR");
+//            FacesContext.getCurrentInstance().getViewRoot().setLocale(frenchLocal);
+//        }
+//        else{
+//            Locale englishLocal = new Locale("en", "US");;
+//            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocal);
+//        }
+////        if (language.equals("FRENCH")){
+////            Locale frenchLocal = new Locale("fr", "FR");
+////            ResourceBundle bundle = ResourceBundle.getBundle("Bundle", frenchLocal);
+////            System.out.print(bundle.getString("ViewUserLabel_firstName"));
+////        }
+//        
+//    }
     
 }
