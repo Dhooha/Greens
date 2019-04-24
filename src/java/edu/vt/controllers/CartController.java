@@ -108,6 +108,12 @@ public class CartController implements Serializable {
     
     
 
+    /*
+    =====================
+    Constructor Method
+    =====================
+    */
+    
     public CartController() {
     }
 
@@ -253,12 +259,17 @@ public class CartController implements Serializable {
     
     /*
     ==================================
-    Methods Added by the team members
+    Methods Added by the Team Members
     ==================================
     */
     
+    /*
+    -------------------------------------------------
+    This method adds a selected MenuItem to the Cart
+    -------------------------------------------------
+    */
     public void addMenuItemToCart(){ // By Dhoha
-        // Do Anyway either the user is logged in or not
+        //either the user is logged in or not
         MenuItem menuSelectedMenuItem = menuController.getSelectedMenuItem();
         if (menuSelectedMenuItem != null){
             cartSelectedMenuItem = new MenuItem(
@@ -273,16 +284,30 @@ public class CartController implements Serializable {
             cartItems.add(new CartItem(cartSelectedMenuItem, cartSelectedMenuItemQty));
             clear();
             
-        // If the user is loggedIn save the added items to the database
+        // Only if the user loggedIn save the added items to the database
+        // Maybe Melanie code goes here
         
     }  
     
+    /*
+    -------------------------------------------------------------
+    Clear the selected MenuItem quantity and special instruction, 
+    so they don't show up for the next selections of MenuItems
+    -------------------------------------------------------------
+    */
     public void clear(){ // By Dhoha
         cartSelectedSpecialInstructionItems = null;
         cartSelectedMenuItemQty = 1;
     }
     
-    public String calculateTotalBeforeTax(){
+    /*
+    -----------------------------------
+    Calculate Total Price before Taxes
+    This method consider the prices of 
+    the added special instructions
+    -----------------------------------
+    */
+    public String calculateTotalBeforeTaxes(){
         // Format to show only 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
         
@@ -292,9 +317,11 @@ public class CartController implements Serializable {
             try{
                 double total = 0.0;
                 for (CartItem cartItem: cartItems){
+                    // get the qty and price of the cartItem
                     int qty = cartItem.getQty();
                     double price = cartItem.getMenuItem().getPrice();
-                    // get the special instruction if any
+                    
+                    // get the special instruction if there are any
                     List<String> specialInstructionItems = cartItem.getMenuItem().getSpecialInstructionItems();
                     double totalSpecialInsructionItems = 0.0;
                     if ((specialInstructionItems != null) && (specialInstructionItems.isEmpty() == false)){                    
@@ -303,6 +330,7 @@ public class CartController implements Serializable {
                             totalSpecialInsructionItems += specialInstructionItemPrice;
                         }
                     }
+                // add to the total for every cartItem
                 total += (qty * price) + totalSpecialInsructionItems;
                 }
                 return  df.format(total);
@@ -315,18 +343,34 @@ public class CartController implements Serializable {
         }
     }
     
+    /*
+    -------------------------------------
+    Calculate Taxes: 11% according to VA
+    -------------------------------------
+    */
     public String calculateTax(){
         // Format to show only 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
-        return df.format(Double.valueOf(calculateTotalBeforeTax()) * 0.11);
+        return df.format(Double.valueOf(calculateTotalBeforeTaxes()) * 0.11);
     }
     
+    /*
+    ----------------------
+    Calculate Total after
+    ----------------------
+    */
     public String calculateTotalAfterTax(){
         // Format to show only 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
-        return df.format(Double.valueOf(calculateTax()) + Double.valueOf(calculateTotalBeforeTax()));
+        return df.format(Double.valueOf(calculateTax()) + Double.valueOf(calculateTotalBeforeTaxes()));
 
     }
+    
+    /*
+    -----------------------------------
+    Check if the cart is empty or null
+    -----------------------------------
+    */
     public boolean isCartEmpty(){
         if ((cartItems == null) || (cartItems.isEmpty() == true)){
             return true;
