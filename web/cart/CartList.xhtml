@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCartTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="editableContent">
+            <br/><br/>
+            <div style="width:90%; text-align: center;margin: 0 auto">
+                <h:form id="CartListForm">
+                    <p:dataGrid value="#{cartController.cartItems}"
+                                var="cartItem"
+                                columns="1"
+                                rows="10"
+                                layout="grid"
+                                paginator="true"
+                                >
+                        <p:panel >
+                            <p:panelGrid columns="3" class="" columnClasses="panelGridColumnMenu1, panelGridColumnMenu2, panelGridColumnMenu2">
+                                <h:outputText value="#{cartItem.menuItem.name}"></h:outputText>
+                                <h:outputText value="Qty"></h:outputText>
+                                <h:outputText value="Price"></h:outputText>
+
+                                <h:outputText value="#{cartItem.menuItem.description}"></h:outputText>
+                                <h:outputText value="#{cartItem.qty}"></h:outputText>
+                                <h:outputText value="#{cartItem.menuItem.price}"></h:outputText>
+
+                              
+
+<!--p:dataList value="#{cartItem.menuItem.specialInstructionItems}"
+            var="specialInstruction" type="definition">
+                                #{specialInstruction}
+                            </p:dataList-->
+
+                                <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
+                                    <h:outputText value="#{specialInstruction}"></h:outputText>
+                                    <br/>
+                                    
+                                </p:repeat>
+                                    
+                                <h:outputText value=""></h:outputText>
+                                <h:outputText value=""></h:outputText>
+
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </h:form>
+            </div>
+
+
+            <!--ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/-->
+        </ui:define>
+    </ui:composition>
+
+</html>
