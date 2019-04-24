@@ -8,11 +8,13 @@ import edu.vt.pojo.MenuItem;
 import edu.vt.pojo.CartItem;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -42,6 +44,7 @@ public class CartController implements Serializable {
     private List<String> cartSelectedSpecialInstructionItems;
     private MenuItem cartSelectedMenuItem;
     private int cartSelectedMenuItemQty;
+  
     
     // to delete
     private List<Cart> items = null;
@@ -92,6 +95,16 @@ public class CartController implements Serializable {
     public void setCartSelectedMenuItemQty(int cartSelectedMenuItemQty) {
         this.cartSelectedMenuItemQty = cartSelectedMenuItemQty;
     }
+    
+     public MenuController getMenuController() {
+        return menuController;
+    }
+
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
+    }
+
+    
     
     
 
@@ -269,9 +282,12 @@ public class CartController implements Serializable {
         cartSelectedMenuItemQty = 1;
     }
     
-    public double calculateTotalBeforeTax(){
+    public String calculateTotalBeforeTax(){
+        // Format to show only 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+        
         if ((cartItems == null) || (cartItems.isEmpty())){
-            return 0.0;
+            return "0.00";
         }else{
             try{
                 double total = 0.0;
@@ -283,25 +299,34 @@ public class CartController implements Serializable {
                     double totalSpecialInsructionItems = 0.0;
                     if ((specialInstructionItems != null) && (specialInstructionItems.isEmpty() == false)){                    
                         for (String specialInstructionItem: specialInstructionItems){
-//                            String[] arr = specialInstructionItem.split("\\$");
-//                            String p = arr[1];
-//                            double specialInstructionItemPrice = Double.valueOf(p);
                             double specialInstructionItemPrice = Double.valueOf(specialInstructionItem.split("\\$")[1]);
                             totalSpecialInsructionItems += specialInstructionItemPrice;
                         }
                     }
                 total += (qty * price) + totalSpecialInsructionItems;
                 }
-                return total;
+                return  df.format(total);
             }
             catch(Exception ex){
                 System.out.println(ex.toString());
-                return 0.0;
+                return "0.00";
             }
            
         }
     }
     
+    public String calculateTax(){
+        // Format to show only 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(Double.valueOf(calculateTotalBeforeTax()) * 0.11);
+    }
+    
+    public String calculateTotalAfterTax(){
+        // Format to show only 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(Double.valueOf(calculateTax()) + Double.valueOf(calculateTotalBeforeTax()));
+
+    }
     public boolean isCartEmpty(){
         if ((cartItems == null) || (cartItems.isEmpty() == true)){
             return true;
