@@ -4,10 +4,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template/siteTemplate.xhtml">
-
 
         <ui:define name="title">
             <h:outputText value="#{bundle.ListCartTitle}"></h:outputText>
@@ -15,7 +15,7 @@
 
         <ui:define name="editableContent">
             <br/><br/>
-            <div style="width:90%; text-align: center;margin: 0 auto">
+            <div style="width:85%; text-align: center;margin: 0 auto">
                 <h:form id="CartListForm">
                     <p:dataGrid value="#{cartController.cartItems}"
                                 var="cartItem"
@@ -25,33 +25,48 @@
                                 paginator="true"
                                 >
                         <p:panel >
-                            <p:panelGrid columns="3" class="" columnClasses="panelGridColumnMenu1, panelGridColumnMenu2, panelGridColumnMenu2">
-                                <h:outputText value="#{cartItem.menuItem.name}"></h:outputText>
-                                <h:outputText value="Qty"></h:outputText>
-                                <h:outputText value="Price"></h:outputText>
+                            <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"/>
+                                
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Qty"/>
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Price"/>
 
-                                <h:outputText value="#{cartItem.menuItem.description}"></h:outputText>
-                                <h:outputText value="#{cartItem.qty}"></h:outputText>
-                                <h:outputText value="#{cartItem.menuItem.price}"></h:outputText>
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.qty}"/>
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.menuItem.price}"/>
 
-                              
 
-<!--p:dataList value="#{cartItem.menuItem.specialInstructionItems}"
-            var="specialInstruction" type="definition">
-                                #{specialInstruction}
-                            </p:dataList-->
 
                                 <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
-                                    <h:outputText value="#{specialInstruction}"></h:outputText>
+                                    <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
                                     <br/>
-                                    
-                                </p:repeat>
-                                    
-                                <h:outputText value=""></h:outputText>
-                                <h:outputText value=""></h:outputText>
+
+                                </p:repeat> 
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+            
+
+
 
                             </p:panelGrid>
                         </p:panel>
+
+                        <c:if test="#{cartController.isCartEmpty()== false}">
+                            <f:facet name="footer">
+                                <p:panel >
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total Price"></h:outputText>
+                                    &nbsp;
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalPriceCart()}"></h:outputText>
+                                    &nbsp;&nbsp;
+                                    <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" value="Check-out"
+                                                     icon="fas fa-check"/>
+                                </p:panel> 
+                            </f:facet>
+                        </c:if>
+
+
+
+
                     </p:dataGrid>
                 </h:form>
             </div>
