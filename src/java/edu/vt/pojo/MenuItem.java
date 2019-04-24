@@ -13,17 +13,17 @@ public class MenuItem {
     Instance Variables (Properties)
     ===============================
     */
-    String name;
-    String description;
-    Double price;
-    List<SpecialInstruction> specialInstructionItems;
+    private String name;
+    private String description;
+    private Double price;
+    private List<String> specialInstructionItems;
 
     /*
     ===================
     Constructor Method
     ===================
     */
-    public MenuItem(String name, String description, Double price, List<SpecialInstruction> specialInstructionItems){
+    public MenuItem(String name, String description, Double price, List<String> specialInstructionItems){
         this.name = name;
         this.description = description;
         this.price = price;
@@ -60,11 +60,11 @@ public class MenuItem {
         this.price = price;
     }
     
-    public List<SpecialInstruction> getSpecialInstructionItems() {
+    public List<String> getSpecialInstructionItems() {
         return specialInstructionItems;
     }
 
-    public void setSpecialInstructionItems(List<SpecialInstruction> specialInstructionItems) {
+    public void setSpecialInstructionItems(List<String> specialInstructionItems) {
         this.specialInstructionItems = specialInstructionItems;
     }
 
