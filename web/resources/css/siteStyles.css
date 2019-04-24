@@ -327,6 +327,14 @@ Used in Profile
     /*white-space: nowrap;     */   /* Disallow line break */
 }
 
+.panelGridColumnMenu1Cart {
+    text-align: left;
+    background-color: bisque; 
+    width:60%;
+    white-space: normal;
+    /*white-space: nowrap;     */   /* Disallow line break */
+}
+
 /* Style p:panelGrid Column 2 */
 .panelGridColumnMenu2 {
     text-align: center;
@@ -335,11 +343,21 @@ Used in Profile
     white-space: normal;      /* Disallow line break */
 }
 
+
 .panelGridNoBorder.ui-panelgrid>*>tr,
 .panelGridNoBorder.ui-panelgrid .ui-panelgrid-cell {
     border: none;
     position: relative;
     height: 55px;
+    width:100%;
+    vertical-align: middle;
+    align-content: center;
+}
+
+.panelGridNoBorderCart.ui-panelgrid>*>tr,
+.panelGridNoBorderCart.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+    position: relative;
     width:100%;
     vertical-align: middle;
     align-content: center;
@@ -366,6 +384,7 @@ background-color: oldlace;
 .ui-paginator-pages .ui-state-hover{
 background-color: whitesmoke;
 }
+
 
 .custromDataGridHeader .ui-datagrid-header {
     background-color:whitesmoke;
