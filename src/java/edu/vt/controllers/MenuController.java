@@ -8,7 +8,6 @@ import edu.vt.globals.Methods;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import edu.vt.pojo.MenuItem;
-import edu.vt.pojo.SpecialInstruction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,12 +58,12 @@ public class MenuController implements Serializable  {
    
     
     private MenuItem selectedMenuItem;
-    
+
     @PostConstruct
     public void init() {
         obtainMenuDataFromAPI();
     }
-    
+       
     /*
     ==========================
     Getter and Setter Methods
@@ -283,7 +282,7 @@ public class MenuController implements Serializable  {
                     
                     // loop over the special instruction
                     // loop over customizationGroups
-                    List<SpecialInstruction> specialInstructionItems = new ArrayList<>();
+                    List<String> specialInstructionItems = new ArrayList<>();
                     
                     JSONArray customizationGroupsItems = menuItemObject.optJSONArray("customizationGroups");
                     for (int k=0; k<customizationGroupsItems.length(); k++){
@@ -299,9 +298,9 @@ public class MenuController implements Serializable  {
                                     JSONArray customizationChoicesItems = firstCustomization.optJSONArray("customizationChoices");
                                     for (int v=0; v<customizationChoicesItems.length(); v++){
                                         JSONObject customizationChoicesObject = customizationChoicesItems.getJSONObject(v);
-                                        double instruction_price = customizationChoicesObject.optDouble("price", 0.0);
-                                        if (instruction_price > 0){
-                                            specialInstructionItems.add(new SpecialInstruction(instruction, instruction_price));
+                                        double instructionPrice = customizationChoicesObject.optDouble("price", 0.0);
+                                        if (instructionPrice > 0){
+                                            specialInstructionItems.add(instruction + ", for " + String.valueOf(instructionPrice));
                                         }
                                     }
                                 }
