@@ -393,6 +393,13 @@ background-color: whitesmoke;
     border: none;
 }
 
+.custromDataGridFooter .ui-datagrid-footer {
+    background-color:whitesmoke;
+    background-image: none;
+    text-align: center;
+    border: none;
+}
+
 .custromDataGridHeaderLeft{
     text-align: left;
     white-space: normal;
