@@ -26,10 +26,17 @@
                                 >
                         <p:panel >
                             <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
-                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"/>
-                                
+
+                                <h:panelGroup>
+
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"></h:outputText>
+                                    <h:commandLink style="color: #990000"> &nbsp;
+                                        <i class="fas fa-trash"></i>
+                                    </h:commandLink>
+                                </h:panelGroup>
                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Qty"/>
                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Price"/>
+
 
                                 <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
                                 <h:outputText style="color: brown; font-size:14px" value="#{cartItem.qty}"/>
@@ -44,19 +51,24 @@
                                 </p:repeat> 
                                 <h:outputText value=""/>
                                 <h:outputText value=""/>
-            
-
-
-
                             </p:panelGrid>
                         </p:panel>
 
                         <c:if test="#{cartController.isCartEmpty()== false}">
                             <f:facet name="footer">
                                 <p:panel >
-                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total Price"></h:outputText>
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total Before Taxes:"></h:outputText>
                                     &nbsp;
                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalBeforeTax()}"></h:outputText>
+                                    <br/>
+                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Taxes:"></h:outputText>
+                                    &nbsp;
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTax()}"></h:outputText>
+                                    <br/>
+                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total After Tax:"></h:outputText>
+                                    &nbsp;
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalAfterTax()}"></h:outputText>
+                                    <br/>
                                     &nbsp;&nbsp;
                                     <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" value="Check-out"
                                                      icon="fas fa-check"/>
