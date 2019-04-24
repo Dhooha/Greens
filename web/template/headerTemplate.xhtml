@@ -67,12 +67,13 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     <td align="right" style="padding-right: 30px; width:100px" valign="top">
                         <i for="language" class="fas fa-globe fa-2x"
                            style="vertical-align: middle;color:green"></i> &nbsp;
-                        <p:selectOneMenu id="language" value="#{languageController.language}"
-                                         valueChangeListener="#{languageController.changeLanguage}" 
-                                         onchange="submit()"
+                           <p:selectOneMenu id="language" 
+                                            value="#{languageController.language}"
+                                            onchange="submit()"
+                                         
                                          style="width: 25px; vertical-align: middle" >
-                            <f:selectItem itemLabel="EN" itemValue="ENGLISH"/>
-                            <f:selectItem itemLabel="FR" itemValue="FRENCH"/>
+                            <f:selectItem itemLabel="EN" itemValue="EN"/>
+                            <f:selectItem itemLabel="FR" itemValue="FR"/>
                         </p:selectOneMenu>
                         <br/> <br/><br/>
                         <!--
