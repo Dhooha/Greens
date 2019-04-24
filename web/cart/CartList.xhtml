@@ -23,6 +23,7 @@
                                 rows="10"
                                 layout="grid"
                                 paginator="true"
+                                styleClass="custromDataGridFooter"
                                 >
                         <p:panel >
                             <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
@@ -56,22 +57,46 @@
 
                         <c:if test="#{cartController.isCartEmpty()== false}">
                             <f:facet name="footer">
-                                <p:panel >
-                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total Before Taxes:"></h:outputText>
-                                    &nbsp;
-                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalBeforeTax()}"></h:outputText>
-                                    <br/>
-                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Taxes:"></h:outputText>
-                                    &nbsp;
-                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTax()}"></h:outputText>
-                                    <br/>
-                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total After Tax:"></h:outputText>
-                                    &nbsp;
-                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalAfterTax()}"></h:outputText>
-                                    <br/>
-                                    &nbsp;&nbsp;
-                                    <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" value="Check-out"
+                                <p:panel  >
+                                    
+                                    <table align="center">
+                                        <tr>
+                                            <td align="right">
+                                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total Before Taxes:"></h:outputText>
+                                            </td>
+                                            <td>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalBeforeTaxes()}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td align="right">
+                                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Taxes:"></h:outputText>
+                                            </td>
+                                            <td>
+                                                &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTax()}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="Total After Tax:"></h:outputText>
+                                            </td>
+                                            <td>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalAfterTax()}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td colspan="2">
+                                                <br/>
+                                                <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" value="Back to Menu"
+                                                     icon="fas fa-arrow-left"/> &nbsp;
+                                                 <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" value="Check-out"
                                                      icon="fas fa-check"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                  
                                 </p:panel> 
                             </f:facet>
                         </c:if>
