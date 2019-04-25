@@ -52,10 +52,10 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     <td align="center" valign="middle">
                         <c:choose>
                             <c:when test="#{userController.isLoggedIn() == true}">
-                                <div class="helloText">Hello, #{userController.selected.firstName}</div>
+                                <div class="helloText">#{bundle.Welcome}, #{userController.selected.firstName}</div>
                             </c:when>
                             <c:otherwise>
-                                <h1>Hello, Guest</h1>
+                                <h1>#{bundle.Welcome}, #{bundle.Guest}</h1>
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -97,7 +97,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 =============
                                 -->
                                 <h:link outcome="/index" class="standardText">
-                                    <i class="fas fa-home"></i>&nbsp;Home
+                                    <i class="fas fa-home"></i>&nbsp;#{bundle.Home}
                                 </h:link>
 
                                 <!--
@@ -106,7 +106,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 =============
                                 -->
                                 <h:link outcome="/menu/Menu" class="standardText">
-                                    <i class="fas fa-utensils"></i>&nbsp; Menu
+                                    <i class="fas fa-utensils"></i>&nbsp; #{bundle.Menu}
                                 </h:link>
 
                                 <!--
@@ -115,7 +115,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 =============
                                 -->
                                 <h:link outcome="/cart/CartList" class="standardText">
-                                    <i class="fas fa-shopping-cart"></i>&nbsp; Cart
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; #{bundle.Cart}
                                 </h:link> 
 
                                 <!--
@@ -124,7 +124,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 =============
                                 -->
                                 <h:link outcome="/index" class="standardText">
-                                    <i class="fas fa-info-circle"></i>&nbsp; About
+                                    <i class="fas fa-info-circle"></i>&nbsp; #{bundle.About}
 
                                 </h:link>
 
@@ -132,7 +132,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                 
                                 -->
                                 <h:link outcome="/index" class="standardText">
-                                    <i class="far fa-newspaper"></i>&nbsp; Reviews
+                                    <i class="far fa-newspaper"></i>&nbsp; #{bundle.Reviews}
 
                                 </h:link>
 
@@ -151,7 +151,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     -->
                                     <h:link outcome="/userAccount/Profile" class="standardText">
                                         <p:graphicImage cache="false" class="smallProfilePhoto"
-                                                        value="#{userController.userPhoto()}"/> &nbsp;&nbsp;My Account
+                                                        value="#{userController.userPhoto()}"/> &nbsp;&nbsp; #{bundle.MyAccount}
                                     </h:link>
                                     <!--
                                     ===================
@@ -159,7 +159,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ===================
                                     -->
                                     <h:commandLink action="#{userController.logout()}" class="standardText">
-                                        <i class="fas fa-sign-out-alt"/> &nbsp; Sign Out
+                                        <i class="fas fa-sign-out-alt"/> &nbsp; #{bundle.SignOut}
                                     </h:commandLink>
                                 </c:if>
 
@@ -175,7 +175,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================
                                     -->
                                     <h:link outcome="/SignIn" class="standardText">
-                                        <i class="fas fa-sign-in-alt"></i>&nbsp; Sign In
+                                        <i class="fas fa-sign-in-alt"></i>&nbsp; #{bundle.SignIn}
 
                                     </h:link>
                                 </c:if>
