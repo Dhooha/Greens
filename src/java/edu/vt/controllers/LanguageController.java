@@ -39,16 +39,16 @@ public class LanguageController implements Serializable{
     }
 
     public void setLanguage(String language) {
-        if (language.equals("FR")){
+        if (language != null){
+            if (language.equals("FR")){
             locale = new Locale("fr", "FR");
             FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+            }
+            else{
+                locale = new Locale("en", "US");
+                FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+            }
         }
-        else{
-            locale = new Locale("en", "US");
-            FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-        }
-        
-        
     }
     
     /*
