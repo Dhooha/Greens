@@ -22,7 +22,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
         <ui:define name="editableContent">
             <div align="center" style="width:70%; margin:0 auto;">
 
-                <h1>Sign In</h1>
+                <h1>#{bundle.SignIn}</h1>
                 <br />
 
                 <h:form>
@@ -46,7 +46,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     |         SIGN IN Button       |
                     ================================
                     -->
-                    <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser()}" 
+                    <p:commandButton id="login" value="#{bundle.SignIn}" action="#{loginManager.loginUser()}" 
                                      ajax="false" icon="fas fa-sign-in-alt" />
                     &nbsp;
                     <!--
@@ -62,7 +62,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     |    FORGOT PASSWORD Button    |
                     ================================
                     -->               
-                    <p:button outcome="/userPasswordChange/EnterUsername" value="Forgot Password" icon="fas fa-key"  />
+                    <p:button outcome="/userPasswordChange/EnterUsername" value="#{bundle.ForgotPassword}Forgot Password" icon="fas fa-key"  />
                     
                     &nbsp;
                     <!--
@@ -70,7 +70,7 @@ Copyright © 2018 Osman Balci. All rights reserved.
                     |         CANCEL Button        |
                     ================================
                     -->
-                    <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+                    <p:button outcome="/index" value="#{bundle.Cancel}" icon="fas fa-ban"  />
                 </h:form>
 
             </div>
