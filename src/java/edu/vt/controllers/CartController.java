@@ -331,7 +331,7 @@ public class CartController implements Serializable {
                         }
                     }
                 // add to the total for every cartItem
-                total += (qty * price) + totalSpecialInsructionItems;
+                total += qty * (price + totalSpecialInsructionItems);
                 }
                 return  df.format(total);
             }
