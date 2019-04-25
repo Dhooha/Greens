@@ -42,7 +42,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:link outcome="/index">
-                                        <i class="fas fa-home"></i>&nbsp;Home
+                                        <i class="fas fa-home"></i>&nbsp;#{bundle.Home}
                                     </h:link>
                                 </li>
 
@@ -53,7 +53,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:link outcome="/index">
-                                        <i class="fab fa-first-order"></i>&nbsp; My Orders
+                                        <i class="fab fa-first-order"></i>&nbsp; #{bundle.MyOrders}
                                     </h:link>
                                 </li>
                                 
@@ -64,7 +64,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:link outcome="/index">
-                                        <i class="far fa-credit-card"></i>&nbsp; My Payment Methods
+                                        <i class="far fa-credit-card"></i>&nbsp; #{bundle.MyPaymentMethods}
                                     </h:link>
                                 </li>
 
@@ -76,7 +76,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:link outcome="/userAccount/EditAccount">
-                                        <i class="fas fa-edit"></i>&nbsp;Edit Profile
+                                        <i class="fas fa-edit"></i>&nbsp;#{EditProfile}
                                     </h:link>
                                 </li>
 
@@ -87,7 +87,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:link outcome="/userPhoto/ChangePhoto">
-                                        <i class="fas fa-camera"></i>&nbsp;Change Photo
+                                        <i class="fas fa-camera"></i>&nbsp;#{ChangePhoto}
                                     </h:link>
                                 </li>
 
@@ -98,7 +98,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:link outcome="/userPasswordChange/EnterUsername">
-                                        <i class="fas fa-key"></i>&nbsp;Change Password
+                                        <i class="fas fa-key"></i>&nbsp;#{bundle.ChangePassword}
                                     </h:link>
                                 </li>
 
@@ -117,7 +117,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     <p:commandLink oncomplete="PF('SecurityQuestionDialog').show()" update=":SecurityQuestionForm" >
 
                                         <label style="font-size: 10pt;">
-                                            <i class="fas fa-trash-alt"></i>&nbsp;Delete Account
+                                            <i class="fas fa-trash-alt"></i>&nbsp;#{bundle.DeleteAccount}
                                         </label>
 
                                         <p:confirm header="Account Deletion Confirmation" 
@@ -129,10 +129,10 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     -->
                                     <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
                                         <div align="center">
-                                            <p:commandButton value="No" type="button" 
+                                            <p:commandButton value="#{bundle.No}" type="button" 
                                                              class="ui-confirmdialog-no" icon="fas fa-window-close" />
                                             &nbsp;
-                                            <p:commandButton value="Yes" type="button" 
+                                            <p:commandButton value="#{bundle.Yes}" type="button" 
                                                              class="ui-confirmdialog-yes" icon="fas fa-check-square" />
                                         </div>
                                     </p:confirmDialog>
@@ -147,7 +147,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     ================================
                                     -->
                                     <h:commandLink action="#{userController.logout()}">
-                                        <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
+                                        <i class="fas fa-sign-out-alt"></i>&nbsp;#{bundle.SignOut}
                                     </h:commandLink>
                                 </li>
                             </ul>
