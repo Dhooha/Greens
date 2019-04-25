@@ -165,7 +165,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         *       CONFIRM PASSWORD       *
                         ********************************
                         -->                         
-                        <p:outputLabel value="Confirm Password:" for="confirmPassword" />
+                        <p:outputLabel value="#{bundle.ConfirmPassword}" for="confirmPassword" />
                         <p:password id="confirmPassword" value="#{userController.confirmPassword}" 
                                     required="true" class="inputTextField"/>
 
@@ -177,7 +177,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     |        SUBMIT Button         |
                     ================================
                     -->
-                    <p:commandButton id="Submit" value="Submit" action="#{userController.createAccount()}" 
+                    <p:commandButton id="Submit" value="#{bundle.Submit}" action="#{userController.createAccount()}" 
                                      ajax="false" icon="fas fa-arrow-up" />
                     &nbsp;&nbsp;
                     <!--
@@ -185,7 +185,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     |        CANCEL Button         |
                     ================================
                     -->
-                    <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+                    <p:button outcome="/index" value="#{bundle.Cancel}" icon="fas fa-ban"  />
                     <br/><br/>
                 </h:form>
             </div>
