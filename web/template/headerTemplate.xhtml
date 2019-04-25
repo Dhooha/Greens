@@ -64,14 +64,15 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     Column 3 (Right): Hamburger Menu Button
                     ***************************************
                     -->
-                    <td align="right" style="padding-right: 30px; width:100px" valign="top">
+                    <td align="right" style="padding-right: 30px; width:200px" valign="top">
                         <i for="language" class="fas fa-globe fa-2x"
                            style="vertical-align: middle;color:green"></i> &nbsp;
                            <p:selectOneMenu id="language" 
                                             value="#{languageController.language}"
                                             onchange="submit()"
                                          
-                                         style="width: 25px; vertical-align: middle" >
+                                         style="vertical-align: middle" >
+                            <f:selectItem itemLabel="Select Language" itemValue="" noSelectionOption="true"/>
                             <f:selectItem itemLabel="EN" itemValue="EN"/>
                             <f:selectItem itemLabel="FR" itemValue="FR"/>
                         </p:selectOneMenu>
