@@ -43,8 +43,8 @@ public class LanguageController implements Serializable{
             locale = new Locale("fr", "FR");
             FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
         }
-        else if (language.equals("EN")){
-            locale = new Locale("en", "US");;
+        else{
+            locale = new Locale("en", "US");
             FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
         }
         
