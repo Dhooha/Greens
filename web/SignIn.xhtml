@@ -15,12 +15,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="Sign In"></h:outputText>
+            <h:outputText value="#{bundle.SignIn}"></h:outputText>
         </ui:define>
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
-            <div align="center" style="width:70%; margin:0 auto;">
+            <div align="#{bundle.SignIn}" style="width:70%; margin:0 auto;">
 
                 <h1>Sign In</h1>
                 <br />
@@ -28,12 +28,12 @@ Copyright © 2018 Osman Balci. All rights reserved.
                 <h:form>
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
 
-                        <h:outputLabel value="Username:" for="username" />
+                        <h:outputLabel value="#{bundle.username}" for="username" />
                         <p:inputText id="username" value="#{loginManager.username}" required="true" class="inputTextField"
                                      requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username" >
                         </p:inputText>
 
-                        <h:outputLabel value="Password:" for="password" />
+                        <h:outputLabel value="#{bundle.Password}" for="password" />
                         <p:password id="password" value="#{loginManager.password}" feedback="false" class="inputTextField" >
                         </p:password>
 
