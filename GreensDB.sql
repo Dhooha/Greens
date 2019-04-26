@@ -50,6 +50,7 @@ CREATE TABLE Orders /* ORDER is a SQL reserved word */
     order_status ENUM('PLACED', 'READY', 'CLAIMED') NOT NULL,
     order_total FLOAT NOT NULL,
     special_instructions VARCHAR(500),
+    text_notification boolean DEFAULT false,
     user_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );

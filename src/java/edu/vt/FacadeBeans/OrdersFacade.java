@@ -29,11 +29,11 @@ public class OrdersFacade extends AbstractFacade<Orders> {
         super(Orders.class);
     }
     
-            /**
-     * Find all surveys that belong to a User whose database primary key is dbPrimaryKey
+     /**
+     * Find all orders that belong to a User whose database primary key is dbPrimaryKey
      * 
      * @param dbPrimaryKey is the Primary Key of the user entity in the database
-     * @return a list of object references of userQuestionnaires that belong to the user whose database Primary Key = dbPrimaryKey
+     * @return a list of object references of Orders that belong to the user whose database Primary Key = dbPrimaryKey
      */
     public List<Orders> findOrdersbyUserId(Integer dbPrimaryKey) {
         /*
@@ -50,4 +50,25 @@ public class OrdersFacade extends AbstractFacade<Orders> {
         return orders;
     }
     
+    
+    /**
+     * And Order using its primarykey
+     * 
+     * @param dbPrimaryKey is the Primary Key of the orders entity in the database
+     * @return this orders
+     */
+    public Orders findOrdersbyId(Integer dbPrimaryKey) {
+        /*
+        The following @NamedQuery is defined in UserQuestionnaire.java entity class file:
+        @NamedQuery(name = "UserQuestionnaire.findQuestionnairesByUserPrimaryKey", 
+            query = "SELECT u FROM UserQuestionnaire u WHERE u.userId.id = :primaryKey")
+        
+        The following statement obtaines the results from the named database query.
+         */
+        Orders orders = (Orders) em.createNamedQuery("Orders.findById")
+                .setParameter("primaryKey", dbPrimaryKey)
+                .getSingleResult();
+
+        return orders;
+    }
 }

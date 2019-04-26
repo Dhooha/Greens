@@ -4,6 +4,7 @@ import edu.vt.EntityBeans.Orders;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.OrdersFacade;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.util.List;
@@ -168,15 +169,13 @@ public class OrdersController implements Serializable {
     
     //Above this is automatically generated Code **********************************************************************************
     
-    
-    //call the OrderFacade ___ method to get a list of all the orders for this user
+    //use the OrderFacade  to get a list of all the orders for this user
     public List<Orders> getOrderList() {
-        int userPrimaryKey  = 1;
-        
-        //get loggedin user primary key
-        //int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
-       
-        return getFacade().findOrdersbyUserId(userPrimaryKey );
+
+       Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");  
+       //I think I do need to set this
+       orderItems = getFacade().findOrdersbyUserId(primaryKey);
+       return orderItems;
     }
 
 }

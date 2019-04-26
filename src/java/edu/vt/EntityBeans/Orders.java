@@ -82,10 +82,16 @@ public class Orders implements Serializable {
     @Column(name = "order_total")
     private float orderTotal;
     
-   //new column in table
+   //new column in table, April
     @Size(min = 1, max = 500)
     @Column(name = "special_instructions")
     private String specialInstructions;
+    
+    //new column in table, April 23
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "text_notification")
+    private boolean textNotification;    
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -98,13 +104,16 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal) {
+    public Orders(Integer id, User userId, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal, String specialInstructions, boolean textNotification) {
         this.id = id;
+        this.userId = userId;
         this.orderItems = orderItems;
         this.orderType = orderType;
         this.orderTimestamp = orderTimestamp;
         this.orderStatus = orderStatus;
         this.orderTotal = orderTotal;
+        this.specialInstructions = specialInstructions;
+        this.textNotification = textNotification;
     }
 
     public Integer getId() {
@@ -161,6 +170,22 @@ public class Orders implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+    
+    public String getSpecialInstructions() {
+        return specialInstructions;
+    }
+
+    public void setSpecialInstructions(String specialInstructions) {
+        this.specialInstructions = specialInstructions;
+    }
+    
+    public boolean isTextNotification() {
+        return textNotification;
+    }
+
+    public void setTextNotification(boolean textNotification) {
+        this.textNotification = textNotification;
     }
 
     @Override

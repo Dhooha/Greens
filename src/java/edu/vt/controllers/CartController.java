@@ -4,6 +4,7 @@ import edu.vt.EntityBeans.Cart;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.CartFacade;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,7 +27,11 @@ public class CartController implements Serializable {
     @EJB
     private edu.vt.FacadeBeans.CartFacade ejbFacade;
     private List<Cart> items = null;
-    private Cart selected;
+    
+    //Cart starts as null, but is instantiated when user logs in or
+    //guest starts to use cart, then stays saved here for duration of the
+    //sesstion
+    private Cart selected = null;
 
     public CartController() {
     }
@@ -113,6 +118,12 @@ public class CartController implements Serializable {
     public Cart getCart(java.lang.Integer id) {
         return getFacade().find(id);
     }
+    
+    public Cart getUserCart(Integer id){
+        List<Cart> carts= getFacade().findCartsbyUserId(id);
+        //should only be one cart
+        return carts.get(0);
+    }
 
     //There should only be one Cart per User
     public List<Cart> getItemsAvailableSelectMany() {
@@ -167,6 +178,28 @@ public class CartController implements Serializable {
     
     //Above this is automatically generated Code **********************************************************************************
     
+    //Updates selectd Cart, and returns a positive integer if the 
+    //user is signed in and negative 1 if they are not
+    public Integer check(){
+    
+        Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
+        if(primaryKey != null){         
+            if(selected == null){
+             //user is signed in AND cart is null
+            selected = getUserCart(primaryKey);
+            }
+            return primaryKey;
+        }
+        else{
+            if(selected == null){
+            //user is not signed in AND cart is null
+            selected = new Cart();
+            }
+            return -1;
+        }
+        
+    }
+    
     //NOTE: only call if creating a user!
     //calls the cart facade to create a cart in the DB table for this user id 
     /*
@@ -176,140 +209,84 @@ public class CartController implements Serializable {
         create();
     }*/
 
-    //TODO: NEED SELECTED TO BE POPULATED WHEN USER SIGNS in?
-    //OR COULD JUST CHECK IF NULL BEFORE EACH OP?
-    //Update the user's cart by adding the menu item and quantity
-    /*
+    //Checks if the user is logged in or not to see if we need to update the database,
+    //Update the user's cart by adding the menu item and quantity to Cart JSON String
+    /* 
     public void addItemToCart(MenuItem item, int quantity){ 
         
-        //THIS WAY? - checks if the user is logged in or not through injecting the userController and calling the ‘isLoggedIn’ method
-        //if the user is logged in
-        if(Methods.sessionMap().get("username") != null;){
-            Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
-            
-            //update selected - get the cart (represented by selected) and update it with the new Menu item and quantity
-            List<Cart> carts= (Cart) getFacade().findCartsByUserPrimaryKey();
-            
-            //should only be one cart
-            selected = carts.get(0);
+        int c = check();
+        if(c >= 0){
     
-            //update the json string
+            //update selected with the new Menu item and quantity by updating the 
+            //json string
+            //TODO
+    
             //push to database aka call update()
             //update();
         }
-        else if(selected != null){
-            
-            //check if cart is null, if so intiated
-            selected = new Cart();
-    
-           //update selected cart object, not DB
-           //TODO
-        }
         else{
-           //if not
            //update selected cart object, not DB
            //TODO
         }
     }*/
     
-    //TODO: NEED SELECTED TO BE POPULATED WHEN USER SIGNS in?
-    //OR COULD JUST CHECK IF NULL BEFORE EACH OP?
-    //Checks if the user is logged in or not to see if we need to update the database
+    //Checks if the user is logged in or not to see if we need to update the database,
+    //changes Json string inside Cart to edit Item
     //also can’t set it to zero, it is about editing the quantity
     /*
     public void editItemInCart(MenuItem item, int newQuantity){
-        //THIS WAY? - checks if the user is logged in or not through injecting the userController and calling the ‘isLoggedIn’ method
-        //if the user is logged in
-        if(Methods.sessionMap().get("username") != null;){
-            Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
-            
-            //update selected - get the cart (represented by selected) and update it with the new Menu item and quantity
-            List<Cart> carts= (Cart) getFacade().findCartsByUserPrimaryKey();
-            
-            //should only be one cart
-            selected = carts.get(0);
+        int c = check();
+        if(c >= 0){
     
-            //update the json string
+            //update selected with the new Menu item and quantity by updating the 
+            //json string
+            //TODO
+    
             //push to database aka call update()
             //update();
         }
-        else if(selected != null){
-            
-            //check if cart is null, if so intiated
-            selected = new Cart();
-    
-           //update selected cart object, not DB
-           //TODO
-        }
         else{
-           //if not
            //update selected cart object, not DB
            //TODO
-        }
-    
+        }    
     }*/
     
-     //TODO: NEED SELECTED TO BE POPULATED WHEN USER SIGNS in?
-    //OR COULD JUST CHECK IF NULL BEFORE EACH OP?
     //Checks if the user is logged in or not to see if we need to update the database
+    //Removes specified item from JSON string in Cart
     /*
     public void removeItemFromCart(MenuItem item){
-        //THIS WAY? - checks if the user is logged in or not through injecting the userController and calling the ‘isLoggedIn’ method
-        
-        //if the user is logged in
-        if(Methods.sessionMap().get("username") != null;){
-            Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
-            
-            //update selected - get the cart (represented by selected) and update it with the new Menu item and quantity
-            List<Cart> carts= (Cart) getFacade().findCartsByUserPrimaryKey();
-            
-            //should only be one cart
-            selected = carts.get(0);
+        int c = check();
+        if(c >= 0){
     
-            //update the json string
+            //update selected with the new Menu item and quantity by updating the 
+            //json string
+            //TODO
+    
             //push to database aka call update()
             //update();
         }
-        else if(selected != null){
-            
-            //check if cart is null, if so intiated
-            selected = new Cart();
-    
-           //update selected cart object, not DB
-           //TODO
-        }
         else{
-           //if not
            //update selected cart object, not DB
            //TODO
-        }
+        }  
     }*/
     
     //Removes the Json string items from the cart object as well as the cart table  
     //(no need to check because the user will be logged in)
     public void removeAllItemsFromCart(){
-        //THIS WAY? - checks if the user is logged in or not through injecting the userController and calling the ‘isLoggedIn’ method
-        //possibly use update()
+
         //Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
-            
-        //update selected - get the cart (represented by selected) and update it with the new Menu item and quantity
-        //List<Cart> carts= (Cart) getFacade().findCartsByUserPrimaryKey();
-            
-        //should only be one cart
-        //selected = carts.get(0);
-        
+        //selected = getUserCart(primaryKey);
         //remove items from cart
         //TODO: keep consistent with JSON Format
         //selected.setCartItems(" ");
         //update();
-    
     }
     
     //checks if the user is logged in, if yes, it redirect to the order page, 
     //otherwise, it will ask the user to login, and redirect the user to the 
     //login/create user page.
     public void checkOutCart(){
-        //THIS WAY? - checks if the user is logged in or not through injecting the userController and calling the ‘isLoggedIn’ method
         
         //if the user is logged in
         /*if(Methods.sessionMap().get("username") != null;){
