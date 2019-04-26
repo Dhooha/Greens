@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCartTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="editableContent">
+            <br/><br/>
+            <div style="width:85%; text-align: center;margin: 0 auto">
+                <h:form id="CartListForm">
+                     <h3 style="color:  #4d0000">#{bundle.ListCartTitle}</h3>
+                    <p:dataGrid value="#{cartController.cartItems}"
+                                var="cartItem"
+                                columns="1"
+                                rows="10"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridFooter"
+                                >
+                        <p:panel >
+                            <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
+
+                                <h:panelGroup>
+
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"></h:outputText>
+                                    <h:commandLink style="color: #990000"> &nbsp;
+                                        <i class="fas fa-trash"></i>
+                                    </h:commandLink>
+                                </h:panelGroup>
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemQty}"/>
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemPrice}"/>
+
+
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.qty}"/>
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.menuItem.price}"/>
+
+
+
+                                <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
+                                    <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
+                                    <br/>
+
+                                </p:repeat> 
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                            </p:panelGrid>
+                        </p:panel>
+
+                        <c:if test="#{cartController.isCartEmpty()== false}">
+                            <f:facet name="footer">
+                                <p:panel  >
+                                    
+                                    <table align="center">
+                                        <tr>
+                                            <td align="right">
+                                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                              value="#{bundle.TotalBeforeTaxes}"/>
+                                            </td>
+                                            <td>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalBeforeTaxes()}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td align="right">
+                                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000"
+                                                               value="#{bundle.Tax}"/>
+                                            </td>
+                                            <td>
+                                                &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTax()}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                               value="#{bundle.TotalAfterTax}"/>
+                                            </td>
+                                            <td>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalAfterTax()}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td colspan="2">
+                                                <br/>
+                                                <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                                 value="#{bundle.BackToMenu}"
+                                                     icon="fas fa-arrow-left"/> &nbsp;
+                                                 <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                                  value="#{bundle.CheckOut}"
+                                                     icon="fas fa-check"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                  
+                                </p:panel> 
+                            </f:facet>
+                        </c:if>
+
+
+
+
+                    </p:dataGrid>
+                </h:form>
+            </div>
+
+
+            <!--ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/-->
+        </ui:define>
+    </ui:composition>
+
+</html>

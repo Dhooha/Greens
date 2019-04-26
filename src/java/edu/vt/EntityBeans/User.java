@@ -314,7 +314,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.vt.EntityBeans.User[ id=" + id + " ]";
+        return id.toString();
     }
     
 }

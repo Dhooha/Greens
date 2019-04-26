@@ -26,13 +26,13 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
 
                 <h:form id="EnterUsernameForm">
 
-                    <h1>Please Enter Your Username</h1>
+                    <h1>#{bundle.EnterUsername}</h1>
 
                     <!-- fieldset is an HTML tag that draws a box around the content enclosed within it -->
                     <fieldset>
                         <div style="margin-bottom: 5px">
                             <p:inputText id="username" value="#{passwordResetManager.username}"
-                                         required="true" requiredMessage="Please enter your username!" 
+                                         required="true" requiredMessage="#{bundle.EnterUsername}!" 
                                          class="inputTextField" />
                         </div>
 
@@ -42,7 +42,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         |         SUBMIT Button        |
                         ================================
                         -->         
-                        <p:commandButton id="submit" value="Submit" ajax="false" icon="fas fa-arrow-up"
+                        <p:commandButton id="submit" value="#{bundle.Submit}" ajax="false" icon="fas fa-arrow-up"
                                          action="#{passwordResetManager.usernameSubmit()}"/>
 
                         &nbsp;
@@ -51,7 +51,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                         |         CANCEL Button        |
                         ================================
                         -->
-                        <p:button outcome="/index" value="Cancel" icon="fas fa-ban" />
+                        <p:button outcome="/index" value="#{bundle.Cancel}" icon="fas fa-ban" />
 
                     </fieldset>  
                     <br/>               

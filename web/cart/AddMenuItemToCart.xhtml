@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog position="center center" 
+                  id="AddMenuItemToCartDlg" 
+                  widgetVar="AddMenuItemToCartDialog" 
+                  modal="true" resizable="false" 
+                  appendTo="@(body)" 
+                  header="#{bundle.AddMenuItemToCart}">
+            <h:form id="AddMenuItemToCartForm">
+                <p:panelGrid rendered="#{not empty menuController.selectedMenuItem}">
+                    <table width="450px" cellpadding="10" cellspacing="0">
+                        <tr>
+                            <td width="90%" valign="top" align="left">
+                                <h3>#{menuController.selectedMenuItem.name}</h3>
+
+                                <h4>#{menuController.selectedMenuItem.description}</h4>
+                            </td>
+
+                            <td width="10%" valign="top" align="right">
+                                <h4>#{menuController.selectedMenuItem.price}</h4>
+                                <p:selectOneMenu style="width: 30px" value='#{cartController.cartSelectedMenuItemQty}'>
+                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                    <f:selectItem itemLabel="3" itemValue="3"/>
+                                    <f:selectItem itemLabel="4" itemValue="4"/>
+                                    <f:selectItem itemLabel="5" itemValue="5"/>
+                                    <f:selectItem itemLabel="6" itemValue="6"/>
+                                    <f:selectItem itemLabel="7" itemValue="7"/>
+                                    <f:selectItem itemLabel="8" itemValue="8"/>
+                                    <f:selectItem itemLabel="9" itemValue="9"/>
+                                    <f:selectItem itemLabel="10" itemValue="10"/>
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                        <td>
+                            <p:selectManyCheckbox id="SpecialInstructionGrid" 
+                                                  value="#{cartController.cartSelectedSpecialInstructionItems}" 
+                                                  layout="grid" 
+                                                  columns="1">
+                                <f:selectItems value="#{menuController.selectedMenuItem.specialInstructionItems}"
+                                               var="specialInstruction"
+                                               itemLabel="#{specialInstruction}"
+                                               itemValue="#{specialInstruction}"/>
+                             
+                             
+                            </p:selectManyCheckbox>
+                        </td>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <p:commandButton value="#{bundle.Add}"
+                                                 icon="fas fa-plus"
+                                                 actionListener="#{cartController.addMenuItemToCart()}"
+                                                 update=":AddMenuItemToCartForm"
+                                                 action="/menu/Menu?faces-redirect=true"
+                                                 onclick="PF('AddMenuItemToCartDialog').hide()"/> &nbsp;
+                                <p:commandButton value="#{bundle.Cancel}"
+                                                 icon="fas fa-ban"
+                                                 update=":AddMenuItemToCartForm"
+                                                 actionListener="#{cartController.clear()}"
+                                                 onclick="AddMenuItemToCartDialog.hide()"/>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </p:panelGrid>
+
+
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
