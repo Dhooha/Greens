@@ -57,28 +57,6 @@ public class LanguageController implements Serializable{
     ====================
     */
     public LanguageController(){
-    }
-    
-    /*
-    ===================
-       ** Methods **
-    ===================
-    */
-//    public void changeLanguage(){
-//         if (language.equals("FR")){
-//            Locale frenchLocal = new Locale("fr", "FR");
-//            FacesContext.getCurrentInstance().getViewRoot().setLocale(frenchLocal);
-//        }
-//        else{
-//            Locale englishLocal = new Locale("en", "US");;
-//            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocal);
-//        }
-////        if (language.equals("FRENCH")){
-////            Locale frenchLocal = new Locale("fr", "FR");
-////            ResourceBundle bundle = ResourceBundle.getBundle("Bundle", frenchLocal);
-////            System.out.print(bundle.getString("ViewUserLabel_firstName"));
-////        }
-//        
-//    }
+    }    
     
 }
