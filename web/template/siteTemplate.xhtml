@@ -27,7 +27,13 @@
             <ui:insert name="title">Greens</ui:insert>
         </title>
         
-        
+        <!--
+        ==============================================
+        *   Internationalization via Bundle files   *
+        ==============================================
+        Instruct the web browser to save the selected language 
+        when the user navigate through pages.
+        -->
         <f:view locale="#{languageController.locale}"/>
    
         <!-- 
