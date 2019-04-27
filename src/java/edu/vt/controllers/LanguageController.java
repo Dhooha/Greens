@@ -4,10 +4,8 @@
  */
 package edu.vt.controllers;
 
-import edu.vt.globals.Methods;
 import java.io.Serializable;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -15,8 +13,7 @@ import javax.inject.Named;
 
 @Named("languageController")
 @SessionScoped
-public class LanguageController implements Serializable{
-    
+public class LanguageController implements Serializable{   
     /*
     ===============================
     Instance Variables (Properties)
@@ -49,7 +46,7 @@ public class LanguageController implements Serializable{
                 FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
             }
         }
-    }
+    }   
     
     /*
     ====================
@@ -57,6 +54,5 @@ public class LanguageController implements Serializable{
     ====================
     */
     public LanguageController(){
-    }    
-    
+    }       
 }
