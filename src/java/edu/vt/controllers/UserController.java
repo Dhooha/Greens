@@ -11,6 +11,8 @@ import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
+import edu.vt.controllers.CartController;
+import edu.vt.EntityBeans.Cart;
 
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -18,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import java.io.IOException;
@@ -104,6 +107,13 @@ public class UserController implements Serializable {
      */
     @EJB
     private UserPhotoFacade userPhotoFacade;
+    
+    
+    /*
+    Inject CartController so that can create cart in DB at the same time create User
+     */
+    @Inject
+    private CartController cartController;
 
    
 
@@ -463,6 +473,21 @@ public class UserController implements Serializable {
 
             // Create the user in the database
             getUserFacade().create(newUser);
+            
+            //Also must create cart for this user
+            User justMade = getUserFacade().findByUsername(username);
+            System.out.println("************************************" + justMade.toString());
+            
+            Cart c = new Cart();
+            c.setCartItems("");
+            c.setUserId(justMade);
+            
+            cartController.prepareCreate();
+            cartController.setSelected(c);
+            cartController.create();
+            
+            //cartController.createCartForUser(justMade);
+
 
         } catch (EJBException | Password.CannotPerformOperationException ex) {
             username = "";
@@ -547,8 +572,7 @@ public class UserController implements Serializable {
             // Delete all of the photo files associated with the signed-in user whose primary key is userPrimaryKey
             deleteAllUserPhotos(userPrimaryKey);
 
-            // Delete all of the user files associated with the signed-in user whose primary key is userPrimaryKey
-            // deleteAllUserFiles(userPrimaryKey);
+            //TODO: delete User Orders and User Cart
 
             // Delete the User entity, whose primary key is user_id, from the database
             getUserFacade().deleteUser(userPrimaryKey);

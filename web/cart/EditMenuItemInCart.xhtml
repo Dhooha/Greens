@@ -9,23 +9,23 @@
     <ui:composition>
 
         <p:dialog position="center center" 
-                  id="AddMenuItemToCartDlg" 
-                  widgetVar="AddMenuItemToCartDialog" 
+                  id="EditMenuItemInCartDlg" 
+                  widgetVar="EditMenuItemInCartDialog" 
                   modal="true" resizable="false" 
                   appendTo="@(body)" 
-                  header="#{bundle.AddMenuItemToCart}">
-            <h:form id="AddMenuItemToCartForm">
-                <p:panelGrid rendered="#{not empty menuController.selectedMenuItem}">
+                  header="#{bundle.EditMenuItemInCart}">
+            <h:form id="EditMenuItemInCartForm">
+                <p:panelGrid>
                     <table width="450px" cellpadding="10" cellspacing="0">
                         <tr>
                             <td width="90%" valign="top" align="left">
-                                <h3>#{menuController.selectedMenuItem.name}</h3>
+                                <h3>#{cartController.selectedCartItem.menuItem.name}</h3>
 
-                                <h4>#{menuController.selectedMenuItem.description}</h4>
+                                <h4>#{cartController.selectedCartItem.menuItem.description}</h4>
                             </td>
 
                             <td width="10%" valign="top" align="right">
-                                <h4>#{menuController.selectedMenuItem.price}</h4>
+                                <h4>#{cartController.selectedCartItem.menuItem.price}</h4>
                                 <p:selectOneMenu style="width: 30px" value='#{cartController.cartSelectedMenuItemQty}'>
                                     <f:selectItem itemLabel="1" itemValue="1"/>
                                     <f:selectItem itemLabel="2" itemValue="2"/>
@@ -40,32 +40,20 @@
                                 </p:selectOneMenu>
                             </td>
                         </tr>
-                        <td>
-                            <p:selectManyCheckbox id="SpecialInstructionGrid" 
-                                                  value="#{cartController.cartSelectedSpecialInstructionItems}" 
-                                                  layout="grid" 
-                                                  columns="1">
-                                <f:selectItems value="#{menuController.selectedMenuItem.specialInstructionItems}"
-                                               var="specialInstruction"
-                                               itemLabel="#{specialInstruction}"
-                                               itemValue="#{specialInstruction}"/>
-                             
-                             
-                            </p:selectManyCheckbox>
-                        </td>
+
                         <tr>
                             <td colspan="2" align="center">
-                                <p:commandButton value="#{bundle.Add}"
-                                                 icon="fas fa-plus"
-                                                 actionListener="#{cartController.addItemToCart()}"
-                                                 update=":menuForm"
-                                                 action="/menu/Menu?faces-redirect=true"
-                                                 onclick="PF('AddMenuItemToCartDialog').hide()"/> &nbsp;
+                                <p:commandButton value="#{bundle.Update}"
+                                                 icon="fas fa-save"
+                                                 actionListener="#{cartController.editItemInCart()}"
+                                                 update=":EditMenuItemInCartForm"
+                                                 action="/cart/CartList?faces-redirect=true"
+                                                 onclick="PF('EditMenuItemInCartDialog').hide()"/> &nbsp;
                                 <p:commandButton value="#{bundle.Cancel}"
                                                  icon="fas fa-ban"
-                                                 update=":menuForm"
+                                                 update=":EditMenuItemInCartForm"
                                                  actionListener="#{cartController.clearFields()}"
-                                                 onclick="AddMenuItemToCartDialog.hide()"/>
+                                                 onclick="EditMenuItemInCartDialog.hide()"/>
                             </td>
 
                         </tr>
@@ -80,3 +68,4 @@
 
     </ui:composition>
 </html>
+
