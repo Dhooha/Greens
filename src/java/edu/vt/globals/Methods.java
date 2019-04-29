@@ -93,27 +93,32 @@ public final class Methods {
      * @ throw Exception
      */
     public static String readCurlContent(String webServiceCurl) throws Exception {
-        //String command = "curl -X GET -H X-Access-Token:__API_EXPLORER_AUTH_KEY__ https://eatstreet.com/publicapi/v1/restaurant/90fd4587554469b1884225aec137a02a83c1200448b8c26e/menu";
-        // retrive the data from the API
-        Process process = Runtime.getRuntime().exec(webServiceCurl);
-//        int exitCode = process.exitValue();
-//        if (exitCode != 0){
-//            Methods.showMessage("Error", "Something went wrong, the system couldn't get the menu data from eatStreet API", "");
-//            return null;
-//        }
+        // A String of WebService curl is passed: something like this:
+        //"curl -X GET -H X-Access-Token:__API_EXPLORER_AUTH_KEY__ https://eatstreet.com/publicapi/v1/restaurant/90fd4587554469b1884225aec137a02a83c1200448b8c26e/menu";
         
-        // read the data into inputStream, then BufferedReader
-        InputStream inputStream = process.getInputStream(); 
-        BufferedReader  reader = null;
-        reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder buffer = new StringBuilder();
-        char[] chars = new char[10240];
-        int numberOfCharactersRead;
-        while((numberOfCharactersRead = reader.read(chars)) != -1){
-            buffer.append(chars, 0, numberOfCharactersRead);
+        // retrive the data from the API
+        try{
+            Process process = Runtime.getRuntime().exec(webServiceCurl);
+
+            // read the data into inputStream, then BufferedReader
+            InputStream inputStream = process.getInputStream(); 
+            BufferedReader  reader = null;
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            // update the buffer from the inputStrem
+            StringBuilder buffer = new StringBuilder();
+            char[] chars = new char[10240];
+            int numberOfCharactersRead;
+            while((numberOfCharactersRead = reader.read(chars)) != -1){
+                buffer.append(chars, 0, numberOfCharactersRead);
+            }
+            process.destroy();
+            return buffer.toString();
         }
-        process.destroy();
-        return buffer.toString();
+        catch(Exception ex){
+            Methods.showMessage("Error", "Something went wrong, the system couldn't get the menu data from eatStreet API", "");
+            return null;
+        }
         
        
     }
