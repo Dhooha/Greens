@@ -112,7 +112,7 @@ public class Cart implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.vt.EntityBeans.Cart[ id=" + id + " ]";
+        return this.id.toString();
     }
     
 }

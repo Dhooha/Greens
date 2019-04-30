@@ -5,6 +5,7 @@
 package edu.vt.pojo;
 
 import java.util.List;
+import java.lang.StringBuilder;
 
 
 public class MenuItem {
@@ -68,5 +69,16 @@ public class MenuItem {
         this.specialInstructionItems = specialInstructionItems;
     }
 
-    
+    @Override
+    public String toString(){
+        StringBuilder b = new StringBuilder();
+        for(int i = 0; i < this.specialInstructionItems.size(); i++){
+            b.append(this.specialInstructionItems.get(i));
+            if(i != (this.specialInstructionItems.size() - 1)){
+                b.append(",");
+            }
+        }
+        String si = b.toString();
+        return "MenuItem:{name:" + this.name + ",description:" + this.description + ",price:" + this.price + ",specialInstructionItems:[" + si + "]}";
+    }
 }

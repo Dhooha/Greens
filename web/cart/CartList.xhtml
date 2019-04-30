@@ -26,25 +26,36 @@
                                 paginator="true"
                                 styleClass="custromDataGridFooter"
                                 >
-                        <p:panel >
+                        <p:panel>
                             <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
 
                                 <h:panelGroup>
 
                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"></h:outputText>
-                                    <h:commandLink style="color: #990000"> &nbsp;
+                                    <p:commandLink style="color: #990000" 
+                                                 update=":EditMenuItemInCartForm" oncomplete="PF('EditMenuItemInCartDialog').show()">
+                                        <i class="fas fa-edit"></i>
+                                        <f:setPropertyActionListener value="#{cartItem}" target="#{cartController.selectedCartItem}"/>
+                                        <f:setPropertyActionListener value="#{cartItem.qty}" target="#{cartController.cartSelectedMenuItemQty}"/>
+                                    </p:commandLink>
+                                    
+                                    <p:commandLink style="color: #990000" 
+                                                 update=":DeleteMenuItemFromCartForm" oncomplete="PF('DeleteMenuItemFromCartDialog').show()">
                                         <i class="fas fa-trash"></i>
-                                    </h:commandLink>
+                                        <f:setPropertyActionListener value="#{cartItem}" target="#{cartController.selectedCartItem}"/>
+                                    </p:commandLink>
+
                                 </h:panelGroup>
+                                
                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemQty}"/>
                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemPrice}"/>
 
 
                                 <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
-                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.qty}"/>
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.qty}"/>
+
+                                
                                 <h:outputText style="color: brown; font-size:14px" value="#{cartItem.menuItem.price}"/>
-
-
 
                                 <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
                                     <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
@@ -53,6 +64,7 @@
                                 </p:repeat> 
                                 <h:outputText value=""/>
                                 <h:outputText value=""/>
+                                
                             </p:panelGrid>
                         </p:panel>
 
@@ -67,7 +79,7 @@
                                                               value="#{bundle.TotalBeforeTaxes}"/>
                                             </td>
                                             <td>
-                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalBeforeTaxes()}"></h:outputText>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalBeforeTaxes}"></h:outputText>
                                             </td>
                                         </tr>
                                         
@@ -77,7 +89,7 @@
                                                                value="#{bundle.Tax}"/>
                                             </td>
                                             <td>
-                                                &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTax()}"></h:outputText>
+                                                &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.tax}"></h:outputText>
                                             </td>
                                         </tr>
                                         <tr>
@@ -86,7 +98,7 @@
                                                                value="#{bundle.TotalAfterTax}"/>
                                             </td>
                                             <td>
-                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.calculateTotalAfterTax()}"></h:outputText>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalAfterTaxes}"></h:outputText>
                                             </td>
                                         </tr>
                                         <tr>
@@ -98,7 +110,9 @@
                                                      icon="fas fa-arrow-left"/> &nbsp;
                                                  <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
                                                                   value="#{bundle.CheckOut}"
-                                                     icon="fas fa-check"/>
+                                                                  icon="fas fa-check"
+                                                                  update=":CartListForm"
+                                                                  actionListener="#{cartController.checkOutCart()}"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -106,18 +120,11 @@
                                 </p:panel> 
                             </f:facet>
                         </c:if>
-
-
-
-
                     </p:dataGrid>
                 </h:form>
             </div>
-
-
-            <!--ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/-->
+            <ui:include src="/cart/DeleteMenuItemFromCart.xhtml"/>
+            <ui:include src="/cart/EditMenuItemInCart.xhtml"/>
         </ui:define>
     </ui:composition>
 

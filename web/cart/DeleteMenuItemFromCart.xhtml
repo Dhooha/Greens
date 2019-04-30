@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog position="center center" 
+                  id="DeleteMenuItemFromCartDlg" 
+                  widgetVar="DeleteMenuItemFromCartDialog" 
+                  modal="true" resizable="false" 
+                  appendTo="@(body)" 
+                  header="#{bundle.DeleteMenuItemFromCart}">
+            <h:form id="DeleteMenuItemFromCartForm">
+                
+                 <p:panelGrid>
+                    <table width="450px" cellpadding="10" cellspacing="0">
+                        <tr>
+                            <td width="90%" valign="top" align="left">
+                                <h3>#{cartController.selectedCartItem.menuItem.name}</h3>
+
+                                <h4>#{cartController.selectedCartItem.menuItem.description}</h4>
+                            </td>
+
+                            <td width="10%" valign="top" align="right">
+                                <h4>#{cartController.selectedCartItem.menuItem.price}</h4>
+                                <h4>#{cartController.selectedCartItem.qty}</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:repeat value="#{cartController.selectedCartItem.menuItem.specialInstructionItems}" var="specialInstruction">
+                                         <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
+                                         <br/>
+                                </p:repeat> 
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>#{bundle.DeleteMenuItemConfirmation}</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                               
+                                <p:commandButton value="#{bundle.Yes}"
+                                                 icon="fas fa-check-square"
+                                                 actionListener="#{cartController.removeItemFromCart()}"
+                                                 update=":DeleteMenuItemFromCartDlg"
+                                                 action="/cart/CartList?faces-redirect=true"
+                                                 onclick="PF('DeleteMenuItemFromCartDialog').hide()"/> &nbsp;
+
+                                <p:commandButton value="#{bundle.No}"
+                                                 icon="fas fa-window-close"
+                                                 update=":DeleteMenuItemFromCartDlg" 
+                                                 actionListener="#{cartController.clearFields()}"
+                                                 onclick="PF('DeleteMenuItemFromCartDialog').hide()"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                </p:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
+

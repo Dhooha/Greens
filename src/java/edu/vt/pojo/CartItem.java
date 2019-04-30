@@ -46,5 +46,8 @@ public class CartItem {
         this.qty = qty;
     }
     
-    
+    @Override
+    public String toString(){
+        return "CartItem:{qty:" + getQty() + "," + getMenuItem().toString() + "}";
+    }
 }
