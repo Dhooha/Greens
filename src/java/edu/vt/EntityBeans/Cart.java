@@ -54,6 +54,11 @@ public class Cart implements Serializable {
     @ManyToOne(optional = false)
     private User userId;
 
+    /*
+    ======================
+      ** Constructors **
+    ======================
+    */
     public Cart() {
     }
 
@@ -64,6 +69,12 @@ public class Cart implements Serializable {
     public Cart(Integer id, String cartItems) {
         this.id = id;
         this.cartItems = cartItems;
+    }
+    
+    // This constructor is added to the generated code
+    public Cart(String cartItems, User id){
+        this.cartItems = cartItems;
+        userId = id;
     }
 
     public Integer getId() {

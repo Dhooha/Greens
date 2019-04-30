@@ -11,8 +11,8 @@ import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
-import edu.vt.controllers.CartController;
 import edu.vt.EntityBeans.Cart;
+import edu.vt.FacadeBeans.CartFacade;
 
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -108,15 +108,9 @@ public class UserController implements Serializable {
     @EJB
     private UserPhotoFacade userPhotoFacade;
     
-    
-    /*
-    Inject CartController so that can create cart in DB at the same time create User
-     */
-    @Inject
-    private CartController cartController;
-
-   
-
+    @EJB
+    private CartFacade cartFacade;
+  
     /*
     ==================
     Constructor Method
@@ -318,6 +312,15 @@ public class UserController implements Serializable {
     public void setUserPhotoFacade(UserPhotoFacade userPhotoFacade) {
         this.userPhotoFacade = userPhotoFacade;
     }
+    
+    public CartFacade getCartFacade() {
+        return cartFacade;
+    }
+
+    public void setCartFacade(CartFacade cartFacade) {
+        this.cartFacade = cartFacade;
+    }
+
 
     /*
     ================
@@ -475,19 +478,14 @@ public class UserController implements Serializable {
             getUserFacade().create(newUser);
             
             //Also must create cart for this user
-            User justMade = getUserFacade().findByUsername(username);
-            System.out.println("************************************" + justMade.toString());
+            User justMadeUser = getUserFacade().findByUsername(username);
             
-            Cart c = new Cart();
-            c.setCartItems("");
-            c.setUserId(justMade);
+            // create an empty cart for the just created user
+            Cart emptyCart = new Cart("status:empty", justMadeUser);
             
-            cartController.prepareCreate();
-            cartController.setSelected(c);
-            cartController.create();
+            // call the cartFacade to create the empty cart            
+            getCartFacade().create(emptyCart);
             
-            //cartController.createCartForUser(justMade);
-
 
         } catch (EJBException | Password.CannotPerformOperationException ex) {
             username = "";
