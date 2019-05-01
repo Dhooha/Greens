@@ -73,12 +73,23 @@ public class MenuItem {
     public String toString(){
         StringBuilder b = new StringBuilder();
         for(int i = 0; i < this.specialInstructionItems.size(); i++){
+            b.append("\"");
             b.append(this.specialInstructionItems.get(i));
+            b.append("\"");
             if(i != (this.specialInstructionItems.size() - 1)){
                 b.append(",");
             }
         }
         String si = b.toString();
-        return "MenuItem:{name:" + this.name + ",description:" + this.description + ",price:" + this.price + ",specialInstructionItems:[" + si + "]}";
+        return  "\"MenuItem\":" +
+                    "{" +
+                        "\"name\":"         + "\"" + this.name  + "\"," +
+                        "\"description\":"  + "\"" + this.description +  "\"," +
+                        "\"price\":"        + "\"" + this.price + "\"," +
+                        "\"specialInstructionItems\":" +
+                            "[" + 
+                                si + 
+                            "]" +
+                    "}";
     }
 }

@@ -481,7 +481,7 @@ public class UserController implements Serializable {
             User justMadeUser = getUserFacade().findByUsername(username);
             
             // create an empty cart for the just created user
-            Cart emptyCart = new Cart("status:empty", justMadeUser);
+            Cart emptyCart = new Cart("{cartItems:[]}", justMadeUser);
             
             // call the cartFacade to create the empty cart            
             getCartFacade().create(emptyCart);

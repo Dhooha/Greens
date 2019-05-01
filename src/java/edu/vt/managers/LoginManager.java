@@ -8,11 +8,13 @@ import edu.vt.globals.Password;
 import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.globals.Methods;
+import edu.vt.controllers.CartController;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.inject.Inject;
 
 @Named(value = "loginManager")
 @SessionScoped
@@ -34,6 +36,11 @@ public class LoginManager implements Serializable {
      */
     @EJB
     private UserFacade userFacade;
+    
+    //Need to inject cart controller so can call its method to merge guest
+    //cart with user's cart saved in DB
+    @Inject
+    private CartController cartController;
 
     /*
     ==================
@@ -126,6 +133,7 @@ public class LoginManager implements Serializable {
 
             // Initialize the session map with user properties of interest
             initializeSessionMap(user);
+            cartController.mergeCart();
 
             // Redirect to show the Profile page
             return "/userAccount/Profile?faces-redirect=true";

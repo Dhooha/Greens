@@ -5,6 +5,7 @@ import edu.vt.EntityBeans.User;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.CartFacade;
+import edu.vt.FacadeBeans.UserFacade;
 
 import edu.vt.globals.Methods;
 import edu.vt.pojo.MenuItem;
@@ -28,11 +29,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import java.lang.StringBuilder;
+import org.primefaces.json.JSONArray;
+import org.primefaces.json.JSONObject;
+import java.lang.Integer;
 
 @Named("cartController")
 @SessionScoped
 public class CartController implements Serializable{
 
+    @EJB
+    private UserFacade userFacade;
+    
     @EJB
     private edu.vt.FacadeBeans.CartFacade ejbFacade;
     
@@ -190,13 +197,11 @@ public class CartController implements Serializable{
         return ejbFacade;
     }
     
-    /*
-    public void createCartForUser(User userId){
-        prepareCreate();
-        selected.setCartItems("");
-        selected.setUserId(userId);
-        create();
-    }*/
+    //used to get user object to save for selected
+    private UserFacade getUserFacade(){
+        return userFacade;
+    
+    }
     
     //Using this to create a cart when user makes an account should be okay
     //because selected is only used upon logining in, at which point it will
@@ -208,9 +213,6 @@ public class CartController implements Serializable{
     }
     
     public void create() {
-        
-        //Melanie added the below
-        //getFacade().create(selected);
         
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CartCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -244,6 +246,7 @@ public class CartController implements Serializable{
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
+                    System.out.println("going to edit selected aka put in DB");
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -442,7 +445,7 @@ public class CartController implements Serializable{
                 //user is signed in AND cart is null
                selected = getUserCart(primaryKey);
                //populate CartItems
-               //TODO
+               convertJsonToCartItems();
             }
             return primaryKey;
         }
@@ -531,7 +534,6 @@ public class CartController implements Serializable{
         cartItems.remove(selectedCartItem);
     }  
     
-    
     //Checks if the user is logged in or not to see if we need to update the database,
     //Update the user's cart by adding the menu item and quantity to Cart JSON String
     public void addItemToCart(){ 
@@ -540,9 +542,10 @@ public class CartController implements Serializable{
         if(c >= 0){
             addMenuItemToCart();
             updateTotalPrice();
+            System.out.println(convertCartItemsToJson());
+            
             //update selected with the new Menu item and quantity by updating the 
             //json string - note, pushing to DB will create notification
-            //TODO - test
             selected.setCartItems(convertCartItemsToJson());
             //push to database aka call update()
             update();
@@ -567,7 +570,6 @@ public class CartController implements Serializable{
             updateTotalPrice();
             //update selected with the new Menu item and quantity by updating the 
             //json string
-            //TODO - test
             selected.setCartItems(convertCartItemsToJson());
             //push to database aka call update()
             update();
@@ -591,7 +593,6 @@ public class CartController implements Serializable{
             //update selected with the new Menu item and quantity by updating the 
             //json string            deleteCartItemFromCart(item);
 
-            //TODO - test
             selected.setCartItems(convertCartItemsToJson());
             //push to database aka call update()
             update();
@@ -604,45 +605,176 @@ public class CartController implements Serializable{
         }  
     }
     
-    //TODO: call this when login
     //when the user signs in, check if they have a cart and merge it with their
     //current cart
-    //TODO - call check???
     public void mergeCart(){
+        
+        //get Cart from DB
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
         Cart dbCart = getUserCart(primaryKey);
+     
+        List<CartItem> temp = new ArrayList<CartItem>();
         
-        //TODO
-        //convert Cart to cartItems
-        List<CartItem> dbCartItems = new ArrayList<>();
-        
-        //TODO: also merge instructions?
-        for(CartItem c: cartItems){
-            for(CartItem d: dbCartItems){
-                if(c.getMenuItem().getName().equals(d.getMenuItem().getName())){
-                    int totalQuantity = c.getQty() + d.getQty();
-                    c.setQty(totalQuantity);
-                    return;
-                }
-            }
+        //possible that user logged in with no using of cart and cartItems is null
+        //and selected is still null
+        if(cartItems == null){
+            cartItems = new ArrayList<CartItem>();
+        }  
+        if(selected == null){
+            selected = new Cart();
         }
         
-        //TODO - test
-        selected.setCartItems(convertCartItemsToJson());
-        //push to database aka call update()
-        update();
+        //set selected UserId and selected id so does not get messed up
+        User justSignedIn = getUserFacade().findById(primaryKey);
+        selected.setUserId(justSignedIn);
+        selected.setId(dbCart.getId());
+        
+        //possible that user added something to cart and then deleted it so now
+        //cartItems is empty (would flow from earlier statement too)
+        if(cartItems.isEmpty()){
+            //then the cart should just be whatever was saved in DB
+            System.out.println("cart was empty and so we just use what we already have in DB");
+            System.out.println("what we have in DB is " + dbCart.getCartItems());
+            selected.setCartItems(dbCart.getCartItems());
+            convertJsonToCartItems();
+        }
+        //possible that DB is empty, so cartItems should just be whatever is already there
+        else if(dbCart.getCartItems().equals("{cartItems:[]}")){
+            System.out.println("DB was empty and so we just use what we already have in cartItems");
+            System.out.println("what we already have in cartitems is" + convertCartItemsToJson());
+            selected.setCartItems(convertCartItemsToJson());
+            update();
+        } 
+        else{
+            //TODO - doesn't work
+            System.out.println("we must merge");
+            //store current cartItems in temp
+            for(CartItem c: cartItems){
+                temp.add(c);
+            }
+            
+            //change selected to be what is in DB
+            selected.setCartItems(dbCart.getCartItems());
+            convertJsonToCartItems();
+            
+             //merge temp and cartItems
+            //TODO: also merge instructions?
+            for(CartItem d: temp){
+                for(CartItem c: cartItems){
+                    if(c.getMenuItem().getName().equals(d.getMenuItem().getName())){
+                        int totalQuantity = c.getQty() + d.getQty();
+                        c.setQty(totalQuantity);
+                    }
+                }
+            }
+            //push to database aka call update()
+            selected.setCartItems(convertCartItemsToJson());
+            update();
+        }
+         updateTotalPrice();
     }
     
     //converts static variable cartItems into json to be saved in the database
     public String convertCartItemsToJson(){
         StringBuilder s = new StringBuilder();
-        s.append("]");
-        for(CartItem c: cartItems){
-           s.append(c.toString());
+        s.append("{");
+        s.append("\"cartItems\":[");
+        for(int i=0; i< cartItems.size(); i++){
+           s.append(cartItems.get(i).toString());
+           if(i < (cartItems.size() - 1)){
+                s.append(",");
+           }
         }
         s.append("]");
+        s.append("}");
         System.out.println(s.toString());
         return s.toString();
+    }
+    
+    //NOTE - selected.cartItems is never null when calling this method
+    public void convertJsonToCartItems(){
+
+        //Json Data should look like
+        /*
+        {
+            "cartItems":[
+                {"CartItem":
+                    {
+                        "qty":"#",
+                          
+                        "MenuItem":{
+                            "name":"x",
+                            "description":"x",
+                            "price":"x",
+                            "specialInstructionItems":[
+                                "x",
+                                "x",
+                                "x"...
+                            ]
+                        }                       
+                        
+                    }
+                },...
+            ]
+        }
+        */
+        System.out.println("the cart items selected string is" + selected.getCartItems());
+        
+        JSONObject dict = new JSONObject(selected.getCartItems());
+        
+        System.out.println("dict looks like looks like " + dict.toString() + "*****************");
+        JSONArray cartItemsJSON = dict.getJSONArray("cartItems");
+        //System.out.println("cartitems json looks like " + cartItemsJSON.toString() + "*****************");
+        
+        if (cartItemsJSON.toString().equals("[]")) {
+                System.out.println("it's empty");
+                //cartItems = new ArrayList();
+                cartItems = new ArrayList<CartItem>();
+        }
+        else{
+            if(cartItems == null){
+                cartItems = new ArrayList<CartItem>();
+            }
+            else{
+                cartItems.clear();
+            }
+            
+            System.out.println("we are working to put cartItemsJSON into DB" + cartItemsJSON.toString());
+            
+            JSONObject cartItemJSONObject = new JSONObject();
+            for(int i = 0; i < cartItemsJSON.length(); i++){
+
+                JSONObject unwrap = cartItemsJSON.getJSONObject(i);
+                System.out.println("we are working to put unwrap into DB" +unwrap.toString());
+
+                String cartItemData = unwrap.optString("CartItem", "");
+                JSONObject cartItemObject = new JSONObject(cartItemData);
+                
+                System.out.println("cartItemData is" + cartItemObject.toString());
+                //get qty
+                int qty = Integer.parseInt(cartItemObject.optString("qty", ""));
+                System.out.println("qty is" + qty);
+                
+                //get Menu Item
+                String menuItem = cartItemObject.optString("MenuItem", "");
+                JSONObject menuItemObject = new JSONObject(menuItem);
+                
+                //get name
+                String name = menuItemObject.optString("name", "");
+                
+                //get description
+                String description = menuItemObject.optString("description ", "");
+                
+                //get price
+                double price = menuItemObject.optDouble("price", 0.0);;
+                
+                //TODO - get special instructions
+                List<String> specialInstructionItems = new ArrayList<String>();
+                MenuItem m = new MenuItem(name, description, price, specialInstructionItems);
+                CartItem c = new CartItem(m, qty);
+                cartItems.add(c);
+            }
+        }
     }
     
     //Removes the Json string items from the cart object as well as the cart table  

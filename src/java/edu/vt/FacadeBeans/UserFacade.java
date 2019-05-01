@@ -51,6 +51,18 @@ public class UserFacade extends AbstractFacade<User> {
         }
     }
     
+        /**
+     * @param username is the username attribute (column) value of the user
+     * @return object reference of the User entity whose user name is username
+     */
+    public User findById(Integer id) {
+
+        User u = (User)(em.createNamedQuery("User.findById")
+                .setParameter("id", id)
+                .getSingleResult());
+        return u;
+    }
+    
     /**
      * Deletes the User entity whose primary key is id
      * @param id is the Primary Key of the User entity in a table row in the database.

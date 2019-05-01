@@ -48,6 +48,12 @@ public class CartItem {
     
     @Override
     public String toString(){
-        return "CartItem:{qty:" + getQty() + "," + getMenuItem().toString() + "}";
+        return "{" +
+                    "\"CartItem\":" +
+                        "{" +
+                            "\"qty\":" + "\"" + getQty() + "\"," +
+                            getMenuItem().toString() + 
+                        "}" +
+                "}";
     }
 }
