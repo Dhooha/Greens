@@ -10,6 +10,7 @@ import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.globals.Methods;
 import edu.vt.pojo.MenuItem;
 import edu.vt.pojo.CartItem;
+import edu.vt.managers.OrderManager;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -42,6 +43,9 @@ public class CartController implements Serializable{
     
     @EJB
     private edu.vt.FacadeBeans.CartFacade ejbFacade;
+    
+    @Inject
+    private OrderManager orderManager;
     
     @Inject
     private MenuController menuController;
@@ -445,7 +449,7 @@ public class CartController implements Serializable{
                 //user is signed in AND cart is null
                selected = getUserCart(primaryKey);
                //populate CartItems
-               convertJsonToCartItems();
+               cartItems = orderManager.convertJsonToCartItems(selected.getCartItems());
             }
             return primaryKey;
         }
@@ -636,7 +640,7 @@ public class CartController implements Serializable{
             System.out.println("cart was empty and so we just use what we already have in DB");
             System.out.println("what we have in DB is " + dbCart.getCartItems());
             selected.setCartItems(dbCart.getCartItems());
-            convertJsonToCartItems();
+            cartItems = orderManager.convertJsonToCartItems(selected.getCartItems());
         }
         //possible that DB is empty, so cartItems should just be whatever is already there
         else if(dbCart.getCartItems().equals("{cartItems:[]}")){
@@ -655,7 +659,7 @@ public class CartController implements Serializable{
             
             //change selected to be what is in DB
             selected.setCartItems(dbCart.getCartItems());
-            convertJsonToCartItems();
+            cartItems = orderManager.convertJsonToCartItems(selected.getCartItems());
             
              //merge temp and cartItems
             //TODO: also merge instructions?
@@ -689,92 +693,6 @@ public class CartController implements Serializable{
         s.append("}");
         System.out.println(s.toString());
         return s.toString();
-    }
-    
-    //NOTE - selected.cartItems is never null when calling this method
-    public void convertJsonToCartItems(){
-
-        //Json Data should look like
-        /*
-        {
-            "cartItems":[
-                {"CartItem":
-                    {
-                        "qty":"#",
-                          
-                        "MenuItem":{
-                            "name":"x",
-                            "description":"x",
-                            "price":"x",
-                            "specialInstructionItems":[
-                                "x",
-                                "x",
-                                "x"...
-                            ]
-                        }                       
-                        
-                    }
-                },...
-            ]
-        }
-        */
-        System.out.println("the cart items selected string is" + selected.getCartItems());
-        
-        JSONObject dict = new JSONObject(selected.getCartItems());
-        
-        System.out.println("dict looks like looks like " + dict.toString() + "*****************");
-        JSONArray cartItemsJSON = dict.getJSONArray("cartItems");
-        //System.out.println("cartitems json looks like " + cartItemsJSON.toString() + "*****************");
-        
-        if (cartItemsJSON.toString().equals("[]")) {
-                System.out.println("it's empty");
-                //cartItems = new ArrayList();
-                cartItems = new ArrayList<CartItem>();
-        }
-        else{
-            if(cartItems == null){
-                cartItems = new ArrayList<CartItem>();
-            }
-            else{
-                cartItems.clear();
-            }
-            
-            System.out.println("we are working to put cartItemsJSON into DB" + cartItemsJSON.toString());
-            
-            JSONObject cartItemJSONObject = new JSONObject();
-            for(int i = 0; i < cartItemsJSON.length(); i++){
-
-                JSONObject unwrap = cartItemsJSON.getJSONObject(i);
-                System.out.println("we are working to put unwrap into DB" +unwrap.toString());
-
-                String cartItemData = unwrap.optString("CartItem", "");
-                JSONObject cartItemObject = new JSONObject(cartItemData);
-                
-                System.out.println("cartItemData is" + cartItemObject.toString());
-                //get qty
-                int qty = Integer.parseInt(cartItemObject.optString("qty", ""));
-                System.out.println("qty is" + qty);
-                
-                //get Menu Item
-                String menuItem = cartItemObject.optString("MenuItem", "");
-                JSONObject menuItemObject = new JSONObject(menuItem);
-                
-                //get name
-                String name = menuItemObject.optString("name", "");
-                
-                //get description
-                String description = menuItemObject.optString("description ", "");
-                
-                //get price
-                double price = menuItemObject.optDouble("price", 0.0);;
-                
-                //TODO - get special instructions
-                List<String> specialInstructionItems = new ArrayList<String>();
-                MenuItem m = new MenuItem(name, description, price, specialInstructionItems);
-                CartItem c = new CartItem(m, qty);
-                cartItems.add(c);
-            }
-        }
     }
     
     //Removes the Json string items from the cart object as well as the cart table  
