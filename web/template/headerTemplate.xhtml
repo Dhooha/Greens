@@ -119,21 +119,26 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     <i class="fas fa-shopping-cart"></i>&nbsp; #{bundle.Cart}
                                 </h:link> 
 
+                               
+
                                 <!--
+                                ==================
+                                  ** Reviews **
+                                ==================
+                                -->
+                                <h:link outcome="/index" class="standardText">
+                                    <i class="far fa-newspaper"></i>&nbsp; #{bundle.Reviews}
+
+                                </h:link>
+                                
+                                
+                                 <!--
                                 =============
                                   ** About **
                                 =============
                                 -->
                                 <h:link outcome="/index" class="standardText">
                                     <i class="fas fa-info-circle"></i>&nbsp; #{bundle.About}
-
-                                </h:link>
-
-                                <!--
-                                
-                                -->
-                                <h:link outcome="/index" class="standardText">
-                                    <i class="far fa-newspaper"></i>&nbsp; #{bundle.Reviews}
 
                                 </h:link>
 
@@ -178,6 +183,10 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     <h:link outcome="/SignIn" class="standardText">
                                         <i class="fas fa-sign-in-alt"></i>&nbsp; #{bundle.SignIn}
 
+                                    </h:link>
+                                    
+                                    <h:link outcome="/userAccount/CreateAccount" class="standardText">
+                                        <i class="fas fa-user-plus"></i> &nbsp; #{bundle.CreateAccount}
                                     </h:link>
                                 </c:if>
 

@@ -14,7 +14,63 @@
         </ui:define>
 
         <ui:define name="editableContent">
+            <div align="center" style="width:95%">
+                <h:form id="OrderHistoryForm">
+                    <p:panel header="Order History List">
+                        <p:dataTable id="dataList"
+                                     value="#{ordersController.orderItems}"
+                                     selectionMode="single"
+                                     selection="#{ordersController.selected}"
+                                     var="orderItem"
+                                     paginator="true"
+                                     rowKey="#{orderItem.id}"
+                                     rowIndexVar="rowNumber"
+                                     rows="10"
+                                     rowsPerPageTemplate="10, 20, 30, 40, 50"
+                                     class="dataTable">
+                            <!-- Update the activation and deactivation buttons -->
+                            <p:ajax event="rowSelect" update="viewButton"/>
+                            
+                            <!-- Order ID -->
+                            <p:column headerText="Id">
+                                <div align="center"><h:outputText value="#{orderItem.id}"/></div>
+                            </p:column>
+                            
+                            <!-- Order Type -->
+                            <p:column headerText="Type">
+                                <div align="center"><h:outputText value="#{orderItem.orderType}"/></div>
+                            </p:column>
+                            
+                            <!-- Order Status -->
+                            <p:column headerText="Status">
+                                <div align="center"><h:outputText value="#{orderItem.orderStatus}"/></div>
+                            </p:column>
+                            
+                            <!-- Order Total -->
+                            <p:column headerText="Total">
+                                <div><h:outputText value="#{orderItem.orderTotal}"/></div>
+                            </p:column>
+                            
+                            <!-- Footer -->
+                            <f:facet name="footer">
+                                <p:commandButton id="viewButton"
+                                                 value="#{bundle.View}"
+                                                 icon="fas fa-eye"
+                                                 update=":OrdersViewDlg"
+                                                 oncomplete="PF('OrdersViewDialog').show()"
+                                                 disabled="#{empty ordersController.selected}"/>
+                            </f:facet>
+                           
+                        </p:dataTable>
+                                     
+                    </p:panel>
+                </h:form>
+            </div>
             
+            <!--
+            Clicking the View Button displays the details of the Order
+            -->
+            <ui:include src="/orders/View.xhtml"/>
         </ui:define>
     </ui:composition>
 

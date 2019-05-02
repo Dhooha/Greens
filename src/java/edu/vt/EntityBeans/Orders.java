@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orders.findByOrderStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus")
     , @NamedQuery(name = "Orders.findByOrderTotal", query = "SELECT o FROM Orders o WHERE o.orderTotal = :orderTotal")
     , @NamedQuery(name = "Orders.findBySpecialInstructions", query = "SELECT o FROM Orders o WHERE o.specialInstructions = :specialInstructions")
-    //,@NamedQuery(name = "Orders.findOrdersByUserPrimaryKey", query = "SELECT o FROM Orders o WHERE o.user_id = :primaryKey")
+    ,@NamedQuery(name = "Orders.findOrdersByUserPrimaryKey", query = "SELECT o FROM Orders o WHERE o.userId.id = :primaryKey")
 })
 public class Orders implements Serializable {
 
