@@ -186,43 +186,27 @@ public class OrderManager implements Serializable {
             ]
         }
         */
-        System.out.println("the cart items selected string is" + JSONCartItemData);
         
         JSONObject dict = new JSONObject(JSONCartItemData);
         
-        System.out.println("dict looks like looks like " + dict.toString() + "*****************");
         JSONArray cartItemsJSON = dict.getJSONArray("cartItems");
-        //System.out.println("cartitems json looks like " + cartItemsJSON.toString() + "*****************");
-        
+
         if (cartItemsJSON.toString().equals("[]")) {
                 System.out.println("it's empty");
-                //cartItems = new ArrayList();
-                //cartItems = new ArrayList<CartItem>();
                 return ret;
         }
         else{
-            /*if(cartItems == null){
-                cartItems = new ArrayList<CartItem>();
-            }
-            else{
-                cartItems.clear();
-            }*/
-            
-            System.out.println("we are working to put cartItemsJSON into DB" + cartItemsJSON.toString());
             
             JSONObject cartItemJSONObject = new JSONObject();
             for(int i = 0; i < cartItemsJSON.length(); i++){
 
                 JSONObject unwrap = cartItemsJSON.getJSONObject(i);
-                System.out.println("we are working to put unwrap into DB" +unwrap.toString());
 
                 String cartItemData = unwrap.optString("CartItem", "");
                 JSONObject cartItemObject = new JSONObject(cartItemData);
                 
-                System.out.println("cartItemData is" + cartItemObject.toString());
                 //get qty
                 int qty = Integer.parseInt(cartItemObject.optString("qty", ""));
-                System.out.println("qty is" + qty);
                 
                 //get Menu Item
                 String menuItem = cartItemObject.optString("MenuItem", "");
@@ -232,13 +216,23 @@ public class OrderManager implements Serializable {
                 String name = menuItemObject.optString("name", "");
                 
                 //get description
-                String description = menuItemObject.optString("description ", "");
+                String description = menuItemObject.optString("description", "");
                 
                 //get price
-                double price = menuItemObject.optDouble("price", 0.0);;
+                double price = menuItemObject.optDouble("price", 0.0);
                 
-                //TODO - get special instructions
+                //get special instructions
+                String specialItemInstructionsList = menuItemObject.optString("specialInstructionItems", "");
                 List<String> specialInstructionItems = new ArrayList<String>();
+                
+                String[] specialInstructionString = specialItemInstructionsList.toString().split("\"");
+                for(int j = 0; j < specialInstructionString.length; j++){
+                    if(j % 2 != 0){
+                        specialInstructionItems.add(specialInstructionString[j]);
+                    }
+                }
+                
+                //make objects and store in arraylist to return
                 MenuItem m = new MenuItem(name, description, price, specialInstructionItems);
                 CartItem c = new CartItem(m, qty);
                 ret.add(c);

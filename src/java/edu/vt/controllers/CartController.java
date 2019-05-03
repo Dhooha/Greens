@@ -616,8 +616,6 @@ public class CartController implements Serializable{
         //get Cart from DB
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
         Cart dbCart = getUserCart(primaryKey);
-     
-        List<CartItem> temp = new ArrayList<CartItem>();
         
         //possible that user logged in with no using of cart and cartItems is null
         //and selected is still null
@@ -650,18 +648,12 @@ public class CartController implements Serializable{
             update();
         } 
         else{
-            //TODO - doesn't work
+            List<CartItem> temp = orderManager.convertJsonToCartItems(dbCart.getCartItems());
+            List<CartItem> saveToAddLater = new ArrayList<CartItem>();
+                   
             System.out.println("we must merge");
-            //store current cartItems in temp
-            for(CartItem c: cartItems){
-                temp.add(c);
-            }
             
-            //change selected to be what is in DB
-            selected.setCartItems(dbCart.getCartItems());
-            cartItems = orderManager.convertJsonToCartItems(selected.getCartItems());
-            
-             //merge temp and cartItems
+             //merge temp and cartItems, neither should be empty
             //TODO: also merge instructions?
             for(CartItem d: temp){
                 for(CartItem c: cartItems){
@@ -669,8 +661,17 @@ public class CartController implements Serializable{
                         int totalQuantity = c.getQty() + d.getQty();
                         c.setQty(totalQuantity);
                     }
+                    else{
+                        //cannot add to cartItems here because of double modification exception
+                        saveToAddLater.add(d);
+                    }
                 }
             }
+            
+            for(CartItem s: saveToAddLater){
+                cartItems.add(s);
+            }
+            
             //push to database aka call update()
             selected.setCartItems(convertCartItemsToJson());
             update();

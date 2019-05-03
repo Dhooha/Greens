@@ -53,7 +53,7 @@ public class CartItem {
                         "{" +
                             "\"qty\":" + "\"" + getQty() + "\"," +
                             getMenuItem().toString() + 
-                        "}" +
+                        "}" + 
                 "}";
     }
 }
