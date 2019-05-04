@@ -14,7 +14,7 @@
         </ui:define>
 
         <ui:define name="editableContent">
-            <div align="center" style="width:95%">
+            <div align="center" style="width:85%;text-align: center;margin: 0 auto">
                 <h:form id="OrderHistoryForm">
                     <p:panel header="Order History List">
                         <p:dataTable id="dataList"
@@ -30,7 +30,7 @@
                                      class="dataTable">
                             <!-- Update the activation and deactivation buttons -->
                             <p:ajax event="rowSelect" update="viewButton"/>
-                            
+                            <p:ajax event="rowUnselect" update="viewButton"/> 
                             <!-- Order ID -->
                             <p:column headerText="Id">
                                 <div align="center"><h:outputText value="#{orderItem.id}"/></div>
