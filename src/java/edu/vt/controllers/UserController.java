@@ -84,6 +84,7 @@ public class UserController implements Serializable {
     private String deliveryZipcode;
     
     private String phoneNumber;
+    private String phoneCarrier;
 
     private int securityQuestionNumber;
     private String answerToSecurityQuestion;
@@ -220,6 +221,14 @@ public class UserController implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    
+    public String getPhoneCarrier() {
+        return phoneCarrier;
+    }
+
+    public void setPhoneCarrier(String phoneCarrier) {
+        this.phoneCarrier = phoneCarrier;
     }
 
     public int getSecurityQuestionNumber() {
@@ -472,6 +481,7 @@ public class UserController implements Serializable {
             newUser.setDeliveryState(deliveryState);
             newUser.setDeliveryZipcode(deliveryZipcode);
             newUser.setPhoneNumber(phoneNumber);
+            newUser.setPhoneCarrier(phoneCarrier);
             newUser.setSecurityQuestionNumber(securityQuestionNumber);
             newUser.setSecurityAnswer(answerToSecurityQuestion);
             newUser.setEmail(email);
@@ -544,6 +554,7 @@ public class UserController implements Serializable {
             editUser.setDeliveryState(this.selected.getDeliveryState());
             editUser.setDeliveryZipcode(this.selected.getDeliveryZipcode());
             editUser.setPhoneNumber(this.selected.getPhoneNumber());
+            editUser.setPhoneNumber(this.selected.getPhoneCarrier());
             editUser.setEmail(this.selected.getEmail());
 
             // Store the changes in the database

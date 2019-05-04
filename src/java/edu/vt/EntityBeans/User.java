@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByDeliveryState", query = "SELECT u FROM User u WHERE u.deliveryState = :deliveryState")
     , @NamedQuery(name = "User.findByDeliveryZipcode", query = "SELECT u FROM User u WHERE u.deliveryZipcode = :deliveryZipcode")
     , @NamedQuery(name = "User.findByPhoneNumber", query = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber")
+    , @NamedQuery(name = "User.findByPhoneCarrier", query = "SELECT u FROM User u WHERE u.phoneCarrier = :phoneCarrier")
     , @NamedQuery(name = "User.findBySecurityQuestionNumber", query = "SELECT u FROM User u WHERE u.securityQuestionNumber = :securityQuestionNumber")
     , @NamedQuery(name = "User.findBySecurityAnswer", query = "SELECT u FROM User u WHERE u.securityAnswer = :securityAnswer")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
@@ -103,6 +104,10 @@ public class User implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
     
+    @Size(min = 1, max = 15)
+    @Column(name = "phone_carrier")
+    private String phoneCarrier;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "security_question_number")
@@ -134,7 +139,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String username, String password, String firstName, String lastName, String deliveryAddress1, String deliveryCity, String deliveryState, String deliveryZipcode, String phoneNumber, int securityQuestionNumber, String securityAnswer, String email) {
+    public User(Integer id, String username, String password, String firstName, String lastName, String deliveryAddress1, String deliveryCity, String deliveryState, String deliveryZipcode, String phoneNumber, String phoneCarrier, int securityQuestionNumber, String securityAnswer, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -145,6 +150,7 @@ public class User implements Serializable {
         this.deliveryState = deliveryState;
         this.deliveryZipcode = deliveryZipcode;
         this.phoneNumber = phoneNumber;
+        this.phoneCarrier = phoneCarrier;
         this.securityQuestionNumber = securityQuestionNumber;
         this.securityAnswer = securityAnswer;
         this.email = email;
@@ -244,6 +250,14 @@ public class User implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    
+    public String getPhoneCarrier() {
+        return phoneCarrier;
+    }
+
+    public void setPhoneCarrier(String phoneCarrier) {
+        this.phoneCarrier = phoneCarrier;
     }
 
     public int getSecurityQuestionNumber() {

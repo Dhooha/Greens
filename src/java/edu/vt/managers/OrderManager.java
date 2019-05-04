@@ -10,6 +10,7 @@ import edu.vt.FacadeBeans.OrdersFacade;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.controllers.OrdersController;
 import edu.vt.controllers.CartController;
+import edu.vt.controllers.TextMessageController;
 import edu.vt.globals.Methods;
 import edu.vt.pojo.CartItem;
 import edu.vt.pojo.MenuItem;
@@ -24,6 +25,8 @@ import javax.inject.Named;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 import javax.faces.event.ValueChangeEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -59,9 +62,16 @@ public class OrderManager implements Serializable {
     //Inject CartController to help the order manager save the menu items 
     //that are being bought (which are in the cart), to the order
      @Inject OrdersController ordersController;
+     
+    //Inject TextMessageController to help order manager send text message when
+    //order is ready
+    @Inject
+    private TextMessageController textMessageController;
     
     @EJB
     private UserFacade userFacade;
+    
+
 
 
     
@@ -135,16 +145,13 @@ public class OrderManager implements Serializable {
     public String placeOrder() {
         
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
-
-        
         User userPlacingOrder = getUserFacade().findById(primaryKey);
 
         //Integer id, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal, String specialInstructions
         Orders o = new Orders();
         
-        //TODO
         //I need the User object
-        //o.setUserId();
+        o.setUserId(userPlacingOrder);
 
         String orderItems = cartController.getSelected().getCartItems();
         o.setOrderItems(orderItems);
@@ -179,7 +186,57 @@ public class OrderManager implements Serializable {
         specialInstructions = "";
         notification = false;
     
+        //find the order you just created
+        //I doubt it updates the method
+        Orders f = getFacade().findOrdersbyId(o.getId());
+        if(f != null){
+            System.out.println("yay!");
+        }
+        
+        MyTimerTask timerTask = new MyTimerTask(f.getId());
+        
+        Timer timer = new Timer();
+        timer.schedule(timerTask, 1000);
+        
         return "/orders/OrderHistory?faces-redirect=true";
+    }
+    
+    //used to get Order id and call changeOrder status properly
+    class MyTimerTask extends TimerTask  {
+        Integer param;
+
+        public MyTimerTask(Integer param) {
+            this.param = param;
+        }
+
+        @Override
+        public void run() {
+            // You can do anything you want with param
+            changeOrderStatus("READY", param);
+        }
+    }
+    
+    //manage changing order status
+    public void changeOrderStatus(String newStatus, Integer id){
+        Orders o = getFacade().findOrdersbyId(id);
+        
+        if(newStatus == "READY"){
+            //check flag
+            //sent text or ask controller to do it
+            if(o.getTextNotification()){
+                //ask textmessate controller to send text
+                textMessageController.setCellPhoneNumber(o.getUserId().getPhoneNumber());
+                textMessageController.setCellPhoneCarrierDomain(o.getUserId().getPhoneCarrier());
+                textMessageController.setMmsTextMessage("Your order is ready.");
+                try{
+                    textMessageController.sendTextMessage();
+                }
+                catch(Exception AddressException){
+                    System.out.println("Phone Number was invalid");  
+                }
+            }
+        }
+        o.setOrderStatus(newStatus);
     }
     
     public void changeDeliveryDisplay(ValueChangeEvent e){
@@ -187,21 +244,6 @@ public class OrderManager implements Serializable {
         if(e.toString().equals("DELIVERY")){
             displayDelivery = "block";
         }
-    }
-    
-    //manage changing order status
-    //TODO: Should pass userid or Order id?
-    //probably order id
-    public void changeOrderStatus(String newStatus, Integer id){
-        Orders o = getFacade().findOrdersbyId(id);
-        
-        if(newStatus == "READY"){
-            //check flag
-            //sent text or ask controller to do it
-            //TODO
-        
-        }
-        o.setOrderStatus(newStatus);
     }
     
     //Takes in a JSON string and creates from it an Array of CartItems that have

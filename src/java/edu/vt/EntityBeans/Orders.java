@@ -180,7 +180,7 @@ public class Orders implements Serializable {
         this.specialInstructions = specialInstructions;
     }
     
-    public boolean isTextNotification() {
+    public boolean getTextNotification() {
         return textNotification;
     }
 
