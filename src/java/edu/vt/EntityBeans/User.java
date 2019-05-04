@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByDeliveryCity", query = "SELECT u FROM User u WHERE u.deliveryCity = :deliveryCity")
     , @NamedQuery(name = "User.findByDeliveryState", query = "SELECT u FROM User u WHERE u.deliveryState = :deliveryState")
     , @NamedQuery(name = "User.findByDeliveryZipcode", query = "SELECT u FROM User u WHERE u.deliveryZipcode = :deliveryZipcode")
+    , @NamedQuery(name = "User.findByPhoneNumber", query = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber")
     , @NamedQuery(name = "User.findBySecurityQuestionNumber", query = "SELECT u FROM User u WHERE u.securityQuestionNumber = :securityQuestionNumber")
     , @NamedQuery(name = "User.findBySecurityAnswer", query = "SELECT u FROM User u WHERE u.securityAnswer = :securityAnswer")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
@@ -98,6 +99,10 @@ public class User implements Serializable {
     @Column(name = "delivery_zipcode")
     private String deliveryZipcode;
     
+    @Size(min = 1, max = 10)
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "security_question_number")
@@ -129,7 +134,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String username, String password, String firstName, String lastName, String deliveryAddress1, String deliveryCity, String deliveryState, String deliveryZipcode, int securityQuestionNumber, String securityAnswer, String email) {
+    public User(Integer id, String username, String password, String firstName, String lastName, String deliveryAddress1, String deliveryCity, String deliveryState, String deliveryZipcode, String phoneNumber, int securityQuestionNumber, String securityAnswer, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -139,6 +144,7 @@ public class User implements Serializable {
         this.deliveryCity = deliveryCity;
         this.deliveryState = deliveryState;
         this.deliveryZipcode = deliveryZipcode;
+        this.phoneNumber = phoneNumber;
         this.securityQuestionNumber = securityQuestionNumber;
         this.securityAnswer = securityAnswer;
         this.email = email;
@@ -230,6 +236,14 @@ public class User implements Serializable {
 
     public void setDeliveryZipcode(String deliveryZipcode) {
         this.deliveryZipcode = deliveryZipcode;
+    }
+    
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getSecurityQuestionNumber() {

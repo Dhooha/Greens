@@ -28,6 +28,7 @@ CREATE TABLE User
     delivery_city VARCHAR(64),
     delivery_state VARCHAR(2),
     delivery_zipcode VARCHAR(10),    /* e.g., 24060-1804 */
+    phone_number VARCHAR(10), 
     security_question_number INT NOT NULL,  /* Refers to the number of the selected security question */
     security_answer VARCHAR(128) NOT NULL,
     email VARCHAR(128) NOT NULL,

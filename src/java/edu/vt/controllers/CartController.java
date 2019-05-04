@@ -705,7 +705,7 @@ public class CartController implements Serializable{
         updateTotalPrice();
         
         //update database
-        selected.setCartItems(" ");
+        selected.setCartItems("{cartItems:[]}");
         update();
     }
     
@@ -713,11 +713,11 @@ public class CartController implements Serializable{
     //otherwise, it will ask the user to login, and redirect the user to the 
     //login/create user page.
     public String checkOutCart(){
-        
+        System.out.println();
         //if the user is logged in
         if(Methods.sessionMap().get("username") != null){
             //redirect to order page
-            return "/orders/OrderHistory.xhtml?faces-redirect=true";
+            return "/orders/PlaceOrder.xhtml?faces-redirect=true";
         }
         else{
             //redirect to login page

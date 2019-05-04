@@ -8,9 +8,13 @@ import edu.vt.EntityBeans.Orders;
 import edu.vt.FacadeBeans.OrdersFacade;
 import edu.vt.controllers.OrdersController;
 import edu.vt.controllers.CartController;
+import edu.vt.controllers.UserController;
 import edu.vt.globals.Methods;
 import edu.vt.pojo.CartItem;
 import edu.vt.pojo.MenuItem;
+import edu.vt.EntityBeans.User;
+import edu.vt.FacadeBeans.UserFacade;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,9 +43,14 @@ public class OrderManager implements Serializable {
     //some static variables that will be editable from the place an Order page
     String orderType;
     String specialInstructions;
+    boolean notification = false;
     
     //used to update Dababase
     OrdersFacade ejbFacade;
+    
+    //used to get user who is signed in
+    @EJB
+    private UserFacade userFacade;
     
     //Inject CartController to help the order manager save the menu items 
     //that are being bought (which are in the cart), to the order
@@ -51,6 +60,10 @@ public class OrderManager implements Serializable {
     //Inject CartController to help the order manager save the menu items 
     //that are being bought (which are in the cart), to the order
      @Inject OrdersController ordersController;
+     
+     //Inject CartController to help the order manager save the menu items 
+    //that are being bought (which are in the cart), to the order
+     @Inject UserController userController;
     
     //TODO: need POJO Class
     // private List<Menu> orderItems = null;
@@ -74,6 +87,10 @@ public class OrderManager implements Serializable {
         return ejbFacade;
     }
     
+    private UserFacade getUserFacade() {
+        return userFacade;
+    }
+    
     public String getOrderType() {
         return orderType;
     }
@@ -90,6 +107,14 @@ public class OrderManager implements Serializable {
         this.specialInstructions = specialInstructions;
     }
     
+    public boolean isNotification() {
+        return notification;
+    }
+
+    public void setNotification(boolean notification) {
+        this.notification = notification;
+    }
+    
     
     //TODO: what about phone number? I guess that will be in User... but how 
     //does the system remember to send the text?
@@ -99,14 +124,20 @@ public class OrderManager implements Serializable {
     //TODO: wouldn't it be better to call OrderController to create..? won't
     //OrderController have the parameters?
     public String placeOrder() {
-        
+        ordersController.prepareCreate();
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
+        
+        System.out.println("the prim key is" + primaryKey);
+        if(getUserFacade() == null){
+            System.out.println("MUAUAUA");
+        }
+        
+        User userPlacingOrder = getUserFacade().findById(primaryKey);
         //Integer id, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal, String specialInstructions
         Orders o = new Orders();
         
-        //TODO
-        //I need the User object
-        //o.setUserId();
+        
+        o.setUserId(userPlacingOrder);
 
         String orderItems = cartController.getSelected().getCartItems();
         o.setOrderItems(orderItems);
@@ -117,24 +148,36 @@ public class OrderManager implements Serializable {
         
         o.setOrderStatus("PLACED");
         
-        //TODO
         //pull pieces of orderItems and get total and place here
-        o.setOrderTotal(0);
+        float total = Float.parseFloat(cartController.getTotalAfterTaxes());
+        o.setOrderTotal(total);
+        
+        specialInstructions = "ARE WE STILL USING THIS?";
         o.setSpecialInstructions(specialInstructions);
         
-        //TODO: notification flag
+        if(notification){
+            o.setTextNotification(true);
+            //TODO: must check to make sure user has input phone number
+        }
+        else{
+            o.setTextNotification(false);
+        }
         
         //Create an Order Object and then call the OrderFacade create and pass all
         //necessary parameters - it felt weird to recreate what already exists in 
         //ordercontroller... but then selected is already set...
         
         ordersController.setSelected(o);
-        ordersController.prepareCreate();
+        
+        //TODO - call ordersFacade directly because create is evil!
         ordersController.create();
         
         
         //empty the cart by calling removeAllItemsFromCart() - inject the cart controller
         cartController.removeAllItemsFromCart();
+        
+        //also update user content
+        userController.updateAccount();
         
         return "/orders/OrderHistory?faces-redirect=true";
     }

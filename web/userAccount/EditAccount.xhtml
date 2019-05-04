@@ -114,6 +114,18 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                             <f:validateLength minimum="5" />
                             <f:validator validatorId="zipCodeValidator"/> 
                         </p:inputText>
+                        
+                        <!--
+                        ********************************
+                        *           PHONE NUMBER           *
+                        ********************************
+                        -->
+                        <p:outputLabel value="#{bundle.EditUserLabel_phoneNumber}" for="phoneNumber" />
+                        <p:inputText id="phoneNumber" value="#{userController.selected.phoneNumber}" class="inputTextField"
+                                     label="Zip Code" >
+                            <f:validateLength minimum="10" />
+                            <!--<f:validator validatorId="zipCodeValidator"/> -->
+                        </p:inputText>
 
                         <!--
                         ********************************
