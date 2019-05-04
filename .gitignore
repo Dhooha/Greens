@@ -12,4 +12,8 @@
 #build.xml
 
 # End of https://www.gitignore.io/api/netbeans
-/nbproject/private/
+/nbproject/
+/build/
+/dist/
+/src/java/edu/vt/globals/Constants.java
+/web/WEB-INF/glassfish-web.xml
