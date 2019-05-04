@@ -17,13 +17,14 @@
                   header="#{bundle.ViewOrdersTitle}">
             <h:form id="OrdersViewForm">
                      <h3 style="color:  #4d0000">XXX</h3>
-                     <p:dataGrid value="#{ordersController.selected.orderItems}"
+                     <p:dataGrid value="#{orderManager.convertJsonToCartItems(ordersController.selected.orderItems)}"
+                                 rendered="#{ordersController.selected != null}"
                                 var="cartItem"
                                 columns="1"
                                 rows="10"
                                 layout="grid"
                                 paginator="true"
-                                styleClass="custromDataGridFooter"
+                               styleClass="custromDataGridFooter"
                                 >
                         <p:panel>
                             <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
@@ -100,20 +101,7 @@
                                                  &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalAfterTaxes}"></h:outputText>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            
-                                            <td colspan="2">
-                                                <br/>
-                                                <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
-                                                                 value="#{bundle.BackToMenu}"
-                                                     icon="fas fa-arrow-left"/> &nbsp;
-                                                 <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
-                                                                  value="#{bundle.CheckOut}"
-                                                                  icon="fas fa-check"
-                                                                  update=":CartListForm"
-                                                                  actionListener="#{cartController.checkOutCart()}"/>
-                                            </td>
-                                        </tr>
+                                        
                                     </table>
                                   
                                 </p:panel> 
