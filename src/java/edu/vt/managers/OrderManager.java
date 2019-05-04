@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -44,6 +45,8 @@ public class OrderManager implements Serializable {
     String orderType;
     String specialInstructions;
     boolean notification = false;
+    
+    String displayDelivery = "none";
     
     //used to update Dababase
     OrdersFacade ejbFacade;
@@ -115,6 +118,15 @@ public class OrderManager implements Serializable {
         this.notification = notification;
     }
     
+        public String getDisplayDelivery() {
+        return displayDelivery;
+    }
+
+    //used to hide delivery form if not needed
+    public void setDisplayDelivery(String displayDelivery) {
+        this.displayDelivery = displayDelivery;
+    }
+    
     
     //TODO: what about phone number? I guess that will be in User... but how 
     //does the system remember to send the text?
@@ -126,11 +138,6 @@ public class OrderManager implements Serializable {
     public String placeOrder() {
         ordersController.prepareCreate();
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
-        
-        System.out.println("the prim key is" + primaryKey);
-        if(getUserFacade() == null){
-            System.out.println("MUAUAUA");
-        }
         
         User userPlacingOrder = getUserFacade().findById(primaryKey);
         //Integer id, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal, String specialInstructions
@@ -179,7 +186,19 @@ public class OrderManager implements Serializable {
         //also update user content
         userController.updateAccount();
         
+        //clean up
+        orderType = "";
+        specialInstructions = "";
+        notification = false;
+    
         return "/orders/OrderHistory?faces-redirect=true";
+    }
+    
+    public void changeDeliveryDisplay(ValueChangeEvent e){
+        System.out.println("We did it!" + e.toString());
+        if(e.toString().equals("DELIVERY")){
+            displayDelivery = "block";
+        }
     }
     
     //manage changing order status

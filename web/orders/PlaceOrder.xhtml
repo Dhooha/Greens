@@ -16,38 +16,35 @@
         <ui:define name="editableContent">
             <div align="center" style="width:95%">
                 <h:form id="PlaceOrderForm">
-                    <p:panel header="#{bundle.PlaceOrderTitle}">
                         
+                    <div style="float:left;width:50%">
+                        <h1>#{bundle.PlaceOrderTitle}</h1>                 
+
                         <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
                             <p:outputLabel value="#{bundle.CreateOrdersLabel_orderType}" for="orderType" />
                             <!--
                             The required="true" attribute automatically places an asterisk *
                             at the end of the value to indicate that the field is required.  
                             -->
-                            <p:selectOneRadio id="orderType" value="#{orderManager.orderType}"  layout="grid" columns="1" required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderType}">
+                            <p:selectOneRadio id="orderType" value="#{orderManager.orderType}"  layout="grid" columns="1" required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderType}" onclick="this.form.submit();" valueChangeListener="#{orderManager.changeDeliveryDisplay}">
                                 <f:selectItem itemLabel="#{bundle.CreateOrdersLabel_orderType_Type1}" itemValue="DINE_IN" />
                                 <f:selectItem itemLabel="#{bundle.CreateOrdersLabel_orderType_Type2}" itemValue="CARRY_OUT" />
                                 <f:selectItem itemLabel="#{bundle.CreateOrdersLabel_orderType_Type3}" itemValue="DELIVERY" />
                             </p:selectOneRadio>
-                        </p:panelGrid>
-                        
-                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
-                            
+
                             <p:outputLabel value="#{bundle.CreateOrdersLabel_orderTimePickUp}" for="pickUpTime" />                   
                             <p:calendar id="pickUpTime" pattern="MM/dd/yyyy"  
                                     title="BLAH" 
                                     required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderTimePickUp}"/>
-                        </p:panelGrid>
-                        
-                         <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+
                             <!--
                             ********************************
                             *        ADDRESS LINE 1        *
                             ********************************
                             -->
-                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress1}" for="address1" />
+                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress1}" for="address1" style="display:#{orderManager.displayDelivery}"/>
                             <p:inputText id="address1" value="#{userController.selected.deliveryAddress1}" required="true" class="inputTextField"
-                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryAddress1}">
+                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryAddress1}" style="display:#{orderManager.displayDelivery}">
                                 <f:validateLength minimum="2" />
                             </p:inputText>
 
@@ -56,8 +53,8 @@
                             *        ADDRESS LINE 2        *
                             ********************************
                             -->
-                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress2}" for="address2" />
-                            <p:inputText id="address2" value="#{userController.selected.deliveryAddress2}" class="inputTextField">
+                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress2}" for="address2" style="display:#{orderManager.displayDelivery}"/>
+                            <p:inputText id="address2" value="#{userController.selected.deliveryAddress2}" class="inputTextField" style="display:#{orderManager.displayDelivery}">
                             </p:inputText>
 
                             <!--
@@ -65,9 +62,9 @@
                             *             CITY             *
                             ********************************
                             -->
-                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryCity}" for="city" />
+                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryCity}" for="city" style="display:#{orderManager.displayDelivery}"/>
                             <p:inputText id="city" value="#{userController.selected.deliveryCity}" required="true" class="inputTextField"
-                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryCity}">
+                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryCity}" style="display:#{orderManager.displayDelivery}">
                                 <f:validateLength minimum="2" />
                             </p:inputText>
 
@@ -76,8 +73,8 @@
                             *      STATE ABBREVIATION      *
                             ********************************
                             -->
-                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryState}" for="state" />
-                            <h:selectOneMenu id="state" value="#{userController.selected.deliveryState}" required="true">
+                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryState}" for="state" style="display:#{orderManager.displayDelivery}"/>
+                            <h:selectOneMenu id="state" value="#{userController.selected.deliveryState}" required="true" style="display:#{orderManager.displayDelivery}">
                                 <!--
                                 List of U.S. state postal codes is iterated over 
                                 to display the list for the user to select one.
@@ -91,7 +88,7 @@
                             *           ZIP CODE           *
                             ********************************
                             -->
-                            <p:outputLabel id="zipcodeEntry" value="#{bundle.CreateUserLabel_deliveryZipcode}" for="zipcode" >
+                            <p:outputLabel id="zipcodeEntry" value="#{bundle.CreateUserLabel_deliveryZipcode}" for="zipcode" style="display:#{orderManager.displayDelivery}">
                                 &nbsp;<i class="fas fa-question-circle" />
                                 <!--
                                 When the user mouses over the icon, a tooltip is displayed
@@ -102,7 +99,7 @@
                             </p:outputLabel> 
 
                             <p:inputText id="zipcode" value="#{userController.selected.deliveryZipcode}" required="true" class="inputTextField"
-                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryZipcode}">
+                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryZipcode}" style="display:#{orderManager.displayDelivery}">
                                 <f:validateLength minimum="5" />
                                 <!-- 
                                 Execute the "validate" method in the "ZipCodeValidator.java" 
@@ -111,23 +108,17 @@
                                 <f:validator validatorId="zipCodeValidator"/> 
                             </p:inputText>
 
-                        </p:panelGrid>
-                        
-                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
-                            <p>Payment Method coming soon!</p>
-                            
-                        </p:panelGrid>
-                        
-                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
-                            
+                            <p:outputLabel value="PAYMENT METHOD"/>
+                            <p:inputText value="coming soon" class="inputTextField"/>
+
                             <p:outputLabel value="#{bundle.EditUserLable_phonenumber}" for="phone" />
                             <p:inputText id="phone" value="#{userController.selected.phoneNumber}" class="inputTextField">
                                 <f:validateLength minimum="10" />
                             </p:inputText>
-                            
-                            <p:selectBooleanCheckbox value="#{orderManager.notification}" itemLabel="#{bunch.CreateOrdersLabel_notification}"/>
-                            <p></p>
-                            
+
+                            <p:selectBooleanCheckbox id="checkbox" value="#{orderManager.notification}"/>
+                            <p:outputLabel value="#{bundle.CreateOrdersLabel_notification}" for="checkbox" />
+
                         </p:panelGrid>
                         <br />
                             <!--
@@ -146,8 +137,46 @@
                             <p:button outcome="/cart/CartList" value="Cancel" icon="fas fa-ban"  />
 
                     <br /><br />
-                                     
-                    </p:panel>
+
+                    </div>
+                    <div style="float:right;width:50%;overflow:auto">
+                        <p:dataGrid value="#{cartController.cartItems}"
+                                    var="cartItem"
+                                    columns="1"
+                                    rows="10"
+                                    layout="grid"
+                                    paginator="true"
+                                    styleClass="custromDataGridFooter"
+                                    >
+
+                            <h1>#{bundle.ListCartTitle}</h1> 
+
+                            <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
+
+                                <h:panelGroup>
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"></h:outputText> 
+                                </h:panelGroup>
+
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemQty}"/>
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemPrice}"/>
+
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.qty}"/>
+
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.menuItem.price}"/>
+
+                                <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
+                                    <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
+                                    <br/>
+
+                                </p:repeat> 
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+
+                            </p:panelGrid>
+
+                        </p:dataGrid>
+                    </div>
                 </h:form>
             </div>
 
