@@ -5,7 +5,9 @@
 package edu.vt.managers;
 
 import edu.vt.EntityBeans.Orders;
+import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.OrdersFacade;
+import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.controllers.OrdersController;
 import edu.vt.controllers.CartController;
 import edu.vt.globals.Methods;
@@ -21,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -39,6 +42,11 @@ public class OrderManager implements Serializable {
     //some static variables that will be editable from the place an Order page
     String orderType;
     String specialInstructions;
+
+    boolean notification = false;
+    
+    String displayDelivery = "none";
+
     
     //used to update Dababase
     OrdersFacade ejbFacade;
@@ -51,6 +59,11 @@ public class OrderManager implements Serializable {
     //Inject CartController to help the order manager save the menu items 
     //that are being bought (which are in the cart), to the order
      @Inject OrdersController ordersController;
+    
+    @EJB
+    private UserFacade userFacade;
+
+
     
     //TODO: need POJO Class
     // private List<Menu> orderItems = null;
@@ -90,6 +103,27 @@ public class OrderManager implements Serializable {
         this.specialInstructions = specialInstructions;
     }
     
+
+    public boolean isNotification() {
+        return notification;
+    }
+
+    public void setNotification(boolean notification) {
+        this.notification = notification;
+    }
+    
+        public String getDisplayDelivery() {
+        return displayDelivery;
+    }
+
+    //used to hide delivery form if not needed
+    public void setDisplayDelivery(String displayDelivery) {
+        this.displayDelivery = displayDelivery;
+    }
+    
+    public UserFacade getUserFacade() {
+        return userFacade;
+    }
     
     //TODO: what about phone number? I guess that will be in User... but how 
     //does the system remember to send the text?
@@ -101,6 +135,10 @@ public class OrderManager implements Serializable {
     public String placeOrder() {
         
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
+
+        
+        User userPlacingOrder = getUserFacade().findById(primaryKey);
+
         //Integer id, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal, String specialInstructions
         Orders o = new Orders();
         
@@ -136,7 +174,19 @@ public class OrderManager implements Serializable {
         //empty the cart by calling removeAllItemsFromCart() - inject the cart controller
         cartController.removeAllItemsFromCart();
         
+        //clean up
+        orderType = "";
+        specialInstructions = "";
+        notification = false;
+    
         return "/orders/OrderHistory?faces-redirect=true";
+    }
+    
+    public void changeDeliveryDisplay(ValueChangeEvent e){
+        System.out.println("We did it!" + e.toString());
+        if(e.toString().equals("DELIVERY")){
+            displayDelivery = "block";
+        }
     }
     
     //manage changing order status

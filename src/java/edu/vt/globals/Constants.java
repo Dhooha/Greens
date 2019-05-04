@@ -38,7 +38,7 @@ public final class Constants {
     
     macOS (Unix or Linux): Specify the absolute directory path as shown below.
      */
-    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Melanie/DocRoot/Greens";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/se/DocRoot/Greens";
     // public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/Survey/SurveyUserPhotoStorage/";
 
     /*
