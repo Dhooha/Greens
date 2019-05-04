@@ -16,28 +16,111 @@
                   appendTo="@(body)" 
                   header="#{bundle.ViewOrdersTitle}">
             <h:form id="OrdersViewForm">
-                
-                    <p:panelGrid rendered="#{ordersController.selected != null}">
-                        <h:outputText value="#{bundle.ViewOrdersLabel_id}"/>
-                        <h:outputText value="#{ordersController.selected.id}" title="#{bundle.ViewOrdersTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewOrdersLabel_orderItems}"/>
-                        <h:outputText value="#{ordersController.selected.orderItems}" title="#{bundle.ViewOrdersTitle_orderItems}"/>
-                        <h:outputText value="#{bundle.ViewOrdersLabel_orderType}"/>
-                        <h:outputText value="#{ordersController.selected.orderType}" title="#{bundle.ViewOrdersTitle_orderType}"/>
-                        <h:outputText value="#{bundle.ViewOrdersLabel_orderTimestamp}"/>
-                        <h:outputText value="#{ordersController.selected.orderTimestamp}" title="#{bundle.ViewOrdersTitle_orderTimestamp}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundle.ViewOrdersLabel_orderStatus}"/>
-                        <h:outputText value="#{ordersController.selected.orderStatus}" title="#{bundle.ViewOrdersTitle_orderStatus}"/>
-                        <h:outputText value="#{bundle.ViewOrdersLabel_orderTotal}"/>
-                        <h:outputText value="#{ordersController.selected.orderTotal}" title="#{bundle.ViewOrdersTitle_orderTotal}"/>
-                        <h:outputText value="#{bundle.ViewOrdersLabel_userId}"/>
-                        <h:outputText value="#{ordersController.selected.userId}" title="#{bundle.ViewOrdersTitle_userId}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="OrdersViewDialog.hide()"/>
-                
-            </h:form>
+                     <h3 style="color:  #4d0000">XXX</h3>
+                     <p:dataGrid value="#{ordersController.selected.orderItems}"
+                                var="cartItem"
+                                columns="1"
+                                rows="10"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridFooter"
+                                >
+                        <p:panel>
+                            <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
+
+                                <h:panelGroup>
+
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"></h:outputText>
+                                    <!--p:commandLink style="color: #990000" 
+                                                 update=":EditMenuItemInCartForm" oncomplete="PF('EditMenuItemInCartDialog').show()">
+                                        <i class="fas fa-edit"></i>
+                                        <f:setPropertyActionListener value="#{cartItem}" target="#{cartController.selectedCartItem}"/>
+                                        <f:setPropertyActionListener value="#{cartItem.qty}" target="#{cartController.cartSelectedMenuItemQty}"/>
+                                    </p:commandLink>
+                                    
+                                    <p:commandLink style="color: #990000" 
+                                                 update=":DeleteMenuItemFromCartForm" oncomplete="PF('DeleteMenuItemFromCartDialog').show()">
+                                        <i class="fas fa-trash"></i>
+                                        <f:setPropertyActionListener value="#{cartItem}" target="#{cartController.selectedCartItem}"/>
+                                    </p:commandLink-->
+
+                                </h:panelGroup>
+                                
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemQty}"/>
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemPrice}"/>
+
+
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.qty}"/>
+
+                                
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.menuItem.price}"/>
+
+                                <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
+                                    <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
+                                    <br/>
+
+                                </p:repeat> 
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+                                
+                            </p:panelGrid>
+                        </p:panel>
+
+                       
+                            <f:facet name="footer">
+                                <p:panel  >
+                                    
+                                    <table align="center">
+                                        <tr>
+                                            <td align="right">
+                                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                              value="#{bundle.TotalBeforeTaxes}"/>
+                                            </td>
+                                            <td>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalBeforeTaxes}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td align="right">
+                                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000"
+                                                               value="#{bundle.Tax}"/>
+                                            </td>
+                                            <td>
+                                                &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.tax}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                 <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                               value="#{bundle.TotalAfterTax}"/>
+                                            </td>
+                                            <td>
+                                                 &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalAfterTaxes}"></h:outputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td colspan="2">
+                                                <br/>
+                                                <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                                 value="#{bundle.BackToMenu}"
+                                                     icon="fas fa-arrow-left"/> &nbsp;
+                                                 <p:commandButton style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                                  value="#{bundle.CheckOut}"
+                                                                  icon="fas fa-check"
+                                                                  update=":CartListForm"
+                                                                  actionListener="#{cartController.checkOutCart()}"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                  
+                                </p:panel> 
+                            </f:facet>
+                       
+                    </p:dataGrid>
+                </h:form>
         </p:dialog>
 
     </ui:composition>
