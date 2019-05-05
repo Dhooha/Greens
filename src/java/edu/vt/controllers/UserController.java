@@ -554,7 +554,7 @@ public class UserController implements Serializable {
             editUser.setDeliveryState(this.selected.getDeliveryState());
             editUser.setDeliveryZipcode(this.selected.getDeliveryZipcode());
             editUser.setPhoneNumber(this.selected.getPhoneNumber());
-            editUser.setPhoneNumber(this.selected.getPhoneCarrier());
+            editUser.setPhoneCarrier(this.selected.getPhoneCarrier());
             editUser.setEmail(this.selected.getEmail());
 
             // Store the changes in the database

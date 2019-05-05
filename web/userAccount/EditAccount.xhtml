@@ -126,7 +126,25 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                             <f:validateLength minimum="10" />
                             <!--<f:validator validatorId="zipCodeValidator"/> -->
                         </p:inputText>
+                        
+                        <!--
+                        ********************************
+                        *           PHONE CARRIER           *
+                        ********************************
+                        -->
+                        <p:outputLabel value="#{bundle.EditUserLabel_phoneCarrier}" for="phoneCarrier" />
+                        <p:selectOneMenu id="phoneCarrier" value="#{userController.selected.phoneCarrier}"
+                                         class="standardText" >
 
+                            <f:selectItem itemLabel="Select a Carrier"  itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="AT&amp;T"          itemValue="mms.att.net" />
+                            <f:selectItem itemLabel="Sprint"            itemValue="pm.sprint.com" />
+                            <f:selectItem itemLabel="T-Mobile"          itemValue="tmomail.net" />
+                            <f:selectItem itemLabel="Verizon"           itemValue="vzwpix.com" />
+                            <f:selectItem itemLabel="Virgin Mobile"     itemValue="vmpix.com" />
+
+                        </p:selectOneMenu>
+                        
                         <!--
                         ********************************
                         *         EMAIL ADDRESS        *

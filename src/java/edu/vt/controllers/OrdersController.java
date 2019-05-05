@@ -96,6 +96,10 @@ public class OrdersController implements Serializable {
             orderItems = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
+    public void createOrder(){
+        getFacade().create(selected);
+    }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("OrdersUpdated"));

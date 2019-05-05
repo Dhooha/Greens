@@ -10,6 +10,7 @@ import edu.vt.FacadeBeans.OrdersFacade;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.controllers.OrdersController;
 import edu.vt.controllers.CartController;
+import edu.vt.controllers.UserController;
 import edu.vt.controllers.TextMessageController;
 import edu.vt.globals.Methods;
 import edu.vt.pojo.CartItem;
@@ -28,6 +29,7 @@ import javax.faces.event.ValueChangeEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 /**
  *
  * @author Melanie
@@ -45,13 +47,12 @@ public class OrderManager implements Serializable {
     //some static variables that will be editable from the place an Order page
     String orderType;
     String specialInstructions;
-
     boolean notification = false;
     
     String displayDelivery = "none";
 
-    
     //used to update Dababase
+    @EJB
     OrdersFacade ejbFacade;
     
     //Inject CartController to help the order manager save the menu items 
@@ -61,7 +62,11 @@ public class OrderManager implements Serializable {
      
     //Inject CartController to help the order manager save the menu items 
     //that are being bought (which are in the cart), to the order
-     @Inject OrdersController ordersController;
+    @Inject OrdersController ordersController;
+     
+   //Inject UserController to help update user fields
+    @Inject
+    private UserController userController;
      
     //Inject TextMessageController to help order manager send text message when
     //order is ready
@@ -71,12 +76,8 @@ public class OrderManager implements Serializable {
     @EJB
     private UserFacade userFacade;
     
-
-
-
-    
-    //TODO: need POJO Class
-    // private List<Menu> orderItems = null;
+    @EJB
+    private OrdersFacade ordersFacade;
     
     /*
     ==================
@@ -122,7 +123,7 @@ public class OrderManager implements Serializable {
         this.notification = notification;
     }
     
-        public String getDisplayDelivery() {
+    public String getDisplayDelivery() {
         return displayDelivery;
     }
 
@@ -144,68 +145,67 @@ public class OrderManager implements Serializable {
     //OrderController have the parameters?
     public String placeOrder() {
         
+        ordersController.prepareCreate();
+        
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
         User userPlacingOrder = getUserFacade().findById(primaryKey);
 
         //Integer id, String orderItems, String orderType, Date orderTimestamp, String orderStatus, float orderTotal, String specialInstructions
         Orders o = new Orders();
         
-        //I need the User object
         o.setUserId(userPlacingOrder);
-
         String orderItems = cartController.getSelected().getCartItems();
         o.setOrderItems(orderItems);
         o.setOrderType(orderType);
+        o.setOrderStatus("PLACED");
         
         Date d = new Date(System.currentTimeMillis());
         o.setOrderTimestamp(d);
         
-        o.setOrderStatus("PLACED");
-        
-        //TODO
         //pull pieces of orderItems and get total and place here
-        o.setOrderTotal(0);
+        float f = Float.parseFloat(cartController.getTotalAfterTaxes());
+        o.setOrderTotal(f);
         o.setSpecialInstructions(specialInstructions);
-        
-        //TODO: notification flag
+        o.setTextNotification(notification);
         
         //Create an Order Object and then call the OrderFacade create and pass all
-        //necessary parameters - it felt weird to recreate what already exists in 
-        //ordercontroller... but then selected is already set...
-        
         ordersController.setSelected(o);
-        ordersController.prepareCreate();
-        ordersController.create();
-        
+        ordersController.createOrder();
         
         //empty the cart by calling removeAllItemsFromCart() - inject the cart controller
         cartController.removeAllItemsFromCart();
+        
+        //Update User with fields edite
+        userController.updateAccount();
         
         //clean up
         orderType = "";
         specialInstructions = "";
         notification = false;
     
-        //find the order you just created
-        //I doubt it updates the method
-        Orders f = getFacade().findOrdersbyId(o.getId());
-        if(f != null){
-            System.out.println("yay!");
-        }
+        //Get the order we just made
+        Orders changeStatus = getFacade().findOrdersbyUserIdANDTimeStamp(userPlacingOrder.getId(), d);
+        changeOrderStatus("READY", changeStatus);
+            
+        //have to do this here, but normally would be below
+        //changeStatus.setOrderStatus("READY");
+        //ordersController.setSelected(changeStatus);
+        //ordersController.update();
         
-        MyTimerTask timerTask = new MyTimerTask(f.getId());
-        
-        Timer timer = new Timer();
-        timer.schedule(timerTask, 1000);
+        //MyTimerTask timerTask = new MyTimerTask(changeStatus);
+ 
+        //int second = 1000;
+        //Timer timer = new Timer();
+        //timer.schedule(timerTask, 2 * second);
         
         return "/orders/OrderHistory?faces-redirect=true";
     }
     
     //used to get Order id and call changeOrder status properly
-    class MyTimerTask extends TimerTask  {
-        Integer param;
+    class MyTimerTask extends TimerTask  { 
+       Orders param;
 
-        public MyTimerTask(Integer param) {
+        public MyTimerTask(Orders param) {
             this.param = param;
         }
 
@@ -213,22 +213,26 @@ public class OrderManager implements Serializable {
         public void run() {
             // You can do anything you want with param
             changeOrderStatus("READY", param);
-        }
+        }  
     }
     
     //manage changing order status
-    public void changeOrderStatus(String newStatus, Integer id){
-        Orders o = getFacade().findOrdersbyId(id);
+    public void changeOrderStatus(String newStatus, Orders o){
+        
+        System.out.println("in change order status");
         
         if(newStatus == "READY"){
             //check flag
             //sent text or ask controller to do it
+             System.out.println("it is ready");
             if(o.getTextNotification()){
+                System.out.println("apparently is true");
                 //ask textmessate controller to send text
                 textMessageController.setCellPhoneNumber(o.getUserId().getPhoneNumber());
                 textMessageController.setCellPhoneCarrierDomain(o.getUserId().getPhoneCarrier());
                 textMessageController.setMmsTextMessage("Your order is ready.");
                 try{
+                     System.out.println("trying to send message");
                     textMessageController.sendTextMessage();
                 }
                 catch(Exception AddressException){
@@ -236,7 +240,11 @@ public class OrderManager implements Serializable {
                 }
             }
         }
-        o.setOrderStatus(newStatus);
+        
+        //cannot call it here because odersController is no longer actively scoped
+        o.setOrderStatus("READY");
+        ordersController.setSelected(o);
+        ordersController.update();
     }
     
     public void changeDeliveryDisplay(ValueChangeEvent e){
