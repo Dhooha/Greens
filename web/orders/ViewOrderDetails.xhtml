@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog position="center center"
+                  id="OrdersViewDlg" 
+                  widgetVar="OrdersViewDialog" 
+                  modal="true" 
+                  resizable="false" 
+                  appendTo="@(body)" 
+                  header="#{bundle.ViewOrdersTitle}">
+            <h:form id="OrdersViewForm" class="ui-datatable-data">
+                
+                <div align="center" style="width: 650px; height: 550px">
+                    <table>
+                        <tr>
+                            
+                       
+                    <p:dataGrid value="#{orderManager.convertJsonToCartItems(ordersController.selected.orderItems)}"
+                                rendered="#{ordersController.selected != null}"
+                                var="cartItem"
+                                columns="1"
+                                rows="10"
+                                layout="grid"
+                                paginator="true"
+                                styleClass="custromDataGridFooter"
+                                >
+                        <p:panel>
+                            <p:panelGrid columns="3" class="panelGridNoBorderCart" columnClasses="panelGridColumnMenu1Cart, panelGridColumnMenu2, panelGridColumnMenu2">
+
+                                <h:panelGroup>
+
+                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{cartItem.menuItem.name}"></h:outputText>
+                                </h:panelGroup>
+
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemQty}"/>
+                                <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="#{bundle.MenuItemPrice}"/>
+
+
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.menuItem.description}"/>
+                                <h:outputText style="padding-left: 10px;color: brown" value="#{cartItem.qty}"/>
+
+
+                                <h:outputText style="color: brown; font-size:14px" value="#{cartItem.menuItem.price}"/>
+
+                                <p:repeat value="#{cartItem.menuItem.specialInstructionItems}" var="specialInstruction">
+                                    <h:outputText style="color:brown; padding-left: 20px;C"  value="- #{specialInstruction}"/>
+                                    <br/>
+
+                                </p:repeat> 
+                                <h:outputText value=""/>
+                                <h:outputText value=""/>
+
+                            </p:panelGrid>
+                        </p:panel>
+
+
+                        <f:facet name="footer">
+                            <p:panel  >
+
+                                <table align="center">
+                                    <tr>
+                                        <td align="right">
+                                            <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                          value="#{bundle.TotalBeforeTaxes}"/>
+                                        </td>
+                                        <td>
+                                            &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalBeforeTaxes}"></h:outputText>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right">
+                                            <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000"
+                                                          value="#{bundle.Tax}"/>
+                                        </td>
+                                        <td>
+                                            &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.tax}"></h:outputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">
+                                            <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
+                                                          value="#{bundle.TotalAfterTax}"/>
+                                        </td>
+                                        <td>
+                                            &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalAfterTaxes}"></h:outputText>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </p:panel> 
+                        </f:facet>
+
+                    </p:dataGrid>
+                     </tr>
+                        <tr valign="bottom">
+                            
+                       
+                    <br/>
+                    <p:commandButton value="#{bundle.Close}"
+                                     onclick="OrdersViewDialog.hide()"
+                                     icon="fas fa-window-close"/>
+                     </tr>
+                   </table>
+                </div>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
