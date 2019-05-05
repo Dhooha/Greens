@@ -202,6 +202,7 @@ public class OrderManager implements Serializable {
     }
     
     //used to get Order id and call changeOrder status properly
+    /*
     class MyTimerTask extends TimerTask  { 
        Orders param;
 
@@ -214,7 +215,7 @@ public class OrderManager implements Serializable {
             // You can do anything you want with param
             changeOrderStatus("READY", param);
         }  
-    }
+    }*/
     
     //manage changing order status
     public void changeOrderStatus(String newStatus, Orders o){
