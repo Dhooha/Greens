@@ -12,8 +12,6 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.PlaceOrder}"></h:outputText>
         </ui:define>
-
-        <!-- https://stackoverflow.com/questions/26796667/how-to-hide-or-show-a-textbox-depending-on-radiobutton-value-in-jsf -->
         <ui:define name="editableContent">
 
             <h:form id="PlaceOrderForm">
@@ -34,105 +32,131 @@
                                         The required="true" attribute automatically places an asterisk *
                                         at the end of the value to indicate that the field is required.  
                                         -->
-                                        <p:selectOneRadio id="orderType" value="#{orderManager.orderType}"  layout="grid" columns="1" required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderType}" onclick="this.form.submit();" valueChangeListener="#{orderManager.changeDeliveryDisplay}">
+                                        <p:selectOneRadio id="orderType" value="#{orderManager.orderType}"  layout="grid" columns="1" required="true" 
+                                                          requiredMessage="#{CreateOrdersRequiredMessage_orderType}">
                                             <f:selectItem itemLabel="#{bundle.CreateOrdersLabel_orderType_Type1}" itemValue="DINE_IN" />
                                             <f:selectItem itemLabel="#{bundle.CreateOrdersLabel_orderType_Type2}" itemValue="CARRY_OUT" />
                                             <f:selectItem itemLabel="#{bundle.CreateOrdersLabel_orderType_Type3}" itemValue="DELIVERY" />
+                                            <p:ajax process="orderType" update="@form" />
                                         </p:selectOneRadio>
 
-                                        <p:outputLabel value="#{bundle.CreateOrdersLabel_orderTimePickUp}" for="pickUpTime" />                   
-                                        <p:calendar id="pickUpTime" pattern="MM/dd/yyyy"  
-                                                    title="BLAH" 
-                                                    required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderTimePickUp}"/>
+                                      
 
-                                        <!--
-                                        ********************************
-                                        *        ADDRESS LINE 1        *
-                                        ********************************
-                                        -->
-                                        <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress1}" for="address1" style="display:#{orderManager.displayDelivery}"/>
-                                        <p:inputText id="address1" value="#{userController.selected.deliveryAddress1}" required="true" class="inputTextField"
-                                                     requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryAddress1}" style="display:#{orderManager.displayDelivery}">
-                                            <f:validateLength minimum="2" />
-                                        </p:inputText>
+                                            <p:outputLabel value="#{bundle.CreateOrdersLabel_orderTimePickUp}" for="pickUpTime" />                   
+                                            <p:calendar id="pickUpTime" pattern="MM/dd/yyyy"  
+                                                        title="BLAH" 
+                                                        required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderTimePickUp}"/>
 
-                                        <!--
-                                        ********************************
-                                        *        ADDRESS LINE 2        *
-                                        ********************************
-                                        -->
-                                        <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress2}" for="address2" style="display:#{orderManager.displayDelivery}"/>
-                                        <p:inputText id="address2" value="#{userController.selected.deliveryAddress2}" class="inputTextField" style="display:#{orderManager.displayDelivery}">
-                                        </p:inputText>
-
-                                        <!--
-                                        ********************************
-                                        *             CITY             *
-                                        ********************************
-                                        -->
-                                        <p:outputLabel value="#{bundle.CreateUserLabel_deliveryCity}" for="city" style="display:#{orderManager.displayDelivery}"/>
-                                        <p:inputText id="city" value="#{userController.selected.deliveryCity}" required="true" class="inputTextField"
-                                                     requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryCity}" style="display:#{orderManager.displayDelivery}">
-                                            <f:validateLength minimum="2" />
-                                        </p:inputText>
-
-                                        <!--
-                                        ********************************
-                                        *      STATE ABBREVIATION      *
-                                        ********************************
-                                        -->
-                                        <p:outputLabel value="#{bundle.CreateUserLabel_deliveryState}" for="state" style="display:#{orderManager.displayDelivery}"/>
-                                        <h:selectOneMenu id="state" value="#{userController.selected.deliveryState}" required="true" style="display:#{orderManager.displayDelivery}">
                                             <!--
-                                            List of U.S. state postal codes is iterated over 
-                                            to display the list for the user to select one.
-                                            -->
-                                            <f:selectItems value="#{userController.listOfStates()}" var="state"
-                                                           itemLabel="#{state}" itemValue="#{state}" />
-                                        </h:selectOneMenu>
+                                            ********************************
+                                            *        ADDRESS LINE 1        *
+                                            ********************************a
+                                            -->  
+                                            
+                                            
+                                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress1}"
+                                                           for="address1"
+                                                           rendered="#{orderManager.orderType eq 'DELIVERY'}"/>
+                                            <p:inputText id="address1"
+                                                         value="#{userController.selected.deliveryAddress1}"
+                                                         required="true"
+                                                         class="inputTextField"
+                                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryAddress1}"
+                                                         rendered="#{orderManager.orderType eq 'DELIVERY'}">
+                                                <f:validateLength minimum="2" />
+                                            </p:inputText>
 
-                                        <!--
-                                        ********************************
-                                        *           ZIP CODE           *
-                                        ********************************
-                                        -->
-                                        <p:outputLabel id="zipcodeEntry" value="#{bundle.CreateUserLabel_deliveryZipcode}" for="zipcode" style="display:#{orderManager.displayDelivery}">
-                                            &nbsp;<i class="fas fa-question-circle" />
                                             <!--
-                                            When the user mouses over the icon, a tooltip is displayed
-                                            to provide context-sensitive help information to the user.
+                                            ********************************
+                                            *        ADDRESS LINE 2        *
+                                            ********************************
                                             -->
-                                            <p:tooltip for="zipcodeEntry" value="Enter 5 digits or 9 digits with hyphen, e.g., 24060-1804" 
-                                                       showEffect="clip" hideEffect="explode" position="top" />
-                                        </p:outputLabel> 
+                                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryAddress2}" 
+                                                           for="address2"
+                                                           rendered="#{orderManager.orderType eq 'DELIVERY'}"/>
+                                            <p:inputText id="address2"
+                                                         value="#{userController.selected.deliveryAddress2}"
+                                                         class="inputTextField"
+                                                         rendered="#{orderManager.orderType eq 'DELIVERY'}">
+                                            </p:inputText>
 
-                                        <p:inputText id="zipcode" value="#{userController.selected.deliveryZipcode}" required="true" class="inputTextField"
-                                                     requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryZipcode}" style="display:#{orderManager.displayDelivery}">
-                                            <f:validateLength minimum="5" />
-                                            <!-- 
-                                            Execute the "validate" method in the "ZipCodeValidator.java" 
-                                            class file to validate the ZIP code entered. 
+                                            <!--
+                                            ********************************
+                                            *             CITY             *
+                                            ********************************
                                             -->
-                                            <f:validator validatorId="zipCodeValidator"/> 
-                                        </p:inputText>
+                                           
+                                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryCity}"
+                                                           for="city"
+                                                           rendered="#{orderManager.orderType eq 'DELIVERY'}"/>
+                                            <p:inputText id="city" value="#{userController.selected.deliveryCity}" required="true" class="inputTextField"
+                                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryCity}"
+                                                         rendered="#{orderManager.orderType eq 'DELIVERY'}">
+                                                <f:validateLength minimum="2" />
+                                            </p:inputText>
 
-                                        <p:outputLabel value="PAYMENT METHOD"/>
-                                        <p:inputText value="coming soon" class="inputTextField"/>
+                                            <!--
+                                            ********************************
+                                            *      STATE ABBREVIATION      *
+                                            ********************************
+                                            -->
+                                            <p:outputLabel value="#{bundle.CreateUserLabel_deliveryState}" for="state"
+                                                           rendered="#{orderManager.orderType eq 'DELIVERY'}" />
+                                            <h:selectOneMenu id="state" value="#{userController.selected.deliveryState}" required="true"
+                                                             rendered="#{orderManager.orderType eq 'DELIVERY'}">
+                                                <!--
+                                                List of U.S. state postal codes is iterated over 
+                                                to display the list for the user to select one.
+                                                -->
+                                                <f:selectItems value="#{userController.listOfStates()}" var="state"
+                                                               itemLabel="#{state}" itemValue="#{state}"
+                                                               />
+                                            </h:selectOneMenu>
 
-                                        <p:outputLabel value="#{bundle.EditUserLable_phonenumber}" for="phone" />
-                                        <p:inputText id="phone" value="#{userController.selected.phoneNumber}" class="inputTextField">
-                                            <f:validateLength minimum="10" />
-                                        </p:inputText>
+                                            <!--
+                                            ********************************
+                                            *           ZIP CODE           *
+                                            ********************************
+                                            -->
+                                            <p:outputLabel id="zipcodeEntry" value="#{bundle.CreateUserLabel_deliveryZipcode}" for="zipcode"
+                                                           rendered="#{orderManager.orderType eq 'DELIVERY'}">
+                                                &nbsp;<i class="fas fa-question-circle" />
+                                                <!--
+                                                When the user mouses over the icon, a tooltip is displayed
+                                                to provide context-sensitive help information to the user.
+                                                -->
+                                                <p:tooltip for="zipcodeEntry" value="Enter 5 digits or 9 digits with hyphen, e.g., 24060-1804" 
+                                                           showEffect="clip" hideEffect="explode" position="top" rendered="#{orderManager.orderType eq 'DELIVERY'}" />
+                                            </p:outputLabel> 
 
-                                        <p:selectBooleanCheckbox id="checkbox" value="#{orderManager.notification}"/>
-                                        <p:outputLabel value="#{bundle.CreateOrdersLabel_notification}" for="checkbox" />
+                                            <p:inputText id="zipcode" value="#{userController.selected.deliveryZipcode}" required="true" class="inputTextField"
+                                                         requiredMessage="#{bundle.CreateUserRequiredMessage_deliveryZipcode}"
+                                                         rendered="#{orderManager.orderType eq 'DELIVERY'}">
+                                                <f:validateLength minimum="5" />
+                                                <!-- 
+                                                Execute the "validate" method in the "ZipCodeValidator.java" 
+                                                class file to validate the ZIP code entered. 
+                                                -->
+                                                <f:validator validatorId="zipCodeValidator"/> 
+                                            </p:inputText>
+
+                                            <p:outputLabel value="PAYMENT METHOD"/>
+                                            <p:inputText value="coming soon" class="inputTextField"/>
+
+                                            <p:outputLabel value="#{bundle.EditUserLable_phonenumber}" for="phone" />
+                                            <p:inputText id="phone" value="#{userController.selected.phoneNumber}" class="inputTextField">
+                                                <f:validateLength minimum="10" />
+                                            </p:inputText>
+
+                                            <p:selectBooleanCheckbox id="checkbox" value="#{orderManager.notification}"/>
+                                            <p:outputLabel value="#{bundle.CreateOrdersLabel_notification}" for="checkbox" />
 
                                     </p:panelGrid>
                                     <br /><br/> <br/>
-                                       <!--
-                                    ================================
-                                    |          Place Button         |
-                                    ================================
+                                    <!--
+                                 ================================
+                                 |          Place Button         |
+                                 ================================
                                     -->
                                     <p:commandButton id="submit" value="#{bundle.PlaceOrder}" action="#{orderManager.placeOrder()}" 
                                                      ajax="false" icon="fab fa-first-order" />
