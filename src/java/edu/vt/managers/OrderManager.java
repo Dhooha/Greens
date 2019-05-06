@@ -109,7 +109,11 @@ public class OrderManager implements Serializable {
     }
     
 
-    //TODO: is vs get
+    //The code automatically generated this method
+     public boolean isNotification() {
+        return notification;
+    }
+    
     public boolean getNotification() {
         return notification;
     }

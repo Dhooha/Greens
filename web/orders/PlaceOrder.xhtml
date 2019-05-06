@@ -44,8 +44,7 @@
 
                                             <p:outputLabel value="#{bundle.CreateOrdersLabel_orderTimePickUp}" for="pickUpTime" />                   
                                             <p:calendar id="pickUpTime" pattern="MM/dd/yyyy"  
-                                                        title="BLAH" 
-                                                        required="true" requiredMessage="#{CreateOrdersRequiredMessage_orderTimePickUp}"/>
+                                                        required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_orderTimePickUp}"/>
 
                                             <!--
                                             ********************************
@@ -142,14 +141,32 @@
 
                                             <p:outputLabel value="PAYMENT METHOD"/>
                                             <p:inputText value="coming soon" class="inputTextField"/>
+                                           
+                                            
+                                            <p:selectBooleanCheckbox id="notification" value="#{orderManager.notification}">
+                                                <p:ajax process="notification" update="@form" />
+                                            </p:selectBooleanCheckbox>
+                                            <p:outputLabel value="#{bundle.CreateOrdersLabel_notification}" for="notification" />
+                                            
+                                            <p:outputLabel value="#{bundle.EditUserLabel_phoneCarrier}" for="phoneCarrier" rendered="#{orderManager.notification}"/>
+                                            <p:selectOneMenu id="phoneCarrier" value="#{userController.selected.phoneCarrier}"
+                                                             class="standardText" rendered="#{orderManager.notification}"
+                                                             required="true"  requiredMessage="#{bundle.CreateOrdersResuiredMessage_phoneCarrier}">
 
-                                            <p:outputLabel value="#{bundle.EditUserLable_phonenumber}" for="phone" />
-                                            <p:inputText id="phone" value="#{userController.selected.phoneNumber}" class="inputTextField">
+                                                <f:selectItem itemLabel="Select a Carrier"  itemValue="" noSelectionOption="true"/>
+                                                <f:selectItem itemLabel="AT&amp;T"          itemValue="mms.att.net" />
+                                                <f:selectItem itemLabel="Sprint"            itemValue="pm.sprint.com" />
+                                                <f:selectItem itemLabel="T-Mobile"          itemValue="tmomail.net" />
+                                                <f:selectItem itemLabel="Verizon"           itemValue="vzwpix.com" />
+                                                <f:selectItem itemLabel="Virgin Mobile"     itemValue="vmpix.com" />
+
+                                            </p:selectOneMenu>
+                                            
+                                            <p:outputLabel value="#{bundle.EditUserLable_phonenumber}" for="phone" rendered="#{orderManager.notification}"/>
+                                            <p:inputText id="phone" value="#{userController.selected.phoneNumber}" class="inputTextField" rendered="#{orderManager.notification}"
+                                                         required="true" requiredMessage="#{bundle.CreateOrdersRequiredMessage_phoneNumber}">
                                                 <f:validateLength minimum="10" />
                                             </p:inputText>
-
-                                            <p:selectBooleanCheckbox id="checkbox" value="#{orderManager.notification}"/>
-                                            <p:outputLabel value="#{bundle.CreateOrdersLabel_notification}" for="checkbox" />
 
                                     </p:panelGrid>
                                     <br /><br/> <br/>
