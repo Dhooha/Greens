@@ -17,14 +17,14 @@
                   header="#{bundle.ViewOrdersTitle}">
             <h:form id="OrdersViewForm" class="ui-datatable-data">
 
-                <div align="center" style="width: 650px; height: 450px">
+                <div align="center" style="width: 650px; height: 500px">
                    
 
                             <p:dataGrid value="#{orderManager.convertJsonToCartItems(ordersController.selected.orderItems)}"
                                         rendered="#{ordersController.selected != null}"
                                         var="cartItem"
                                         columns="1"
-                                        rows="4"
+                                        rows="3"
                                         layout="grid"
                                         paginator="true"
                                         styleClass="custromDataGridFooter"
