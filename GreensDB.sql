@@ -75,8 +75,8 @@ CREATE TABLE PaymentMethod
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name_on_credit_card VARCHAR(100) NOT NULL,
     credit_card_number VARCHAR(19) NOT NULL,    /* longest credit card numbers are 19, internationally */
-    credit_card_type ENUM('VISA', 'MASTERCARD', 'DISCOVER') NOT NULL,
-    credit_card_expiration VARCHAR(5) NOT NULL, /* MM/DD has 5 characters */
+    credit_card_type ENUM('VISA', 'MASTERCARD', 'DISCOVER', 'AMERICANEXPRESS', 'DINERSCLUB', 'JCB') NOT NULL,
+    credit_card_expiration VARCHAR(7) NOT NULL, /* MM/YYYY has 7 characters */
     billing_address1 VARCHAR(128) NOT NULL,
     billing_address2 VARCHAR(128),
     billing_city VARCHAR(64) NOT NULL,

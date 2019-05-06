@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Joshua Detwiler on 2019.05.04
+Copyright Ã‚Â© 2019 Joshua Detwiler. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="#{bundle.MyPaymentMethods}"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+                <h:form id="PaymentMethodListForm">
+                    <h1>#{bundle.MyPaymentMethods}</h1>
+                    <br/>
+                    
+                    <!--
+                    If there are no payment methods yet, notify the user that
+                    they can add one to generate the accordion panel.
+                    -->
+                    <h:outputText value="#{bundle.NoPaymentMethodsYet}" rendered="#{empty paymentMethodController.items}"/>
+                    
+                    <!--
+                    When the user's list of payment methods isn't empty,
+                    -->
+                    <p:accordionPanel id="pmlist" 
+                                      value="#{paymentMethodController.items}" 
+                                      var="card" 
+                                      rendered="#{not empty paymentMethodController.items}">
+                        <p:tab title="#{paymentMethodController.getCardTypeFormatted(card.creditCardType)} #{bundle.ListPaymentMethodTitle_creditCardNumber} #{card.creditCardNumber}">
+                            <p:layout style="min-width:400px;min-height:175px;">
+                                <p:layoutUnit position="west" resizable="true" size="300" minSize="40">
+                                    <h:outputText value="#{bundle.ListPaymentMethodTitle_nameOnCreditCard}: #{card.nameOnCreditCard}"
+                                                  style="font-weight: bold"/>
+                                    
+                                    <br/>
+                                    
+                                    <h:outputText value ="#{bundle.ListPaymentMethodTitle_creditCardExpiration}:" style="font-weight: bold" />
+                                    <h:outputText value="#{card.creditCardExpiration}"/>
+                                </p:layoutUnit>
+                                
+                                <p:layoutUnit position="center">
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value ="#{bundle.ListPaymentMethodTitle_billingAddress1}:" style="font-weight: bold" />
+                                        <h:outputText value="#{card.billingAddress1}"/>
+
+                                        <h:outputText value ="#{bundle.ListPaymentMethodTitle_billingAddress2}:" style="font-weight: bold" />
+                                        <h:outputText value="#{card.billingAddress2}"/>
+
+                                        <h:outputText value ="#{bundle.ListPaymentMethodTitle_billingCity}:" style="font-weight: bold" />
+                                        <h:outputText value="#{card.billingCity}"/>
+
+                                        <h:outputText value ="#{bundle.ListPaymentMethodTitle_billingState}:" style="font-weight: bold" />
+                                        <h:outputText value="#{card.billingState}"/>
+
+                                        <h:outputText value ="#{bundle.ListPaymentMethodTitle_billingZipcode}:" style="font-weight: bold" />
+                                        <h:outputText value="#{card.billingZipcode}"/>
+                                    </h:panelGrid>
+                                </p:layoutUnit>
+                            </p:layout>
+                            
+                            <!-- 
+                            Call a method in the controller first to set the
+                            selected Payment Method just in time before
+                            rendering the edit dialog. This takes advantage of
+                            the fact that the payment method is within scope of
+                            the accordion tab.
+                            -->                            
+                            <p:commandButton icon="fas fa-edit"
+                                             value="#{bundle.Edit}"
+                                             actionListener="#{paymentMethodController.prepareEdit(card)}"
+                                             update=":PaymentMethodEditForm"
+                                             oncomplete="PF('PaymentMethodEditDialog').show()"/>
+                            &nbsp;
+                            <!-- 
+                            ===========================
+                            DELETE Survey Button
+                            ===========================
+                            -->
+                            <!-- 
+                            ***************************************************
+                            Display a Confirmation dialog for the DELETE button
+                            *************************************************** 
+                            -->
+                            <p:commandButton icon="fas fa-trash-alt"  value="#{bundle.Delete}"
+                                             actionListener="#{paymentMethodController.prepareDelete(card)}"
+                                             oncomplete="PF('SecurityQuestionDialog').show()">
+
+                                <p:confirm header="#{bundle.PaymentMethodDeletionConfirmationTitle}" 
+                                           message="#{bundle.PaymentMethodDeletionConfirmationMessage}" 
+                                           icon="fas fa-exclamation-triangle fa-2x" />
+                            </p:commandButton>
+
+                            
+                            
+                        </p:tab>
+                    </p:accordionPanel>
+                    
+                    <br/><br/>
+                 
+                    <!-- 
+                    ===========
+                    Create Button
+                    ===========
+                    -->
+                    <p:commandButton id="createButton" icon="fas fa-plus" 
+                                     value="#{bundle.CreatePaymentMethodTitle}" 
+                                     actionListener="#{paymentMethodController.prepareCreate}"
+                                     update=":PaymentMethodCreateForm" 
+                                     oncomplete="PF('PaymentMethodCreateDialog').show()"/>
+
+                    <!-- Try putting it here to see what happens... -->
+                    <p:confirmDialog id="confirmDialogBox" global="true" showEffect="slide" hideEffect="fade">
+                        <div align="center">
+                            <!-- The value of the first button listed below will be 
+                            shown as highlighted (default action) when displayed -->
+                            <p:commandButton value="No" type="button" 
+                                             class="ui-confirmdialog-no" icon="fas fa-window-close" />
+                            &nbsp;
+                            <p:commandButton value="Yes" type="button" 
+                                             class="ui-confirmdialog-yes" icon="fas fa-check-square" />
+                        </div>
+                    </p:confirmDialog>
+                </h:form>
+                
+            </div>
+            
+            <!-- Include the dialogs necessary to add and edit payment methods. -->
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            
+            
+            
+            <!-- 
+            ==================================================================
+            Dialog for Security Question and Answer for Survey Deletion
+            ==================================================================
+            -->
+            <p:dialog position="center center" id="SecurityQuestionDialog" widgetVar="SecurityQuestionDialog" 
+                      modal="true" resizable="false" appendTo="@(body)" header="Security Question" 
+                      showEffect="blind" hideEffect="fade" >
+                <!--
+                Various effect options are available when displaying and closing p:dialog or p:confirmDialog.
+                You can apply a showEffect and a hideEffect option listed below: 
+                ******************************************************************
+                |   blind, bounce, clip, drop, explode, fade, fold, highlight,   |
+                |   puff, pulsate, scale, shake, size, slide, and transfer.      |
+                ******************************************************************
+                -->
+
+                <h:form id="securityQuestionForm">
+                    <fieldset>
+                        <div style="margin-bottom:20px">
+                            <h:outputLabel for="answer" value="#{userController.getSelectedSecurityQuestion()}"/>
+                        </div>
+
+                        <div style="margin-bottom:10px">
+                            <p:inputText id="answer" value="#{paymentMethodController.answerToSecurityQuestion}" 
+                                         required="true" requiredMessage="Please enter your answer!" 
+                                         class="inputTextField" />
+                        </div>
+
+                        <br/>
+                        <div align="center">
+                            <!--
+                            ================================
+                            |         SUBMIT Button        |
+                            ================================
+                            -->
+                            <p:commandButton id="Submit" value="Submit" ajax="false" icon="fas fa-arrow-up"
+                                             actionListener="#{paymentMethodController.securityAnswerSubmit()}"
+                                             update="display,:PaymentMethodListForm:pmlist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage" 
+                                             oncomplete="PF('SecurityQuestionDialog').hide()"/>
+                            &nbsp;
+                            <!--
+                            ================================
+                            |         CANCEL Button        |
+                            ================================
+                            -->
+                            <p:button outcome="/paymentMethod/MyPaymentMethods.xhtml" value="Cancel" icon="fas fa-ban"  />
+                        </div>
+                        <br />
+                    </fieldset>
+                </h:form>
+            </p:dialog>
+
+            
+        </ui:define>
+    </ui:composition>
+</html>
