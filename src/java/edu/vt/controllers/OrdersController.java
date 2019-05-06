@@ -124,9 +124,12 @@ public class OrdersController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
-                } else {
+                } else if(persistAction == PersistAction.CREATE){
+                    getFacade().create(selected);
+                }
+                else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);

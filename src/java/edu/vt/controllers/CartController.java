@@ -217,7 +217,6 @@ public class CartController implements Serializable{
     }
     
     public void create() {
-        
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CartCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -245,14 +244,17 @@ public class CartController implements Serializable{
         return items;
     }
 
+    //Melanie added create here
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
-                    System.out.println("going to edit selected aka put in DB");
+                if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
-                } else {
+                } else if(persistAction == PersistAction.CREATE){
+                    getFacade().create(selected);
+                }
+                else {
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
@@ -548,12 +550,12 @@ public class CartController implements Serializable{
             updateTotalPrice();
             System.out.println(convertCartItemsToJson());
             
-            //update selected with the new Menu item and quantity by updating the 
             //json string - note, pushing to DB will create notification
             selected.setCartItems(convertCartItemsToJson());
             //push to database aka call update()
             update();
-        }
+        }            //update selected with the new Menu item and quantity by updating the 
+
         else{
             //update cart items, not DB
             addMenuItemToCart();

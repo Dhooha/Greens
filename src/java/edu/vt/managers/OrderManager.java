@@ -29,7 +29,6 @@ import javax.faces.event.ValueChangeEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 /**
  *
  * @author Melanie
@@ -46,10 +45,8 @@ public class OrderManager implements Serializable {
     
     //some static variables that will be editable from the place an Order page
     String orderType;
-    String specialInstructions;
+    String specialInstructions = "none";
     boolean notification = false;
-    
-    String displayDelivery = "none";
 
     //used to update Dababase
     @EJB
@@ -75,9 +72,6 @@ public class OrderManager implements Serializable {
     
     @EJB
     private UserFacade userFacade;
-    
-    @EJB
-    private OrdersFacade ordersFacade;
     
     /*
     ==================
@@ -115,7 +109,8 @@ public class OrderManager implements Serializable {
     }
     
 
-    public boolean isNotification() {
+    //TODO: is vs get
+    public boolean getNotification() {
         return notification;
     }
 
@@ -123,26 +118,12 @@ public class OrderManager implements Serializable {
         this.notification = notification;
     }
     
-    public String getDisplayDelivery() {
-        return displayDelivery;
-    }
-
-    //used to hide delivery form if not needed
-    public void setDisplayDelivery(String displayDelivery) {
-        this.displayDelivery = displayDelivery;
-    }
-    
     public UserFacade getUserFacade() {
         return userFacade;
     }
     
-    //TODO: what about phone number? I guess that will be in User... but how 
-    //does the system remember to send the text?
-    
-    //TODO: how does the system remember how it was paid for?
-    
-    //TODO: wouldn't it be better to call OrderController to create..? won't
-    //OrderController have the parameters?
+    //pulls data off placeOrder.xhtml to populate an order object and push it to the database
+    //also updates all user information that was entered
     public String placeOrder() {
         
         ordersController.prepareCreate();
@@ -170,7 +151,9 @@ public class OrderManager implements Serializable {
         
         //Create an Order Object and then call the OrderFacade create and pass all
         ordersController.setSelected(o);
-        ordersController.createOrder();
+        
+        //ordersController.createOrder();
+        ordersController.create();
         
         //empty the cart by calling removeAllItemsFromCart() - inject the cart controller
         cartController.removeAllItemsFromCart();
@@ -180,11 +163,11 @@ public class OrderManager implements Serializable {
         
         //clean up
         orderType = "";
-        specialInstructions = "";
+        specialInstructions = "none";
         notification = false;
     
         //Get the order we just made
-        Orders changeStatus = getFacade().findOrdersbyUserIdANDTimeStamp(userPlacingOrder.getId(), d);
+        Orders changeStatus = getFacade().findOrdersbyUserIdANDTimeStamp(primaryKey, d);
         changeOrderStatus("READY", changeStatus);
             
         //have to do this here, but normally would be below
@@ -220,20 +203,15 @@ public class OrderManager implements Serializable {
     //manage changing order status
     public void changeOrderStatus(String newStatus, Orders o){
         
-        System.out.println("in change order status");
-        
         if(newStatus == "READY"){
             //check flag
             //sent text or ask controller to do it
-             System.out.println("it is ready");
             if(o.getTextNotification()){
-                System.out.println("apparently is true");
                 //ask textmessate controller to send text
                 textMessageController.setCellPhoneNumber(o.getUserId().getPhoneNumber());
                 textMessageController.setCellPhoneCarrierDomain(o.getUserId().getPhoneCarrier());
                 textMessageController.setMmsTextMessage("Your order is ready.");
                 try{
-                     System.out.println("trying to send message");
                     textMessageController.sendTextMessage();
                 }
                 catch(Exception AddressException){
@@ -246,13 +224,6 @@ public class OrderManager implements Serializable {
         o.setOrderStatus("READY");
         ordersController.setSelected(o);
         ordersController.update();
-    }
-    
-    public void changeDeliveryDisplay(ValueChangeEvent e){
-        System.out.println("We did it!" + e.toString());
-        if(e.toString().equals("DELIVERY")){
-            displayDelivery = "block";
-        }
     }
     
     //Takes in a JSON string and creates from it an Array of CartItems that have
@@ -293,7 +264,6 @@ public class OrderManager implements Serializable {
         JSONArray cartItemsJSON = dict.getJSONArray("cartItems");
 
         if (cartItemsJSON.toString().equals("[]")) {
-                System.out.println("it's empty");
                 return ret;
         }
         else{
