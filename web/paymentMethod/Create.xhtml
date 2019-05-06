@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Joshua Detwiler on 2019.05.05
+Copyright © 2019 Joshua Detwiler. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -8,39 +12,112 @@
 
     <ui:composition>
 
-        <p:dialog id="PaymentMethodCreateDlg" widgetVar="PaymentMethodCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePaymentMethodTitle}">
-            <h:form id="PaymentMethodCreateForm">
+        <p:dialog id="PaymentMethodCreateDlg" widgetVar="PaymentMethodCreateDialog" modal="true" 
+                  resizable="false" appendTo="@(body)" header="#{bundle.CreatePaymentMethodTitle}">
+            
+            <h:form id="PaymentMethodCreateForm" class="ui-datatable-data">
+                
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{paymentMethodController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{paymentMethodController.selected.id}" title="#{bundle.CreatePaymentMethodTitle_id}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_id}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_nameOnCreditCard}" for="nameOnCreditCard" />
-                        <p:inputText id="nameOnCreditCard" value="#{paymentMethodController.selected.nameOnCreditCard}" title="#{bundle.CreatePaymentMethodTitle_nameOnCreditCard}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_nameOnCreditCard}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_creditCardNumber}" for="creditCardNumber" />
-                        <p:inputText id="creditCardNumber" value="#{paymentMethodController.selected.creditCardNumber}" title="#{bundle.CreatePaymentMethodTitle_creditCardNumber}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_creditCardNumber}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_creditCardType}" for="creditCardType" />
-                        <p:inputText id="creditCardType" value="#{paymentMethodController.selected.creditCardType}" title="#{bundle.CreatePaymentMethodTitle_creditCardType}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_creditCardType}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_creditCardExpiration}" for="creditCardExpiration" />
-                        <p:inputText id="creditCardExpiration" value="#{paymentMethodController.selected.creditCardExpiration}" title="#{bundle.CreatePaymentMethodTitle_creditCardExpiration}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_creditCardExpiration}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingAddress1}" for="billingAddress1" />
-                        <p:inputText id="billingAddress1" value="#{paymentMethodController.selected.billingAddress1}" title="#{bundle.CreatePaymentMethodTitle_billingAddress1}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingAddress1}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingAddress2}" for="billingAddress2" />
-                        <p:inputText id="billingAddress2" value="#{paymentMethodController.selected.billingAddress2}" title="#{bundle.CreatePaymentMethodTitle_billingAddress2}" />
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingCity}" for="billingCity" />
-                        <p:inputText id="billingCity" value="#{paymentMethodController.selected.billingCity}" title="#{bundle.CreatePaymentMethodTitle_billingCity}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingCity}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingState}" for="billingState" />
-                        <p:inputText id="billingState" value="#{paymentMethodController.selected.billingState}" title="#{bundle.CreatePaymentMethodTitle_billingState}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingState}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingZipcode}" for="billingZipcode" />
-                        <p:inputText id="billingZipcode" value="#{paymentMethodController.selected.billingZipcode}" title="#{bundle.CreatePaymentMethodTitle_billingZipcode}" required="true" requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingZipcode}"/>
-                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_userId}" for="userId" />
-                        <p:selectOneMenu id="userId" value="#{paymentMethodController.selected.userId}" required="true" requiredMessage="#{bundle.EditPaymentMethodRequiredMessage_userId}">
-                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
-                                           var="userIdItem"
-                                           itemValue="#{userIdItem}"/>
-                        </p:selectOneMenu>
+                    
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                 rendered="#{paymentMethodController.selected != null}">
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_nameOnCreditCard}" 
+                                       for="nameOnCreditCard" class="standardText"/>
+                        <p:inputText id="nameOnCreditCard" value="#{paymentMethodController.selected.nameOnCreditCard}" 
+                                     title="#{bundle.CreatePaymentMethodTitle_nameOnCreditCard}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_nameOnCreditCard}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_creditCardType}" 
+                                       for="creditCardType" class="standardText"/>
+                        <p:selectOneRadio id="creditCardType" value="#{paymentMethodController.selected.creditCardType}" 
+                                          layout="grid" columns="3" required="true" class="standardText"
+                                          requiredMessage="#{CreatePaymentMethodRequiredMessage_creditCardType}">
+                            <f:selectItem itemLabel="Visa" itemValue="VISA" />
+                            <f:selectItem itemLabel="MasterCard" itemValue="MASTERCARD" />
+                            <f:selectItem itemLabel="Discover" itemValue="DISCOVER" />
+                            <f:selectItem itemLabel="American Express" itemValue="AMERICANEXPRESS" />
+                            <f:selectItem itemLabel="Diners Club" itemValue="DINERSCLUB" />
+                            <f:selectItem itemLabel="JCB" itemValue="JCB" />
+                        </p:selectOneRadio>
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_creditCardNumber}" 
+                                       for="creditCardNumber" class="standardText"/>
+                        <p:inputText id="creditCardNumber" value="#{paymentMethodController.selected.creditCardNumber}" 
+                                     title="#{bundle.CreatePaymentMethodTitle_creditCardNumber}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_creditCardNumber}">
+                            <f:validateLength minimum="13" /> <!-- 13 is the smallest card length -->
+                            <f:validator validatorId="paymentMethodValidator"/>
+                        </p:inputText>
+                                                
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_creditCardExpiration}" 
+                                       for="creditCardExpiration" class="standardText"/>
+                        <p:inputMask id="creditCardExpiration" required="true" mask="99/9999" class="standardText"
+                                     requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_creditCardExpiration}" 
+                                     value="#{paymentMethodController.selected.creditCardExpiration}" />
+                        
+                        <p:outputLabel value="#{bundle.SecurityCode}" for="creditCardSecurityCode" class="standardText"/>
+                        <p:inputText id="creditCardSecurityCode" value="#{paymentMethodController.securityCode}"
+                                     title="#{bundle.SecurityCode}" required="true" type="password"
+                                     requiredMessage="#{bundle.SecurityCodeRequiredMessage}"/>
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingAddress1}" 
+                                       for="billingAddress1" class="standardText"/>
+                        <p:inputText id="billingAddress1" value="#{paymentMethodController.selected.billingAddress1}" 
+                                     title="#{bundle.CreatePaymentMethodTitle_billingAddress1}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingAddress1}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingAddress2}" 
+                                       for="billingAddress2" class="standardText"/>
+                        <p:inputText id="billingAddress2" value="#{paymentMethodController.selected.billingAddress2}" class="inputTextField"
+                                     title="#{bundle.CreatePaymentMethodTitle_billingAddress2}" />
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingCity}" 
+                                       for="billingCity" class="standardText"/>
+                        <p:inputText id="billingCity" value="#{paymentMethodController.selected.billingCity}" 
+                                     title="#{bundle.CreatePaymentMethodTitle_billingCity}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingCity}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingState}" 
+                                       for="billingState" class="standardText"/>
+                        <h:selectOneMenu id="billingState" value="#{paymentMethodController.selected.billingState}" >
+                            <f:selectItems value="#{userController.listOfStates()}" var="state"
+                                           itemLabel="#{state}" itemValue="#{state}" />
+                        </h:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundle.CreatePaymentMethodLabel_billingZipcode}" 
+                                       for="billingZipcode" class="standardText"/>
+                        <p:inputText id="billingZipcode" value="#{paymentMethodController.selected.billingZipcode}" 
+                                     title="#{bundle.CreatePaymentMethodTitle_billingZipcode}" required="true" 
+                                     requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_billingZipcode}">
+                            <f:validateLength minimum="5" />
+                            <f:validator validatorId="zipCodeValidator"/>
+                        </p:inputText>
+                        
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{paymentMethodController.create}" value="#{bundle.Save}" update="display,:PaymentMethodListForm:datalist,:growl" oncomplete="handleSubmit(args,'PaymentMethodCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PaymentMethodCreateDialog.hide()"/>
+                    
+                </h:panelGroup>
+                
+                <h:panelGroup>
+                    <br />
+                    <div align="center">
+                        <!-- CREATE button -->
+                        <p:commandButton actionListener="#{paymentMethodController.create}" 
+                                         value="#{bundle.Create}" icon="fas fa-plus" ajax="false"
+                                         update="display,:PaymentMethodListForm:pmlist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         oncomplete="handleSubmit(args,'PaymentMethodCreateDialog');"/>
+                        &nbsp;
+                        <!-- CANCEL button -->
+                        <p:commandButton value="#{bundle.Cancel}" onclick="PF('PaymentMethodCreateDialog').hide()" 
+                                         immediate="true" icon="fas fa-ban"/>
+                    </div>
+
                 </h:panelGroup>
             </h:form>
         </p:dialog>
