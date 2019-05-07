@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2018.06.10
+Copyright Â© 2018 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="#{bundle.About}"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+                
+                <h1>#{bundle.About} Green's Grill &amp; Sushi Bar</h1>
+                
+                <h:form id="PaymentMethodCreateForm" class="ui-datatable-data">
+                
+                    <h:panelGroup id="display">
+
+                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                            <h3>#{bundle.RestaurantHours}</h3>
+                            <table>
+                                <tbody>
+                                    <tr><td>#{bundle.Monday}</td><td>11:00 am - 10:15 pm</td></tr>
+                                    <tr><td>#{bundle.Tuesday}</td><td>11:00 am - 10:15 pm</td></tr>
+                                    <tr><td>#{bundle.Wednesday}</td><td>11:00 am - 10:15 pm</td></tr>
+                                    <tr><td>#{bundle.Thursday}</td><td>11:00 am - 10:15 pm</td></tr>
+                                    <tr><td>#{bundle.Friday}</td><td>11:00 am - 10:45 pm</td></tr>
+                                    <tr><td>#{bundle.Saturday}</td><td>11:00 am - 10:45 pm</td></tr>
+                                    <tr><td>#{bundle.Sunday}</td><td>11:00 am - 10:15 pm</td></tr>
+                                </tbody>
+                            </table>
+
+                            <p:gmap center="37.2303339,-80.4155607" zoom="17" type="roadmap"
+                                    style="width:600px; height:400px" 
+                                    model="#{restaurantMapController.model}" navigationControl="true">
+                                <p:ajax event="overlaySelect" listener="#{restaurantMapController.onMarkerSelect}" />
+                                <p:gmapInfoWindow>
+                                    <h:outputText value="#{restaurantMapController.restaurantMarker.title}" />
+                                </p:gmapInfoWindow>
+                            </p:gmap>
+                            
+                        </p:panelGrid>
+                    </h:panelGroup>
+                </h:form>
+                
+                                
+                
+                
+                
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

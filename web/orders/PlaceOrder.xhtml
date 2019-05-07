@@ -138,11 +138,30 @@
                                                 -->
                                                 <f:validator validatorId="zipCodeValidator"/> 
                                             </p:inputText>
-
-                                            <p:outputLabel value="PAYMENT METHOD"/>
-                                            <p:inputText value="coming soon" class="inputTextField"/>
-                                           
                                             
+                                            <p:outputLabel value="#{bundle.CreateOrdersLabel_paymentMethod}" for="paymentMethod" />
+                                            <!--
+                                            The required="true" attribute automatically places an asterisk *
+                                            at the end of the value to indicate that the field is required.  
+                                            -->
+                                            <p:selectOneRadio id="paymentMethod" layout="grid" columns="1" required="true" 
+                                                              requiredMessage="#{bundle.CreateOrdersRequiredMessage_paymentMethod}">
+                                                <f:selectItems value="#{paymentMethodController.items}" rendered="#{not empty paymentMethodController.items}"
+                                                               var="card" itemLabel="#{card.creditCardType} ending in #{card.creditCardNumber}" itemValue="no value"/>
+                                            </p:selectOneRadio>
+                                            
+                                            <p></p>
+                                            <!-- 
+                                            ===========
+                                            Create Button
+                                            ===========
+                                            -->
+                                            <p:commandButton id="createButton" icon="fas fa-plus" 
+                                                             value="#{bundle.CreatePaymentMethodTitle}" 
+                                                             actionListener="#{paymentMethodController.prepareCreate()}"
+                                                             update=":PaymentMethodCreateForm" 
+                                                             oncomplete="PF('PaymentMethodCreateDialog').show()"/>
+
                                             <p:selectBooleanCheckbox id="notification" value="#{orderManager.notification}">
                                                 <p:ajax process="notification" update="@form" />
                                             </p:selectBooleanCheckbox>
@@ -234,8 +253,9 @@
                         </tr>
                     </table>  
                     <br/>
-                </div>
+                </div>        
             </h:form>
+            <ui:include src="/paymentMethod/Create.xhtml"/>
         </ui:define>
     </ui:composition>
 
