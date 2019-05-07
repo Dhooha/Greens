@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 Created by Dhoha Abid on 2019.04.18
-Copyright © 2019 Dhoha Abid. All rights reserved.
+Copyright Â© 2019 Dhoha Abid. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -67,15 +67,24 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     <td align="right" style="padding-right: 30px; width:200px" valign="top">
                         <i for="language" class="fas fa-globe fa-2x"
                            style="vertical-align: middle;color:green"></i> &nbsp;
-                           <p:selectOneMenu id="language" 
-                                            value="#{languageController.language}"
-                                            onchange="submit()"
-                                         
-                                         style="vertical-align: middle" >
-                            <f:selectItem itemLabel="Select Language" itemValue="" noSelectionOption="true"/>
-                            <f:selectItem itemLabel="EN" itemValue="EN"/>
-                            <f:selectItem itemLabel="FR" itemValue="FR"/>
+                        <p:selectOneMenu id="language" 
+                                         value="#{languageController.language}" 
+                                         style="vertical-align: middle"   
+                                         onchange="submit()"
+                                         dynamic="true">
+
+                            <c:choose>
+                                <c:when test="#{languageController.language eq 'en'}">
+                                    <f:selectItem itemLabel="EN" itemValue="EN"/>
+                                    <f:selectItem itemLabel="FR" itemValue="FR"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <f:selectItem itemLabel="FR" itemValue="FR"/>
+                                    <f:selectItem itemLabel="EN" itemValue="EN"/>
+                                </c:otherwise>
+                            </c:choose>         
                         </p:selectOneMenu>
+
                         <br/> <br/><br/>
                         <!--
                         tabindex="0" enables the menu element to be focusable and to trigger interaction. 
@@ -119,7 +128,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     <i class="fas fa-shopping-cart"></i>&nbsp; #{bundle.Cart}
                                 </h:link> 
 
-                               
+
 
                                 <!--
                                 ==================
@@ -130,14 +139,14 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                     <i class="far fa-newspaper"></i>&nbsp; #{bundle.Reviews}
 
                                 </h:link>
-                                
-                                
-                                 <!--
-                                =============
-                                  ** About **
-                                =============
+
+
+                                <!--
+                               =============
+                                 ** About **
+                               =============
                                 -->
-                                <h:link outcome="/index" class="standardText">
+                                <h:link outcome="/About" class="standardText">
                                     <i class="fas fa-info-circle"></i>&nbsp; #{bundle.About}
 
                                 </h:link>
@@ -184,7 +193,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                                         <i class="fas fa-sign-in-alt"></i>&nbsp; #{bundle.SignIn}
 
                                     </h:link>
-                                    
+
                                     <h:link outcome="/userAccount/CreateAccount" class="standardText">
                                         <i class="fas fa-user-plus"></i> &nbsp; #{bundle.CreateAccount}
                                     </h:link>

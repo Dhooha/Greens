@@ -5,9 +5,13 @@
 package edu.vt.controllers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 
@@ -19,9 +23,9 @@ public class LanguageController implements Serializable{
     Instance Variables (Properties)
     ===============================
     */
-    private String language;
+    private String language = "EN";
     private Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-    
+   
     /*
     ==========================
     Getter and Setters Methods
@@ -47,12 +51,12 @@ public class LanguageController implements Serializable{
             }
         }
     }   
-    
+     
     /*
     ====================
       ** Constructor **
     ====================
     */
     public LanguageController(){
-    }       
+    }          
 }
