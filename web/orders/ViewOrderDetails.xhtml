@@ -63,32 +63,15 @@
                                     <p:panel  >
 
                                         <table align="center">
-                                            <tr>
-                                                <td align="right">
-                                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
-                                                                  value="#{bundle.TotalBeforeTaxes}"/>
-                                                </td>
-                                                <td>
-                                                    &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalBeforeTaxes}"></h:outputText>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td align="right">
-                                                    <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000"
-                                                                  value="#{bundle.Tax}"/>
-                                                </td>
-                                                <td>
-                                                    &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.tax}"></h:outputText>
-                                                </td>
-                                            </tr>
+                                            
+                                           
                                             <tr>
                                                 <td align="right">
                                                     <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" 
                                                                   value="#{bundle.TotalAfterTax}"/>
                                                 </td>
                                                 <td>
-                                                    &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{cartController.totalAfterTaxes}"></h:outputText>
+                                                    &nbsp; <h:outputText style="font-weight: bold;font-size: 16px; color: #4d0000" value="$#{ordersController.selected.orderTotal}"></h:outputText>
                                                 </td>
                                             </tr>
 
@@ -98,8 +81,6 @@
                                 </f:facet>
 
                             </p:dataGrid>
-                      
-
                           
                 
                 </div>

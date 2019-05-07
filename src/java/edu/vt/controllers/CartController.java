@@ -658,16 +658,27 @@ public class CartController implements Serializable{
              //merge temp and cartItems, neither should be empty
             //TODO: also merge instructions?
             for(CartItem d: temp){
-                for(CartItem c: cartItems){
-                    if(c.getMenuItem().getName().equals(d.getMenuItem().getName())){
-                        int totalQuantity = c.getQty() + d.getQty();
-                        c.setQty(totalQuantity);
-                    }
-                    else{
-                        //cannot add to cartItems here because of double modification exception
-                        saveToAddLater.add(d);
+                
+                Integer needsUpdateIndex = -1;
+                Integer updateQty = 0;
+                
+                for(int i = 0; i < cartItems.size(); i ++){
+                    if(cartItems.get(i).getMenuItem().getName().equals(d.getMenuItem().getName())){
+                        needsUpdateIndex = i;
+                        updateQty = cartItems.get(i).getQty();
                     }
                 }
+        
+                if(needsUpdateIndex >= 0){
+                    int totalQuantity = cartItems.get(needsUpdateIndex).getQty() + d.getQty();
+                    cartItems.get(needsUpdateIndex).setQty(totalQuantity);
+                }
+                else{
+                    //cannot add to cartItems here because of double modification exception
+                    //must make sure not the same as something earlier in d that was already in c that we updated    
+                    saveToAddLater.add(d);
+                }
+                
             }
             
             for(CartItem s: saveToAddLater){
@@ -680,6 +691,7 @@ public class CartController implements Serializable{
         }
          updateTotalPrice();
     }
+    
     
     //converts static variable cartItems into json to be saved in the database
     public String convertCartItemsToJson(){
