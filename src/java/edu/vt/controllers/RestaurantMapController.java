@@ -1,6 +1,6 @@
 /*
  * Created by Joshua Detwiler on 2019.05.06  * 
- * Copyright � 2019 Joshua Detwiler. All rights reserved. * 
+ * Copyright 2019 Joshua Detwiler. All rights reserved. * 
  */
 package edu.vt.controllers;
 
