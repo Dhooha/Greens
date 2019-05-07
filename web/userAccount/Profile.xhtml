@@ -120,8 +120,8 @@ Copyright Â© 2019 Dhoha Abid. All rights reserved.
                                             <i class="fas fa-trash-alt"></i>&nbsp;#{bundle.DeleteAccount}
                                         </label>
 
-                                        <p:confirm header="Account Deletion Confirmation" 
-                                                   message="Are you sure to permanently delete your account? This cannot be undone!" 
+                                        <p:confirm header="#{bundle.AccountDeletionConfirmation}" 
+                                                   message="#{bundle.DeleteAccountMessage}" 
                                                    icon="fas fa-exclamation-triangle fa-2x" />
                                     </p:commandLink>
                                     <!-- 
@@ -159,7 +159,7 @@ Copyright Â© 2019 Dhoha Abid. All rights reserved.
                         -->
                         <td align="center" valign="top">
 
-                            <h1> #{userController.selected.firstName}&nbsp;#{userController.selected.lastName}'s Account Profile </h1>
+                            <h1> #{userController.selected.firstName}&nbsp;#{userController.selected.lastName}</h1>
 
                             <!-- 
                             USER'S PROFILE PHOTO: Display the user's account profile photo in a circle. 
