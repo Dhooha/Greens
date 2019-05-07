@@ -168,7 +168,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     |          SAVE Button         |
                     ================================
                     -->
-                    <p:commandButton id="submit" value="Save" action="#{userController.updateAccount()}" 
+                    <p:commandButton id="submit" value="#{bundle.Save}" action="#{userController.updateAccount()}" 
                                      ajax="false" icon="fas fa-save" />
                     &nbsp;
                     <!--
@@ -176,7 +176,7 @@ Copyright © 2019 Dhoha Abid. All rights reserved.
                     |         CANCEL Button        |
                     ================================
                     -->
-                    <p:button outcome="/userAccount/Profile" value="Cancel" icon="fas fa-ban"  />
+                    <p:button outcome="/userAccount/Profile" value="#{bundle.Cancel}" icon="fas fa-ban"  />
 
                     <br /><br />
                 </h:form>
