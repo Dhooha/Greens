@@ -46,12 +46,12 @@
                                 <p:commandButton value="#{bundle.Update}"
                                                  icon="fas fa-save"
                                                  actionListener="#{cartController.editItemInCart()}"
-                                                 update=":EditMenuItemInCartForm"
+                                                 update=":CartListForm"
                                                  action="/cart/CartList?faces-redirect=true"
                                                  onclick="PF('EditMenuItemInCartDialog').hide()"/> &nbsp;
                                 <p:commandButton value="#{bundle.Cancel}"
                                                  icon="fas fa-ban"
-                                                 update=":EditMenuItemInCartForm"
+                                                 update=":CartListForm"
                                                  actionListener="#{cartController.clearFields()}"
                                                  onclick="EditMenuItemInCartDialog.hide()"/>
                             </td>

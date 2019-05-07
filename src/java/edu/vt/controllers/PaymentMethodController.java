@@ -122,6 +122,7 @@ public class PaymentMethodController implements Serializable {
     *************************************
      */
     public PaymentMethod prepareCreate() {
+        System.out.println("muauau");
         selected = new PaymentMethod();
         
         User signedInUser = (User) Methods.sessionMap().get("user");
