@@ -110,7 +110,7 @@ Copyright © 2019 Joshua Detwiler. All rights reserved.
                         <!-- CREATE button -->
                         <p:commandButton actionListener="#{paymentMethodController.create}" 
                                          value="#{bundle.Create}" icon="fas fa-plus" ajax="false"
-                                         update="display,:PaymentMethodListForm:pmlist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         update="display, :PaymentMethodListForm:pmlist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                          oncomplete="handleSubmit(args,'PaymentMethodCreateDialog');"/>
                         &nbsp;
                         <!-- CANCEL button -->

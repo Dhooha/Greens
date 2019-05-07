@@ -22,8 +22,6 @@
                                 <div style="width:100%; height: 100%" align="center">
                                     <h1 >#{bundle.PlaceOrderTitle}</h1>     
 
-
-
                                     <p:panelGrid columns="2"
                                                  class="panelGridNoBorderCart"
                                                  columnClasses="panelGridColumn1, panelGridColumn2">
@@ -140,6 +138,8 @@
                                             </p:inputText>
                                             
                                             <p:outputLabel value="#{bundle.CreateOrdersLabel_paymentMethod}" for="paymentMethod" />
+                                            
+                                            <h:outputText value="#{bundle.NoPaymentMethodsYet}" rendered="#{empty paymentMethodController.items}"/>
                                             <!--
                                             The required="true" attribute automatically places an asterisk *
                                             at the end of the value to indicate that the field is required.  
@@ -148,19 +148,21 @@
                                                               requiredMessage="#{bundle.CreateOrdersRequiredMessage_paymentMethod}">
                                                 <f:selectItems value="#{paymentMethodController.items}" rendered="#{not empty paymentMethodController.items}"
                                                                var="card" itemLabel="#{card.creditCardType} ending in #{card.creditCardNumber}" itemValue="no value"/>
+                                                
                                             </p:selectOneRadio>
                                             
-                                            <p></p>
+                                           <h:outputText value="" rendered="#{not empty paymentMethodController.items}"/>
+                                            
                                             <!-- 
                                             ===========
                                             Create Button
                                             ===========
                                             -->
-                                            <p:commandButton id="createButton" icon="fas fa-plus" 
+                                            <p:button id="createButton" icon="fas fa-plus" 
                                                              value="#{bundle.CreatePaymentMethodTitle}" 
-                                                             actionListener="#{paymentMethodController.prepareCreate()}"
-                                                             update=":PaymentMethodCreateForm" 
-                                                             oncomplete="PF('PaymentMethodCreateDialog').show()"/>
+                                                             outcome="/paymentMethod/MyPaymentMethods"
+                                                             />
+                                            
 
                                             <p:selectBooleanCheckbox id="notification" value="#{orderManager.notification}">
                                                 <p:ajax process="notification" update="@form" />
