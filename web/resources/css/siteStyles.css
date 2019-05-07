@@ -475,6 +475,11 @@ background-color: whitesmoke;
     padding-bottom: 5px;
 }
 
+.previewImage {
+    width: auto;
+    height: 80px;
+}
+
 /* Used in Profile and About pages to style person's photo in a circle */
 .profilePhoto {
     display: inline-block;

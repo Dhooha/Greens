@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Joshua Detwiler on 2019.05.07
+Copyright 2019 Joshua Detwiler. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="#{bundle.Reviews}"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:95%; margin:0 auto;">
+                
+                <h:form id="ReviewListForm">
+                    <p:panel header="Yelp #{bundle.Reviews}">
+                        <p:dataTable id="datalist" value="#{reviewsController.reviewItems}" var="item"
+                                             selectionMode="single" selection="#{reviewsController.selected}"
+                                             reflow="true"
+                                             paginator="true"
+                                             rowKey="#{item.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="5,10"
+                                             class="dataTable"
+                                             >
+
+                            <p:column headerText="#{bundle.Name}" style="width:80px;">
+                                <h:outputText value="#{item.name}"/>
+                            </p:column>
+
+                            <p:column headerText="#{bundle.Photo}" style="width:120px;">
+                                <div align="center">
+                                    <h:graphicImage class="previewImage" value="#{item.userPhotoUrl}"/>
+                                </div>
+                            </p:column>
+                            
+                            <p:column headerText="#{bundle.Rating}" style="width:50px;">
+                                <div align="center"><h:outputText value="#{item.rating} / 5"/></div>
+                            </p:column>
+                            
+                            <p:column headerText="#{bundle.TimeCreated}" style="width: 150px;">
+                                <h:outputText value="#{item.timeCreated}"/>
+                            </p:column>
+                            
+                            <p:column headerText="#{bundle.Review}">
+                                <a href="#{item.ratingUrl}" target="_blank" style="color: blue;">#{item.reviewText}</a>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
