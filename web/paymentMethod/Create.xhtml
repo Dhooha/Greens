@@ -34,7 +34,7 @@ Copyright © 2019 Joshua Detwiler. All rights reserved.
                                        for="creditCardType" class="standardText"/>
                         <p:selectOneRadio id="creditCardType" value="#{paymentMethodController.selected.creditCardType}" 
                                           layout="grid" columns="3" required="true" class="standardText"
-                                          requiredMessage="#{CreatePaymentMethodRequiredMessage_creditCardType}">
+                                          requiredMessage="#{bundle.CreatePaymentMethodRequiredMessage_creditCardType}">
                             <f:selectItem itemLabel="Visa" itemValue="VISA" />
                             <f:selectItem itemLabel="MasterCard" itemValue="MASTERCARD" />
                             <f:selectItem itemLabel="Discover" itemValue="DISCOVER" />
